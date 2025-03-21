@@ -1,28 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonDemo } from "../../components/button-demo/button-demo.component";
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
-import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { NotificationService } from '../../services/notification.service';
 import { UserService } from '../../services/user.service';
+import { IReturn } from '../../entity/return.interface';
+import { Router } from '@angular/router';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-authentication',
-  imports: [ButtonDemo, Toast, InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule],
-  providers: [NotificationService, UserService],
+  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule],
+  providers: [UserService],
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.scss'
 })
 export class AuthenticationComponent {
 
+  private utils = inject(UtilsService);
   private fb = inject(FormBuilder);
   private notificationService = inject(NotificationService);
   private userService = inject(UserService);
+  private router = inject(Router);
+
   authForm!: FormGroup;
   registerForm!: FormGroup;
   showRegistration = false;
@@ -51,18 +55,25 @@ export class AuthenticationComponent {
     }
     
     this.userService.existsByEmail(this.authForm.controls['email'].value).subscribe({
-      next: (response:any) => {
-        console.log(response);
-        if (response?.exists){
-          this.userExists = true;
+      next: (res:any) => {
+        const apiResponse:IReturn = res as IReturn;
+
+        if(this.utils.validateApiResponse(apiResponse)){
+          this.userExists = apiResponse.data;
           this.isCheckingEmail = false;
         }
       },
       error: (error) => {
-        console.log(error);
         this.notificationService.toastError('Erro ao verificar email');
         this.isCheckingEmail = false
-        
+      },
+      complete: () => {
+        if(this.userExists){
+            this.router.navigate(['/login'], { queryParams: { email: this.authForm.controls['email'].value } });
+        }
+        else{
+            this.router.navigate(['/register'], { queryParams: { email: this.authForm.controls['email'].value } });
+        }
       }
     });
 

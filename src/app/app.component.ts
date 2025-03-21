@@ -5,7 +5,10 @@ import { AuthenticationComponent } from "./features/authentication/authenticatio
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { Toast } from 'primeng/toast';
+import { NotificationService } from './services/notification.service';
+import { UtilsService } from './services/utils.service';
+
 
 @Component({
   selector: 'app-root',
@@ -13,11 +16,12 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
     RouterOutlet,
     ReactiveFormsModule, 
     CommonModule, 
-    ButtonDemo,
-    AuthenticationComponent,
+    Toast
   ],
   providers: [
-    MessageService
+    MessageService,
+    NotificationService,
+    UtilsService
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

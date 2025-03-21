@@ -14,15 +14,25 @@
     <!-- Lado direito -->
     <div class="w-6 flex align-items-center justify-content-center">
         <div class="w-10 sm:w-6 md:w-4">
-            <h2 class="text-2xl font-bold text-center mb-3">Autenticação</h2>
-            <p class="text-center mb-5">Insira seus dados para prosseguir</p>
+            @if(existsEmail){
+                <h2 class="text-2xl font-bold text-center mb-3">Bem vindo de volta!</h2>
+                <p class="text-center mb-5">Insira sua senha para prosseguir</p>
+            }
+            @else {
+                <h2 class="text-2xl font-bold text-center mb-3">Autenticação</h2>
+                <p class="text-center mb-5">Insira seus dados para prosseguir</p>
+            }
 
-            <div class="flex flex-column gap-3 align-items-center" [formGroup]="authForm">
+            <div class="flex flex-column gap-4 align-items-center" [formGroup]="loginForm">
                 <p-floatlabel class="w-full">
                     <input pInputText id="over_label" formControlName="email"  class="w-full" />
                     <label for="over_label">Email</label>
                 </p-floatlabel>
-                <p-button [loading]="isCheckingEmail" (onClick)="onVerifyEmail()" >Entrar com e-mail</p-button>
+                <p-floatlabel class="w-full">
+                    <p-password id="over_label" formControlName="password" class="w-full"/>
+                    <label for="over_label">Password</label>
+                </p-floatlabel>
+                <p-button [loading]="isCheckingLogin" (onClick)="handleLogin()" >Entrar</p-button>
             </div>
 
             <div class="flex align-items-center justify-content-center my-3 gap-2"

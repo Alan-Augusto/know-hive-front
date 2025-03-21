@@ -12,5 +12,9 @@ export class UserService extends BaseApiService {
   existsByEmail(email: string) {
     return this.get(`existsByEmail/${email}`);
   }
+
+  login(data: any) {
+    return this.post('login', data);
+  }
   
 }
