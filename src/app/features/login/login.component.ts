@@ -10,6 +10,8 @@ import { UserService } from '../../services/user.service';
 import { IReturn } from '../../entity/return.interface';
 import { PasswordModule } from 'primeng/password';
 import { Router } from '@angular/router';
+import { UtilsService } from '../../services/utils.service';
+import { LoggedUserService } from '../../services/logged-user.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,8 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  // private utils = inject(UtilsService);
+  private utils = inject(UtilsService);
+  private loggedUser = inject(LoggedUserService);
   private fb = inject(FormBuilder);
   private notificationService = inject(NotificationService);
   private userService = inject(UserService);
@@ -30,6 +33,8 @@ export class LoginComponent {
   isCheckingLogin: Boolean = false;
   emailParam!: string;
   existsEmail!: boolean;
+
+  isLogged:boolean = false;
 
   ngOnInit() {
 
@@ -42,6 +47,8 @@ export class LoginComponent {
       email: [this.emailParam || null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]]
     });
+
+    if(this.existsEmail) this.loginForm.controls['email'].disable();
   }
 
 
@@ -52,29 +59,30 @@ export class LoginComponent {
     }
     
     this.isCheckingLogin = true;
-    this.userService.login(this.loginForm.value).subscribe({
+    this.userService.login(this.loginForm.getRawValue()).subscribe({
       next: (res:any) => {
         const apiResponse:IReturn = res as IReturn;
 
-        if(this.validateApiResponse(apiResponse)){
-          this.router.navigate(['/home']);
+        if(this.utils.validateApiResponse(apiResponse)){
+          if(apiResponse.data.token){
+            this.loggedUser.setUser(apiResponse.data.user);
+            this.loggedUser.setToken(apiResponse.data.token);
+            this.notificationService.toastSuccess(apiResponse.message);
+            this.isCheckingLogin = false;
+            this.router.navigate(['/home']);
+          }
+          else{
+            this.notificationService.toastError(apiResponse.message);
+          }
         }
       },
       error: (err:any) => {
-        this.notificationService.toastError('Erro ao realizar login');
-      },
-      complete: () => {
+        const apiResponse:IReturn = err.error as IReturn;
+        this.notificationService.toastError(apiResponse.message);
         this.isCheckingLogin = false;
-      }
+      },
+      complete: () => {}
     });
-  }
-
-  validateApiResponse(response: IReturn):any {
-    if(response.status === 'error') {
-      this.notificationService.toastError(response.message);
-      return false;
-    }
-    return true;
   }
 
 }

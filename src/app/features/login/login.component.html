@@ -24,12 +24,13 @@
             }
 
             <div class="flex flex-column gap-4 align-items-center" [formGroup]="loginForm">
-                <p-floatlabel class="w-full">
+                <p-floatlabel variant="on" class="w-full">
                     <input pInputText id="over_label" formControlName="email"  class="w-full" />
                     <label for="over_label">Email</label>
                 </p-floatlabel>
-                <p-floatlabel class="w-full">
-                    <p-password id="over_label" formControlName="password" class="w-full"/>
+                <p-floatlabel variant="on" class="w-full">
+                    <input pInputText id="over_label" pPassword formControlName="password" type="password" class="w-full" [feedback]="false" />
+                    <!-- <p-password id="over_label" formControlName="password" class="w-full"/> -->
                     <label for="over_label">Password</label>
                 </p-floatlabel>
                 <p-button [loading]="isCheckingLogin" (onClick)="handleLogin()" >Entrar</p-button>
