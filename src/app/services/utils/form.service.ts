@@ -56,7 +56,7 @@ export class FormService {
   }
 
   public validateForm(form: FormGroup): boolean {
-    let isValid = true;
+    
 
     Object.keys(form.controls).forEach((key) => {
       const control = form.get(key);
@@ -69,7 +69,7 @@ export class FormService {
 
     });
 
-    return isValid;
+    return form.valid;
   }
 
 

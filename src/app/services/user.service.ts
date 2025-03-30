@@ -16,5 +16,9 @@ export class UserService extends BaseApiService {
   login(data: any) {
     return this.post('login', data);
   }
+
+  register(data: any) {
+    return this.post('register', data);
+  }
   
 }

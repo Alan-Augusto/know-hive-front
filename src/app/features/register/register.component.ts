@@ -58,15 +58,38 @@ export class RegisterComponent implements OnInit {
   }
 
   handleRegister() {
-    
-    
-
     if(this.formService.validateForm(this.registerForm)) {
-      this.notificationService.toastSuccess('Válido');
+      //email, password, name, profile_picture_url
+      const formRegister = {
+        email: this.registerForm.value.confirmemail,
+        password: this.registerForm.value.password,
+        name: this.registerForm.value.name,
+        profile_picture_url: ''
+      }
+
+      console.log(formRegister);
+
+      this.userService.register(formRegister).subscribe({
+        next: (response:any) => {
+          if(response.status == 'success') {
+            this.loggedUser.setUser(response.data);
+            this.loggedUser.setToken(response.data.token);
+            // this.loggedUser.setLogged(true);
+          }
+        },
+        error: (error:any) => {
+          console.log(error);
+          this.notificationService.toastError(error.error.message);
+        },
+        complete: () => {
+          this.notificationService.toastSuccess('Usuário cadastrado com sucesso.');
+          this.router.navigate(['/login']);
+        }
+    });
     }
     else {
       console.log(this.registerForm);
-      this.notificationService.toastError('Inválido');
+      this.notificationService.toastError('Verifique os campos do formulário.');
     }
   }
 }
