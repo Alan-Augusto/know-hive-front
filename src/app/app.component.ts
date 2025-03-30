@@ -14,10 +14,11 @@ import { UtilsService } from './services/utils.service';
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    ReactiveFormsModule, 
-    CommonModule, 
-    Toast
-  ],
+    ReactiveFormsModule,
+    CommonModule,
+    Toast,
+    ButtonDemo
+],
   providers: [
     MessageService,
     NotificationService,
