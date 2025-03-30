@@ -11,6 +11,7 @@ import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { FormService } from '../../services/utils/form.service';
 
 @Component({
   selector: 'app-register',
@@ -21,6 +22,7 @@ import { PasswordModule } from 'primeng/password';
 })
 export class RegisterComponent implements OnInit {
   private fb = inject(FormBuilder);
+  private formService = inject(FormService);
   private notificationService = inject(NotificationService);
   private userService = inject(UserService);
   private router = inject(Router);
@@ -34,12 +36,15 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      name: [''],
-      email: [''],
-      confirmemail: [''],
-      password: [''],
-      confirmpassword: ['']
+      name: [null, [this.formService.requiredValidator()]],
+      email: [null, [this.formService.requiredValidator(), this.formService.emailValidator()]],
+      confirmemail: [null, [this.formService.requiredValidator(), this.formService.matchControlValidator('email')]],
+      password: [null, [this.formService.requiredValidator(), this.formService.passwordValidator()]],
+      confirmpassword: [null, [this.formService.requiredValidator(), this.formService.matchControlValidator('password')]],
     });
+
+    this.formService.validateFormErrors(this.registerForm);
+    
     
     const queryParams = this.router.parseUrl(this.router.url).queryParams;
     this.emailParam = queryParams['email'];
@@ -53,16 +58,16 @@ export class RegisterComponent implements OnInit {
   }
 
   checkEmailMatch(): void {
-    const email = this.registerForm.controls['email'].value;
-    const confirmEmail = this.registerForm.controls['confirmemail'].value;
+    // const email = this.registerForm.controls['email'].value;
+    // const confirmEmail = this.registerForm.controls['confirmemail'].value;
 
-    if (email !== confirmEmail) {
-      this.registerForm.controls['confirmemail'].setErrors({ emailMismatch: true });
-      this.notificationService.toastError('Errado')
-      console.log('Email não confere');
-    } else {
-      this.registerForm.controls['confirmemail'].setErrors(null);
-    }
+    // if (email !== confirmEmail) {
+    //   this.registerForm.controls['confirmemail'].setErrors({ message: 'Email não verifica.' });
+    //   this.notificationService.toastError('Errado')
+    //   console.log('Email não confere');
+    // } else {
+    //   this.registerForm.controls['confirmemail'].setErrors(null);
+    // }
   
   }
 
