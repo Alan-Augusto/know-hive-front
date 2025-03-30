@@ -11,6 +11,7 @@ import { UserService } from '../../services/user.service';
 import { IReturn } from '../../entity/return.interface';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../services/utils.service';
+import { FormService } from '../../services/utils/form.service';
 
 @Component({
   selector: 'app-authentication',
@@ -23,29 +24,23 @@ export class AuthenticationComponent {
 
   private utils = inject(UtilsService);
   private fb = inject(FormBuilder);
+  private formService = inject(FormService);
   private notificationService = inject(NotificationService);
   private userService = inject(UserService);
   private router = inject(Router);
 
   authForm!: FormGroup;
-  registerForm!: FormGroup;
   showRegistration = false;
   userExists = false;
   isCheckingEmail = false;
 
   ngOnInit() {
     this.authForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [this.formService.requiredValidator(), this.formService.emailValidator()]],
       password: ['', []]
     });
 
-    this.registerForm = this.fb.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      confirmEmail: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      confirmPassowrd: ['', [Validators.required]]
-    });
+    this.formService.validateFormErrors(this.authForm);
   }
 
   onVerifyEmail() {

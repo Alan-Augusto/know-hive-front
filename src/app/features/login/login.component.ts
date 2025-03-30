@@ -12,6 +12,7 @@ import { PasswordModule } from 'primeng/password';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../services/utils.service';
 import { LoggedUserService } from '../../services/logged-user.service';
+import { FormService } from '../../services/utils/form.service';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent {
 
   private utils = inject(UtilsService);
   private loggedUser = inject(LoggedUserService);
+  private formService = inject(FormService);
   private fb = inject(FormBuilder);
   private notificationService = inject(NotificationService);
   private userService = inject(UserService);
@@ -44,9 +46,11 @@ export class LoginComponent {
     if(this.emailParam) this.existsEmail = true;
 
     this.loginForm = this.fb.group({
-      email: [this.emailParam || null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]]
+      email: [this.emailParam || null, [this.formService.requiredValidator(), this.formService.emailValidator()]],
+      password: [null, [this.formService.requiredValidator()]]
     });
+
+    this.formService.validateFormErrors(this.loginForm);
 
     if(this.existsEmail) this.loginForm.controls['email'].disable();
   }
