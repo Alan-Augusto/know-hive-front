@@ -24,23 +24,9 @@ export class FormService {
         const field = document.querySelector(`[formControlName="${key}"]`);
         if (!field) return;
 
-        if (control.errors) {
+        if (control.errors && control.dirty) {
           // Mostrar erro
-          if (!document.querySelector(`.error-message[data-for="${key}"]`)) {
-            const errorMessage = document.createElement('div');
-            errorMessage.className = 'error-message';
-            errorMessage.setAttribute('data-for', key);
-            errorMessage.innerText = control.errors['message'] || 'Campo inválido';
-            errorMessage.style.position = 'absolute';
-            errorMessage.style.top = `${field?.getBoundingClientRect().bottom + window.scrollY}px`;
-            errorMessage.style.left = `${field?.getBoundingClientRect().left}px`;
-            errorMessage.style.color = 'red';
-            errorMessage.style.fontSize = '0.8rem';
-            errorMessage.style.opacity = '.8';
-            document.body.appendChild(errorMessage);
-          }
-
-
+          this.inserirMensagemErro(key, control, field);
 
         } else {
           // Remover erro
@@ -53,13 +39,46 @@ export class FormService {
     });
   }
 
+  private inserirMensagemErro(key: string, control:AbstractControl, field:Element): void {
+    if (!document.querySelector(`.error-message[data-for="${key}"]`)) {
+      const errorMessage = document.createElement('div');
+      errorMessage.className = 'error-message';
+      errorMessage.setAttribute('data-for', key);
+      errorMessage.innerText = control.errors?.['message'] || 'Campo inválido';
+      errorMessage.style.position = 'absolute';
+      errorMessage.style.top = `${field?.getBoundingClientRect().bottom + window.scrollY}px`;
+      errorMessage.style.left = `${field?.getBoundingClientRect().left}px`;
+      errorMessage.style.color = 'red';
+      errorMessage.style.fontSize = '0.8rem';
+      errorMessage.style.opacity = '.8';
+      document.body.appendChild(errorMessage);
+    }
+  }
+
+  public validateForm(form: FormGroup): boolean {
+    let isValid = true;
+
+    Object.keys(form.controls).forEach((key) => {
+      const control = form.get(key);
+      if (!control) return;
+      const field = document.querySelector(`[formControlName="${key}"]`);
+        if (!field) return;
+      this.inserirMensagemErro(key, control, field);
+      control.markAsDirty();
+      control.updateValueAndValidity();
+
+    });
+
+    return isValid;
+  }
+
 
   // ============================================
   // ============== FORM VALIDATORS =============
   // ============================================
   public matchControlValidator(controlNameToMatch: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (!control.parent || !control.dirty) {
+      if (!control.parent) {
         return null;
       }
 
@@ -78,9 +97,7 @@ export class FormService {
 
   public requiredValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (!control.dirty) {
-        return null;
-      }
+      
       const isValid = control.value && control.value.trim() !== '';
       return isValid ? null : { message: 'Campo obrigatório.' };
     };
@@ -88,9 +105,7 @@ export class FormService {
 
   public emailValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (!control.dirty) {
-        return null;
-      }
+      
       const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(control.value);
       return isValid ? null : { message: 'Email inválido.' };
     };
@@ -98,9 +113,7 @@ export class FormService {
 
   public passwordValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (!control.dirty) {
-        return null; // Validator cannot run if the parent group is not available or the control is not dirty
-      }
+
       const isValid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(control.value);
       return isValid ? null : { message: 'Mínimo 8 caracteres, 1 letra e 1 número.' };
     };

@@ -57,19 +57,16 @@ export class RegisterComponent implements OnInit {
     };
   }
 
-  checkEmailMatch(): void {
-    // const email = this.registerForm.controls['email'].value;
-    // const confirmEmail = this.registerForm.controls['confirmemail'].value;
+  handleRegister() {
+    
+    
 
-    // if (email !== confirmEmail) {
-    //   this.registerForm.controls['confirmemail'].setErrors({ message: 'Email não verifica.' });
-    //   this.notificationService.toastError('Errado')
-    //   console.log('Email não confere');
-    // } else {
-    //   this.registerForm.controls['confirmemail'].setErrors(null);
-    // }
-  
+    if(this.formService.validateForm(this.registerForm)) {
+      this.notificationService.toastSuccess('Válido');
+    }
+    else {
+      console.log(this.registerForm);
+      this.notificationService.toastError('Inválido');
+    }
   }
-
-  handleRegister() {}
 }
