@@ -45,10 +45,15 @@ export class LoginComponent {
 
     if(this.emailParam) this.existsEmail = true;
 
+    const userAgent = navigator.userAgent;
+
     this.loginForm = this.fb.group({
       email: [this.emailParam || null, [this.formService.requiredValidator(), this.formService.emailValidator()]],
-      password: [null, [this.formService.requiredValidator()]]
+      password: [null, [this.formService.requiredValidator()]],
+      user_agent: [navigator.userAgent, []]
     });
+
+    console.log(userAgent);
 
     this.formService.validateFormErrors(this.loginForm);
 
@@ -57,7 +62,7 @@ export class LoginComponent {
 
 
   handleLogin() {
-    if(this.loginForm.invalid) {
+    if(!this.formService.validateForm(this.loginForm)) {
       this.notificationService.toastError('Email ou senha inválidos');
       return;
     }
