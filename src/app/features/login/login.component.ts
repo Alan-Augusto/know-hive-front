@@ -37,6 +37,7 @@ export class LoginComponent {
   existsEmail!: boolean;
 
   isLogged:boolean = false;
+  timePending:number = 0;
 
   ngOnInit() {
 
@@ -70,6 +71,7 @@ export class LoginComponent {
     this.isCheckingLogin = true;
     this.userService.login(this.loginForm.getRawValue()).subscribe({
       next: (res:any) => {
+        console.log(res)
         const apiResponse:IReturn = res as IReturn;
 
         if(this.utils.validateApiResponse(apiResponse)){
@@ -82,6 +84,13 @@ export class LoginComponent {
           }
           else{
             this.notificationService.toastError(apiResponse.message);
+            if(apiResponse.data.failed){
+              this.timePending = apiResponse.data.time;
+              this.startCountdown();
+            }
+            else{
+              this.isCheckingLogin = false;
+            }
           }
         }
       },
@@ -92,6 +101,19 @@ export class LoginComponent {
       },
       complete: () => {}
     });
+  }
+
+  startCountdown() {
+    const interval = setInterval(() => {
+      this.isCheckingLogin = true;
+      this.timePending--;
+
+      if (this.timePending <= 0) {
+        this.isCheckingLogin = false;
+        this.timePending = 0;
+        clearInterval(interval);
+      }
+    }, 60000); // 60000ms = 1 minute
   }
 
 }

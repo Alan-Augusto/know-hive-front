@@ -33,7 +33,13 @@
                     <!-- <p-password id="over_label" formControlName="password" class="w-full"/> -->
                     <label for="over_label">Password</label>
                 </p-floatlabel>
-                <p-button [loading]="isCheckingLogin" (onClick)="handleLogin()" >Entrar</p-button>
+                <!-- <p-button [loading]="isCheckingLogin" (onClick)="handleLogin()" >Entrar</p-button> -->
+                <p-button 
+                    [loading]="isCheckingLogin" 
+                    (onClick)="handleLogin()"
+                >
+                    {{ timePending > 0 ? 'Aguarde ' + timePending + ' minutos' : 'Entrar' }}
+                </p-button>
             </div>
 
             <div class="flex align-items-center justify-content-center my-3 gap-2"
