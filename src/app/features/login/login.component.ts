@@ -51,7 +51,6 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: [this.emailParam || null, [this.formService.requiredValidator(), this.formService.emailValidator()]],
       password: [null, [this.formService.requiredValidator()]],
-      user_agent: [navigator.userAgent, []]
     });
 
     console.log(userAgent);
