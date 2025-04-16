@@ -12,10 +12,11 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FormService } from '../../services/utils/form.service';
+import { AuthBaseComponent } from "../../components/auth-base/auth-base.component";
 
 @Component({
   selector: 'app-register',
-  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule],
+  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, AuthBaseComponent],
     providers: [UserService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'

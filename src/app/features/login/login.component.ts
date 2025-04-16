@@ -13,10 +13,11 @@ import { Router } from '@angular/router';
 import { UtilsService } from '../../services/utils.service';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { FormService } from '../../services/utils/form.service';
+import { AuthBaseComponent } from "../../components/auth-base/auth-base.component";
 
 @Component({
   selector: 'app-login',
-  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule],
+  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, AuthBaseComponent],
   providers: [UserService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

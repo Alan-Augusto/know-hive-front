@@ -12,10 +12,11 @@ import { IReturn } from '../../entity/return.interface';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../services/utils.service';
 import { FormService } from '../../services/utils/form.service';
+import { AuthBaseComponent } from "../../components/auth-base/auth-base.component";
 
 @Component({
   selector: 'app-authentication',
-  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule],
+  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, AuthBaseComponent],
   providers: [UserService],
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.scss'
