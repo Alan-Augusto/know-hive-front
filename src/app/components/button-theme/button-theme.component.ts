@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'button-demo',
-    templateUrl: './button-demo.component.html',
-    styleUrl: './button-demo.component.scss',
+    templateUrl: './button-theme.component.html',
+    styleUrl: './button-theme.component.scss',
     standalone: true,
 })
-export class ButtonDemo {
+export class ButtonTheme {
     theme:'light'|'dark' = 'light'
     toggleDarkMode() {
         const element = document.querySelector('html');
