@@ -1,6 +1,19 @@
 .theme-button{
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 99999;
+    svg{
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .3rem;
+    border-radius: .5rem;
+    background-color: var(--p-surface-base);
+    transition: background-color 0.3s ease;
+    &:hover{
+        background-color: var(--p-surface-secondary);
+    }
 }

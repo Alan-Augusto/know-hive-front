@@ -5,6 +5,7 @@ import Aura from '@primeng/themes/aura';
 export const Noir = definePreset(Aura, {
     semantic: {
         primary: {
+            0: '#ffffff',
             50: '{zinc.50}',
             100: '{zinc.100}',
             200: '{zinc.200}',
@@ -15,40 +16,98 @@ export const Noir = definePreset(Aura, {
             700: '{zinc.700}',
             800: '{zinc.800}',
             900: '{zinc.900}',
-            950: '{zinc.950}'
+            950: '{zinc.950}',
+            1000: '#09090b'
+        },
+        accent: {
+            50: '#fefce8',
+            100: '#fef9c3', 
+            200: '#fef08a',
+            300: '#fde047',
+            400: '#facc15',
+            500: '#eab308',
+            600: '#ca8a04',
+            700: '#a16207',
+            800: '#854d0e',
+            900: '#713f12',
+            950: '#422006'
         },
         colorScheme: {
             light: {
-                primary: {
-                    color: '{zinc.950}',
-                    lightColor: '{zinc.400}',
-                    inverseColor: '#ffffff',
-                    hoverColor: '{zinc.900}',
-                    activeColor: '{zinc.800}',
+                text: {
+                    base: '{zinc.950}',
+                    secondary: '{zinc.400}',
+                    inverse: '{zinc.50}',
+                    accent: '{accent.400}'
                 },
-                highlight: {
-                    background: '{zinc.950}',
-                    focusBackground: '{zinc.700}',
-                    color: '#ffffff',
-                    lightColor: '{zinc.400}',
-                    focusColor: '#ffffff'
+                surface: {
+                    base: '{zinc.0}',
+                    card: '{zinc.100}',
+                    secondary: '{zinc.200}',
+                    inverse: '{zinc.800}'
+                },
+                feedback: {
+                    error: {
+                        main: '#dc2626',
+                        surface: '#fee2e2'
+                    },
+                    warning: {
+                        main: '#f59e0b',
+                        surface: '#fef3c7'
+                    },
+                    success: {
+                        main: '#16a34a',
+                        surface: '#dcfce7'
+                    },
+                    info: {
+                        main: '#0ea5e9',
+                        surface: '#e0f2fe'
+                    }
+                },
+                shadow: {
+                    sm: '0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.05)',
+                    md: '0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1)',
+                    lg: '0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.1)'
                 }
+                
             },
             dark: {
-                primary: {
-                    color: '{zinc.50}',
-                    lightColor: '{zinc.400}',
-                    inverseColor: '{zinc.950}',
-                    hoverColor: '{zinc.100}',
-                    activeColor: '{zinc.200}'
+                text: {
+                    base: '{zinc.50}',
+                    secondary: '{zinc.500}',
+                    inverse: '{zinc.950}',
+                    accent: '{accent.400}'
                 },
-                highlight: {
-                    background: 'rgba(250, 250, 250, .16)',
-                    focusBackground: 'rgba(250, 250, 250, .24)',
-                    color: 'rgba(255,255,255,.87)',
-                    lightColor: '{zinc.400}',
-                    focusColor: 'rgba(255,255,255,.87)'
+                surface: {
+                    base: '{zinc.1000}',
+                    card: '{zinc.800}',
+                    secondary: '{zinc.700}',
+                    inverse: '{zinc.200}'
+                },
+                feedback: {
+                    error: {
+                        main: '#dc2626',
+                        surface: '#450a0a'
+                    },
+                    warning: {
+                        main: '#f59e0b', 
+                        surface: '#451a03'
+                    },
+                    success: {
+                        main: '#16a34a',
+                        surface: '#052e16'
+                    },
+                    info: {
+                        main: '#0ea5e9',
+                        surface: '#082f49'
+                    }
+                },
+                shadow: {
+                    sm: '0 0.0625rem 0.125rem 0 rgba(255, 255, 255, 0.15)',
+                    md: '0 0.25rem 0.375rem -0.0625rem rgba(255, 255, 255, 0.2)', 
+                    lg: '0 0.625rem 0.9375rem -0.1875rem rgba(255, 255, 255, 0.2)'
                 }
+                
             }
         }
     }

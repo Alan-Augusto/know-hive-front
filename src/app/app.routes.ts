@@ -30,5 +30,9 @@ export const routes: Routes = [
     {
         path: 'home',
         loadComponent: () => import('./features/home-page/home-page.component').then(m => m.HomePageComponent)
+    },
+    {
+        path: 'color-preview',
+        loadComponent: () => import('./features/color-preview/color-preview.component').then(m => m.ColorPreviewComponent)
     }
 ];
