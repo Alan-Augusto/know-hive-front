@@ -1,4 +1,4 @@
-.theme-button{
+.button-color{
     svg{
         width: 1.5rem;
         height: 1.5rem;
@@ -15,5 +15,20 @@
     transition: background-color 0.3s ease;
     &:hover{
         background-color: var(--p-surface-card);
+    }
+}
+
+.color-container{
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+.color-item{
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    &:hover{
+        scale: 1.1;
     }
 }

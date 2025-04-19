@@ -1,6 +1,7 @@
 //mypreset.ts
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
+import { ColorService } from './services/style/color.service';
 
 export const Noir = definePreset(Aura, {
     semantic: {
@@ -21,7 +22,7 @@ export const Noir = definePreset(Aura, {
         },
         accent: {
             50: '#fefce8',
-            100: '#fef9c3', 
+            100: '#fef9c3',
             200: '#fef08a',
             300: '#fde047',
             400: '#facc15',
