@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 import { NotificationService } from './services/notification.service';
 import { UtilsService } from './services/utils.service';
+import { MenuComponent } from './components/menu/menu.component';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ import { UtilsService } from './services/utils.service';
     RouterOutlet,
     ReactiveFormsModule,
     CommonModule,
-    Toast
+    Toast,
+    MenuComponent,
   ],
   providers: [
     MessageService,
