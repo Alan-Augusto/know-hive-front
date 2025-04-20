@@ -9,6 +9,7 @@ import { Component, input } from '@angular/core';
 export class KhButtonComponent {
   type = input<'primary' | 'secondary' | 'tertiary' | 'accent' | 'danger'>('primary');
   size = input<'small' | 'medium' | 'large'>('medium');
+  widthType = input<'full' | 'fit'>('full');
   disabled = input(false);
   loading = input(false);
   label = input<string | null>(null);

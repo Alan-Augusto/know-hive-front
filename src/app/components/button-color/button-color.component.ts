@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { PopoverModule } from 'primeng/popover';
 import { ColorService } from '../../services/style/color.service';
+import { KhButtonComponent } from "../kh-button/kh-button.component";
 
 @Component({
   selector: 'button-color',
-  imports: [PopoverModule],
+  imports: [PopoverModule, KhButtonComponent],
   templateUrl: './button-color.component.html',
   styleUrl: './button-color.component.scss'
 })
