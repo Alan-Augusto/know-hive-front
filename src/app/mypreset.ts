@@ -45,7 +45,7 @@ export const Noir = definePreset(Aura, {
                     base: '{zinc.0}',
                     card: '{zinc.100}',
                     secondary: '{zinc.200}',
-                    inverse: '{zinc.800}'
+                    inverse: '{zinc.950}'
                 },
                 feedback: {
                     error: {
@@ -83,7 +83,7 @@ export const Noir = definePreset(Aura, {
                     base: '{zinc.1000}',
                     card: '{zinc.800}',
                     secondary: '{zinc.700}',
-                    inverse: '{zinc.200}'
+                    inverse: '{zinc.50}'
                 },
                 feedback: {
                     error: {

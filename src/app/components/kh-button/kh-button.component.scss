@@ -1,0 +1,59 @@
+.kh-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+        transform: translateY(-2px);
+    }
+    &:active {
+        transform: translateY(0);
+        opacity: 0.9;
+    }
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    // Types
+    &.primary {
+        background-color: var(--p-surface-inverse);
+        color: var(--p-text-inverse);
+    }
+    &.secondary {
+        border: 1.5px solid var(--p-surface-inverse);
+        color: var(--p-text-base);
+    }
+    &.tertiary {
+        color: var(--p-text-base);
+        &:hover {
+            background-color: var(--p-surface-card);
+        }
+    }
+    &.accent {
+        background-color: var(--p-accent-500);
+        color: var(--p-text-inverse);
+    }
+    &.danger {
+        background-color: var(--p-feedback-error-main);
+        color: var(--p-text-inverse);
+    }
+
+    // Sizes
+    &.small {
+        font-size: 0.875rem;
+        padding: 0.25rem 0.5rem;
+    }
+    &.medium {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+    &.large {
+        font-size: 1.25rem;
+        padding: 0.75rem 1.5rem;
+    }
+}
