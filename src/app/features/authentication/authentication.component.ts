@@ -13,10 +13,11 @@ import { Router } from '@angular/router';
 import { UtilsService } from '../../services/utils.service';
 import { FormService } from '../../services/utils/form.service';
 import { AuthBaseComponent } from "../../components/auth-base/auth-base.component";
+import { KhButtonComponent } from "../../components/kh-button/kh-button.component";
 
 @Component({
   selector: 'app-authentication',
-  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, AuthBaseComponent],
+  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, AuthBaseComponent, KhButtonComponent],
   providers: [UserService],
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.scss'

@@ -14,10 +14,11 @@ import { UtilsService } from '../../services/utils.service';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { FormService } from '../../services/utils/form.service';
 import { AuthBaseComponent } from "../../components/auth-base/auth-base.component";
+import { KhButtonComponent } from "../../components/kh-button/kh-button.component";
 
 @Component({
   selector: 'app-login',
-  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, AuthBaseComponent],
+  imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, AuthBaseComponent, KhButtonComponent],
   providers: [UserService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -33,7 +34,7 @@ export class LoginComponent {
   private router = inject(Router);
 
   loginForm!: FormGroup;
-  isCheckingLogin: Boolean = false;
+  isCheckingLogin: boolean = false;
   emailParam!: string;
   existsEmail!: boolean;
 

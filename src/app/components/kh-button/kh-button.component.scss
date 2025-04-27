@@ -61,7 +61,7 @@
 
     // Width
     &.full {
-        width: 100%;
+        width: 100% !important;
     }
     &.fit {
         width: fit-content;
