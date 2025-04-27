@@ -20,7 +20,6 @@ export class LayoutComponent {
   )
   {
     this.router.events.pipe(
-      // 1) Só NavigationEnd, para ter a rota correta
       filter(evt => evt instanceof RouteConfigLoadEnd)
     )
     .subscribe(data => {
