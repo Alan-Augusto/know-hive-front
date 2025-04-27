@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonColorComponent } from "../button-color/button-color.component";
 import { ButtonTheme } from "../button-theme/button-theme.component";
@@ -11,4 +11,6 @@ import { ButtonTheme } from "../button-theme/button-theme.component";
 })
 export class MenuComponent {
   isExpanded = signal(false);
+  iconMenu = signal('ti ti-menu-2');
+  titlePage = signal('🐝 KnowHive');
 }

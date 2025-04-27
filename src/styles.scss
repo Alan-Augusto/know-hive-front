@@ -1,23 +1,30 @@
+@import 'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css';
 @font-face {
     font-family: 'SF Pro Display';
     src: url('assets/fonts/SFPRODISPLAYREGULAR.OTF') format('opentype');
     font-weight: normal;
     font-style: normal;
-  }
+}
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     font-family: 'SF Pro Display', sans-serif;
 }
 
 body {
     background-color: var(--p-surface-base);
+}
+
+.ti{
+    font-size: 1.2rem;
+    color: var(--p-text-base);
 }
