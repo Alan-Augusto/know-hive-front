@@ -13,23 +13,28 @@ export const routes: Routes = [
     // },
     {
         path: 'not-found',
-        loadComponent: () => import('./features/not-found/not-found.component').then(m => m.NotFoundComponent)
+        loadComponent: () => import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
+        data: {showMenu: false}
     },
     {
         path: 'auth',
-        loadComponent: () => import('./features/authentication/authentication.component').then(m => m.AuthenticationComponent)
+        loadComponent: () => import('./features/authentication/authentication.component').then(m => m.AuthenticationComponent),
+        data: {showMenu: false}
     },
     {
         path: 'login',
-        loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent)
+        loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent),
+        data: {showMenu: false}
     },
     {
         path: 'register',
-        loadComponent: () => import('./features/register/register.component').then(m => m.RegisterComponent)
+        loadComponent: () => import('./features/register/register.component').then(m => m.RegisterComponent),
+        data: {showMenu: false}
     },
     {
         path: 'home',
         loadComponent: () => import('./features/home-page/home-page.component').then(m => m.HomePageComponent)
+        
     },
     {
         path: 'color-preview',

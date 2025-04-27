@@ -7,17 +7,17 @@ import { Toast } from 'primeng/toast';
 import { NotificationService } from './services/notification.service';
 import { UtilsService } from './services/utils.service';
 import { MenuComponent } from './components/menu/menu.component';
+import { LayoutComponent } from "./features/layout/layout.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
     ReactiveFormsModule,
     CommonModule,
     Toast,
-    MenuComponent,
-  ],
+    LayoutComponent
+],
   providers: [
     MessageService,
     NotificationService,
