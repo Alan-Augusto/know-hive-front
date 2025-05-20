@@ -1,3 +1,7 @@
+:host{
+    width: 100%;
+}
+
 .kh-button {
     display: flex;
     align-items: center;
@@ -6,7 +10,6 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    
     white-space: nowrap;
 
     &:hover {
@@ -57,13 +60,5 @@
     &.large {
         font-size: 1.25rem;
         padding: 0.75rem 1.5rem;
-    }
-
-    // Width
-    &.full {
-        width: 100% !important;
-    }
-    &.fit {
-        width: fit-content;
     }
 }

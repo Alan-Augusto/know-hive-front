@@ -84,10 +84,12 @@
     flex: 1;
     overflow-y: auto;
     background-color: var(--p-surface-ground);
+    position: relative;
 
     .content-header{
         display: flex;
         flex-direction: row;
+        position: fixed;
     }
 }
 
@@ -98,6 +100,22 @@
     width: 32px;
     height: 32px;
     cursor: pointer;
+}
+
+.img-profile{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: var(--p-shadow-sm);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        scale: 1.05;
+    }
+}
+
+.center{
+    flex: 1;
 }
 
 .menu-body {

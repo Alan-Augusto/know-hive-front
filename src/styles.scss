@@ -6,8 +6,15 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Apple Color Emoji';
+    src: url('assets/fonts/AppleColorEmoji.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .emoji {
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Apple Color Emoji", "Sf Pro Display", sans-serif;
 }
 
 * {
