@@ -92,6 +92,7 @@
     width: 100%;
     flex-direction: row;
     position: sticky;
+    border-bottom: 1px solid var(--p-surface-secondary);
 
     .space-horizon {
       flex: 1;
