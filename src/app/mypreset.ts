@@ -66,11 +66,11 @@ export const Noir = definePreset(Aura, {
                     }
                 },
                 shadow: {
-                    sm: '0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.05)',
-                    md: '0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1)',
-                    lg: '0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.1)'
+                    sm: '0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.1)',
+                    md: '0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.2)',
+                    lg: '0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.4)'
                 }
-                
+
             },
             dark: {
                 text: {
@@ -91,7 +91,7 @@ export const Noir = definePreset(Aura, {
                         surface: '#450a0a'
                     },
                     warning: {
-                        main: '#f59e0b', 
+                        main: '#f59e0b',
                         surface: '#451a03'
                     },
                     success: {
@@ -105,10 +105,10 @@ export const Noir = definePreset(Aura, {
                 },
                 shadow: {
                     sm: '0 0.0625rem 0.125rem 0 rgba(255, 255, 255, 0.15)',
-                    md: '0 0.25rem 0.375rem -0.0625rem rgba(255, 255, 255, 0.2)', 
+                    md: '0 0.25rem 0.375rem -0.0625rem rgba(255, 255, 255, 0.2)',
                     lg: '0 0.625rem 0.9375rem -0.1875rem rgba(255, 255, 255, 0.2)'
                 }
-                
+
             }
         }
     }
