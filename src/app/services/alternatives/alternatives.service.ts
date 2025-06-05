@@ -22,7 +22,7 @@ export class AlternativesService extends BaseApiService {
   }
 
   update(id: string, data: IAlternative) {
-    return this.put(`/${id}`, data);
+    return this.patch(`/${id}`, data);
   }
 
   remove(id: string) {
