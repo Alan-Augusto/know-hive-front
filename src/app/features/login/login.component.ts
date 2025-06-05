@@ -32,7 +32,6 @@ export class LoginComponent {
   existsEmail!: boolean;
 
   isLogged:boolean = false;
-  timePending:number = 0;
 
   ngOnInit() {
 
@@ -62,52 +61,6 @@ export class LoginComponent {
       return;
     }
 
-    this.isCheckingLogin = true;
-    // this.userService.login(this.loginForm.getRawValue()).subscribe({
-    //   next: (res:any) => {
-    //     console.log(res)
-    //     const apiResponse:IReturn = res as IReturn;
-
-    //     if(this.utils.validateApiResponse(apiResponse)){
-    //       if(apiResponse.data.token){
-    //         this.loggedUser.setUser(apiResponse.data.user);
-    //         this.loggedUser.setToken(apiResponse.data.token);
-    //         this.notificationService.toastSuccess(apiResponse.message);
-    //         this.isCheckingLogin = false;
-    //         this.router.navigate(['/home']);
-    //       }
-    //       else{
-    //         this.notificationService.toastError(apiResponse.message);
-    //         if(apiResponse.data.failed){
-    //           this.timePending = apiResponse.data.time;
-    //           this.startCountdown();
-    //         }
-    //         else{
-    //           this.isCheckingLogin = false;
-    //         }
-    //       }
-    //     }
-    //   },
-    //   error: (err:any) => {
-    //     const apiResponse:IReturn = err.error as IReturn;
-    //     this.notificationService.toastError(apiResponse.message);
-    //     this.isCheckingLogin = false;
-    //   },
-    //   complete: () => {}
-    // });
-  }
-
-  startCountdown() {
-    const interval = setInterval(() => {
-      this.isCheckingLogin = true;
-      this.timePending--;
-
-      if (this.timePending <= 0) {
-        this.isCheckingLogin = false;
-        this.timePending = 0;
-        clearInterval(interval);
-      }
-    }, 60000); // 60000ms = 1 minute
   }
 
 }
