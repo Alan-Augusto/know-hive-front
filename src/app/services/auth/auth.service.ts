@@ -15,11 +15,11 @@ export class AuthService extends BaseApiService {
   }
 
   ExistEmail(email: string) {
-    return this.get(`/exist-email/${encodeURIComponent(email)}`);
+    return this.get(`exist-email/${encodeURIComponent(email)}`);
   }
 
   register(data: IRegisterAuth) {
-    return this.post('/register', data);
+    return this.post('register', data);
   }
 
 }

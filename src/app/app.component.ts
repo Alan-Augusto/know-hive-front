@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
-import { UtilsService } from './services/utils.service';
 import { MenuComponent } from './components/menu/menu.component';
 import { LayoutComponent } from "./features/layout/layout.component";
 import { NotificationService } from './services/notification/notification.service';
@@ -21,7 +20,6 @@ import { NotificationService } from './services/notification/notification.servic
   providers: [
     MessageService,
     NotificationService,
-    UtilsService
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

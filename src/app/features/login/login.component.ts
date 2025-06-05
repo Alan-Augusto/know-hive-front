@@ -8,7 +8,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { NotificationService } from '../../services/notification/notification.service';
 import { PasswordModule } from 'primeng/password';
 import { Router } from '@angular/router';
-import { UtilsService } from '../../services/utils.service';
 import { FormService } from '../../services/utils/form.service';
 import { AuthBaseComponent } from "../../components/auth-base/auth-base.component";
 import { KhButtonComponent } from "../../components/kh-button/kh-button.component";
