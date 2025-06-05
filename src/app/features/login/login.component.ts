@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { FormService } from '../../services/utils/form.service';
 import { AuthBaseComponent } from "../../components/auth-base/auth-base.component";
 import { KhButtonComponent } from "../../components/kh-button/kh-button.component";
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private notificationService = inject(NotificationService);
   private router = inject(Router);
+  private authService = inject(AuthService)
 
   loginForm!: FormGroup;
   isCheckingLogin: boolean = false;
@@ -34,33 +36,37 @@ export class LoginComponent {
   isLogged:boolean = false;
 
   ngOnInit() {
-
-    const queryParams = this.router.parseUrl(this.router.url).queryParams;
-    this.emailParam = queryParams['email'];
-
-    if(this.emailParam) this.existsEmail = true;
-
-    const userAgent = navigator.userAgent;
-
-    this.loginForm = this.fb.group({
-      email: [this.emailParam || null, [this.formService.requiredValidator(), this.formService.emailValidator()]],
-      password: [null, [this.formService.requiredValidator()]],
-    });
-
-    console.log(userAgent);
-
-    this.formService.validateFormErrors(this.loginForm);
-
-    if(this.existsEmail) this.loginForm.controls['email'].disable();
+    this.initializeForm();
+    this.handleQueryParams();
   }
 
+  private initializeForm() {
+    this.loginForm = this.fb.group({
+      email: [null, [this.formService.requiredValidator(), this.formService.emailValidator()]],
+      password: [null, [this.formService.requiredValidator()]],
+    });
+  }
+
+  private handleQueryParams() {
+    const queryParams = this.router.parseUrl(this.router.url).queryParams;
+    this.emailParam = queryParams['email'];
+    this.existsEmail = !!this.emailParam;
+
+    if (this.existsEmail) {
+      this.loginForm.controls['email'].setValue(this.emailParam);
+      this.loginForm.controls['email'].disable();
+    }
+    else{
+      this.router.navigate(['/auth']);
+    }
+  }
 
   handleLogin() {
-    if(!this.formService.validateForm(this.loginForm)) {
+    if (!this.formService.validateForm(this.loginForm)) {
       this.notificationService.toastError('Email ou senha inválidos');
       return;
     }
-
+    // Adicione a lógica de login aqui
   }
 
 }

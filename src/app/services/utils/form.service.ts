@@ -39,7 +39,7 @@ export class FormService {
     });
   }
 
-  private inserirMensagemErro(key: string, control:AbstractControl, field:Element): void {
+  private inserirMensagemErro(key: string, control: AbstractControl, field: Element): void {
     if (!document.querySelector(`.error-message[data-for="${key}"]`)) {
       const errorMessage = document.createElement('div');
       errorMessage.className = 'error-message';
@@ -56,19 +56,24 @@ export class FormService {
   }
 
   public validateForm(form: FormGroup): boolean {
-    
-
     Object.keys(form.controls).forEach((key) => {
       const control = form.get(key);
       if (!control) return;
       const field = document.querySelector(`[formControlName="${key}"]`);
-        if (!field) return;
-      this.inserirMensagemErro(key, control, field);
-      control.markAsDirty();
-      control.updateValueAndValidity();
+      if (!field) return;
+      if(control.errors){
+        this.inserirMensagemErro(key, control, field);
+        control.markAsDirty();
+        control.updateValueAndValidity();
+      }
+      else{
+        const existingErrorMessage = document.querySelector(`.error-message[data-for="${key}"]`);
+        if (existingErrorMessage) {
+          existingErrorMessage.remove();
+        }
+      }
 
     });
-
     return form.valid;
   }
 
@@ -97,7 +102,7 @@ export class FormService {
 
   public requiredValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      
+
       const isValid = control.value && control.value.trim() !== '';
       return isValid ? null : { message: 'Campo obrigatório.' };
     };
@@ -105,7 +110,7 @@ export class FormService {
 
   public emailValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      
+
       const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(control.value);
       return isValid ? null : { message: 'Email inválido.' };
     };
