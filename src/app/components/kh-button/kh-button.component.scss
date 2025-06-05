@@ -12,6 +12,13 @@
     transition: all 0.2s ease-in-out;
     white-space: nowrap;
 
+    .content{
+      flex: 1;
+      display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
     &:hover {
         transform: translateY(-2px);
     }
@@ -61,4 +68,19 @@
         font-size: 1.25rem;
         padding: 0.75rem 1.5rem;
     }
+
+    .spinner{
+        font-size: 1.2rem;
+        animation: spin 1s linear infinite;
+    }
+
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

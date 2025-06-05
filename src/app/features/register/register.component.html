@@ -23,7 +23,7 @@
                 <input pInputText id="over_label" pPassword formControlName="confirmpassword" type="password" class="w-full" [feedback]="false" autocomplete="new-password" />
                 <label for="over_label">Confirme a senha</label>
             </p-floatlabel>
-            <kh-button [loading]="isCheckingLogin" (click)="handleRegister()" widthType="full">Entrar</kh-button>
+            <kh-button [loading]="isCheckingRegister()" (click)="handleRegister()" widthType="full">Entrar</kh-button>
 
         </div>
 

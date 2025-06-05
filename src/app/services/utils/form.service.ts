@@ -119,7 +119,7 @@ export class FormService {
   public passwordValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
 
-      const isValid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(control.value);
+      const isValid = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(control.value);
       return isValid ? null : { message: 'Mínimo 8 caracteres, 1 letra e 1 número.' };
     };
   }

@@ -35,7 +35,6 @@ export class LoginComponent {
   isCheckingLogin = signal<boolean>(false);
   emailParam = signal<string | null>(null);
   existsEmail = signal<boolean>(false);
-  isLogged = signal<boolean>(false);
   ngOnInit() {
     this.initializeForm();
     this.handleQueryParams();
@@ -74,7 +73,6 @@ export class LoginComponent {
           this.loggedUserService.setUser(res.user);
           this.loggedUserService.setToken(res.token);
 
-          this.isLogged.set(true);
           this.notificationService.toastSuccess('Login realizado com sucesso!');
           this.router.navigate(['/home']);
 
