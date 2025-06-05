@@ -18,7 +18,7 @@
   .menu-header {
     display: flex;
     align-items: center;
-    padding-bottom: .5rem;
+    padding-bottom: .8rem;
     border-bottom: 1px solid var(--p-surface-secondary);
     width: 100%;
     transition: width 0.5s ease;
@@ -92,6 +92,7 @@
     width: 100%;
     flex-direction: row;
     position: sticky;
+    padding-bottom: .5rem;
     border-bottom: 1px solid var(--p-surface-secondary);
 
     .space-horizon {
@@ -107,19 +108,6 @@
   width: 32px;
   height: 32px;
   cursor: pointer;
-}
-
-.img-profile {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  box-shadow: var(--p-shadow-sm);
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-
-  &:hover {
-    scale: 1.05;
-  }
 }
 
 .center {

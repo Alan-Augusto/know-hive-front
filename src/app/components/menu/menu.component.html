@@ -15,12 +15,10 @@
     <div class="content">
         <div class="content-header">
             <div class="toggle-button" (click)="isExpanded.set(!isExpanded())">
-                <i [class]="isExpanded() ? 'ti ti-layout-sidebar-left-collapse' : 'ti ti-layout-sidebar-right-collapse'" [@iconChangeAnimation]></i>
+                <i [class]="isExpanded() ? 'ti ti-layout-sidebar-left-collapse' : 'ti ti-layout-sidebar-right-collapse'"></i>
             </div>
             <div class="space-horizon"></div>
-            <div class="img-profile">
-                <img src="https://notion-avatar.app/api/svg/eyJmYWNlIjoxMCwibm9zZSI6NCwibW91dGgiOjAsImV5ZXMiOjQsImV5ZWJyb3dzIjowLCJnbGFzc2VzIjowLCJoYWlyIjozLCJhY2Nlc3NvcmllcyI6NywiZGV0YWlscyI6MCwiYmVhcmQiOjcsImZsaXAiOjAsImNvbG9yIjoidHJhbnNwYXJlbnQiLCJzaGFwZSI6ImNpcmNsZSJ9" alt="notion avatar">
-            </div>
+            <user-icon/>
         </div>
         <ng-content></ng-content>
     </div>
