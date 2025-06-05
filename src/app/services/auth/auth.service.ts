@@ -11,7 +11,7 @@ export class AuthService extends BaseApiService {
   override entityUrl = '/auth';
 
   login(data: ILoginAuth) {
-    return this.post('/login', data);
+    return this.post('login', data);
   }
 
   ExistEmail(email: string) {

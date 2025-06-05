@@ -1,6 +1,6 @@
 <auth-base>
     <div class="w-10 sm:w-6 md:w-4">
-        @if(existsEmail){
+        @if(existsEmail()){
             <h2 class="text-2xl font-bold text-center mb-3">Bem vindo de volta!</h2>
             <p class="text-center mb-5">Insira sua senha para prosseguir</p>
         }
@@ -15,12 +15,11 @@
                 <label for="over_label">Email</label>
             </p-floatlabel>
             <p-floatlabel variant="on" class="w-full">
-                <input pInputText id="over_label" pPassword formControlName="password" type="password" class="w-full" [feedback]="false" />
-                <!-- <p-password id="over_label" formControlName="password" class="w-full"/> -->
+                <p-password [toggleMask]="true" formControlName="password" [feedback]="false" ></p-password>
                 <label for="over_label">Password</label>
             </p-floatlabel>
 
-            <kh-button [loading]="isCheckingLogin" (click)="handleLogin()" widthType="full">Entrar</kh-button>
+            <kh-button [loading]="isCheckingLogin()" (click)="handleLogin()" widthType="full">Entrar</kh-button>
 
         </div>
 

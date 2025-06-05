@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -12,6 +12,7 @@ import { FormService } from '../../services/utils/form.service';
 import { AuthBaseComponent } from "../../components/auth-base/auth-base.component";
 import { KhButtonComponent } from "../../components/kh-button/kh-button.component";
 import { AuthService } from '../../services/auth/auth.service';
+import { LoggedUserService } from '../../services/logged-user/logged-user.service';
 
 @Component({
   selector: 'app-login',
@@ -27,14 +28,14 @@ export class LoginComponent {
   private notificationService = inject(NotificationService);
   private router = inject(Router);
   private authService = inject(AuthService)
+  private loggedUserService = inject(LoggedUserService)
 
   loginForm!: FormGroup;
-  isCheckingLogin: boolean = false;
-  emailParam!: string;
-  existsEmail!: boolean;
 
-  isLogged:boolean = false;
-
+  isCheckingLogin = signal<boolean>(false);
+  emailParam = signal<string | null>(null);
+  existsEmail = signal<boolean>(false);
+  isLogged = signal<boolean>(false);
   ngOnInit() {
     this.initializeForm();
     this.handleQueryParams();
@@ -49,16 +50,16 @@ export class LoginComponent {
 
   private handleQueryParams() {
     const queryParams = this.router.parseUrl(this.router.url).queryParams;
-    this.emailParam = queryParams['email'];
-    this.existsEmail = !!this.emailParam;
+    this.emailParam.set(queryParams['email']);
+    this.existsEmail.set(!!this.emailParam());
 
-    if (this.existsEmail) {
-      this.loginForm.controls['email'].setValue(this.emailParam);
+    if (this.existsEmail()) {
+      this.loginForm.controls['email'].setValue(this.emailParam());
       this.loginForm.controls['email'].disable();
     }
-    else{
-      this.router.navigate(['/auth']);
-    }
+    // else{
+    //   this.router.navigate(['/auth']);
+    // }
   }
 
   handleLogin() {
@@ -66,7 +67,30 @@ export class LoginComponent {
       this.notificationService.toastError('Email ou senha inválidos');
       return;
     }
-    // Adicione a lógica de login aqui
+
+    this.authService.login(this.loginForm.getRawValue()).subscribe({
+      next: (res: any) => {
+        if(res?.token && res?.user) {
+          this.loggedUserService.setUser(res.user);
+          this.loggedUserService.setToken(res.token);
+
+          this.isLogged.set(true);
+          this.notificationService.toastSuccess('Login realizado com sucesso!');
+          this.router.navigate(['/home']);
+
+        }
+        else {
+          this.notificationService.toastError('Erro ao realizar login. Verifique suas credenciais.');
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        this.notificationService.toastError('Erro ao realizar login. Verifique suas credenciais.');
+      },
+      complete: () => {
+        // this.isCheckingLogin.set(false);
+      }
+    })
   }
 
 }
