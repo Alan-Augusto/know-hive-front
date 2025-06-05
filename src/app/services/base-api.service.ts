@@ -27,4 +27,8 @@ export abstract class BaseApiService {
   protected delete<T>(endpoint: string, params?: HttpParams, headers?: HttpHeaders): Observable<T> {
     return this.http.delete<T>(`${this.apiUrl+this.entityUrl}/${endpoint}`, { params, headers });
   }
+
+  protected patch<T>(endpoint: string, body: any, headers?: HttpHeaders): Observable<T> {
+    return this.http.patch<T>(`${this.apiUrl+this.entityUrl}/${endpoint}`, body, { headers });
+  }
 }
