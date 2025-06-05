@@ -5,10 +5,10 @@
 
         <div class="flex flex-column gap-3 align-items-center" [formGroup]="authForm">
             <p-floatlabel class="w-full">
-                <input pInputText id="over_label" formControlName="email"  class="w-full" />
+                <input pInputText id="input_email" formControlName="email"  class="w-full" />
                 <label for="over_label">Email</label>
             </p-floatlabel>
-            <kh-button [loading]="isCheckingEmail" (click)="onVerifyEmail()">Entrar com e-mail</kh-button>
+            <kh-button id="btn_sigin_email" [loading]="isCheckingEmail()" (click)="onVerifyEmail()">Entrar com e-mail</kh-button>
             <!-- <p-button [loading]="isCheckingEmail" (onClick)="onVerifyEmail()" >Entrar com e-mail</p-button> -->
         </div>
 

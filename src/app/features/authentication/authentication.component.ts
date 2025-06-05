@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -30,9 +30,9 @@ export class AuthenticationComponent {
   private authService = inject(AuthService);
 
   authForm!: FormGroup;
-  showRegistration = false;
-  userExists = false;
-  isCheckingEmail = false;
+  showRegistration = signal<boolean>(false);
+  userExists = signal<boolean>(false);
+  isCheckingEmail = signal<boolean>(false);
 
   ngOnInit() {
     this.authForm = this.fb.group({
@@ -54,17 +54,17 @@ export class AuthenticationComponent {
         const exists:boolean = res as boolean;
 
         if(exists){
-          this.userExists = true;
-          this.isCheckingEmail = false;
+          this.userExists.set(true);
+          this.isCheckingEmail.set(false);
         }
       },
       error: (error) => {
         console.error(error);
         this.notificationService.toastError('Erro ao verificar email');
-        this.isCheckingEmail = false
+        this.isCheckingEmail.set(false);
       },
       complete: () => {
-        if(this.userExists){
+        if(this.userExists()){
             this.router.navigate(['/login'], { queryParams: { email: this.authForm.controls['email'].value } });
         }
         else{
@@ -73,7 +73,7 @@ export class AuthenticationComponent {
       }
     });
 
-    this.isCheckingEmail = true;
+    this.isCheckingEmail.set(true);
 
   }
 
