@@ -1,9 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoggedUserService } from '../../services/logged-user.service';
-import { NotificationService } from '../../services/notification.service';
-import { UserService } from '../../services/user.service';
+import { NotificationService } from '../../services/notification/notification.service';
 import { UtilsService } from '../../services/utils.service';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -18,7 +16,7 @@ import { KhButtonComponent } from "../../components/kh-button/kh-button.componen
 @Component({
   selector: 'app-register',
   imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, AuthBaseComponent, KhButtonComponent],
-  providers: [UserService],
+  providers: [],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -26,11 +24,8 @@ export class RegisterComponent implements OnInit {
   private fb = inject(FormBuilder);
   private formService = inject(FormService);
   private notificationService = inject(NotificationService);
-  private userService = inject(UserService);
   private router = inject(Router);
-  private utils = inject(UtilsService);
-  private loggedUser = inject(LoggedUserService);
-  
+
   registerForm!:FormGroup;
   isCheckingLogin: boolean = false;
   emailParam!: string;
@@ -46,12 +41,12 @@ export class RegisterComponent implements OnInit {
     });
 
     this.formService.validateFormErrors(this.registerForm);
-    
-    
+
+
     const queryParams = this.router.parseUrl(this.router.url).queryParams;
     this.emailParam = queryParams['email'];
     console.log(this.emailParam);
-    
+
     if(this.emailParam){
       this.existsEmail = true;
       this.registerForm.controls['email'].setValue(this.emailParam);
@@ -71,23 +66,23 @@ export class RegisterComponent implements OnInit {
 
       console.log(formRegister);
 
-      this.userService.register(formRegister).subscribe({
-        next: (response:any) => {
-          if(response.status == 'success') {
-            this.loggedUser.setUser(response.data);
-            this.loggedUser.setToken(response.data.token);
-            // this.loggedUser.setLogged(true);
-          }
-        },
-        error: (error:any) => {
-          console.log(error);
-          this.notificationService.toastError(error.error.message);
-        },
-        complete: () => {
-          this.notificationService.toastSuccess('Usuário cadastrado com sucesso.');
-          this.router.navigate(['/login']);
-        }
-    });
+    //   this.userService.register(formRegister).subscribe({
+    //     next: (response:any) => {
+    //       if(response.status == 'success') {
+    //         this.loggedUser.setUser(response.data);
+    //         this.loggedUser.setToken(response.data.token);
+    //         // this.loggedUser.setLogged(true);
+    //       }
+    //     },
+    //     error: (error:any) => {
+    //       console.log(error);
+    //       this.notificationService.toastError(error.error.message);
+    //     },
+    //     complete: () => {
+    //       this.notificationService.toastSuccess('Usuário cadastrado com sucesso.');
+    //       this.router.navigate(['/login']);
+    //     }
+    // });
     }
     else {
       console.log(this.registerForm);

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { NotificationService } from './notification.service';
+import { NotificationService } from './notification/notification.service';
 import { IReturn } from '../entity/return.interface';
 
 @Injectable({

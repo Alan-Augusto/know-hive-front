@@ -5,13 +5,10 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { NotificationService } from '../../services/notification.service';
-import { UserService } from '../../services/user.service';
-import { IReturn } from '../../entity/return.interface';
+import { NotificationService } from '../../services/notification/notification.service';
 import { PasswordModule } from 'primeng/password';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../services/utils.service';
-import { LoggedUserService } from '../../services/logged-user.service';
 import { FormService } from '../../services/utils/form.service';
 import { AuthBaseComponent } from "../../components/auth-base/auth-base.component";
 import { KhButtonComponent } from "../../components/kh-button/kh-button.component";
@@ -19,18 +16,15 @@ import { KhButtonComponent } from "../../components/kh-button/kh-button.componen
 @Component({
   selector: 'app-login',
   imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, AuthBaseComponent, KhButtonComponent],
-  providers: [UserService],
+  providers: [],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
-  private utils = inject(UtilsService);
-  private loggedUser = inject(LoggedUserService);
   private formService = inject(FormService);
   private fb = inject(FormBuilder);
   private notificationService = inject(NotificationService);
-  private userService = inject(UserService);
   private router = inject(Router);
 
   loginForm!: FormGroup;
@@ -68,40 +62,40 @@ export class LoginComponent {
       this.notificationService.toastError('Email ou senha inválidos');
       return;
     }
-    
-    this.isCheckingLogin = true;
-    this.userService.login(this.loginForm.getRawValue()).subscribe({
-      next: (res:any) => {
-        console.log(res)
-        const apiResponse:IReturn = res as IReturn;
 
-        if(this.utils.validateApiResponse(apiResponse)){
-          if(apiResponse.data.token){
-            this.loggedUser.setUser(apiResponse.data.user);
-            this.loggedUser.setToken(apiResponse.data.token);
-            this.notificationService.toastSuccess(apiResponse.message);
-            this.isCheckingLogin = false;
-            this.router.navigate(['/home']);
-          }
-          else{
-            this.notificationService.toastError(apiResponse.message);
-            if(apiResponse.data.failed){
-              this.timePending = apiResponse.data.time;
-              this.startCountdown();
-            }
-            else{
-              this.isCheckingLogin = false;
-            }
-          }
-        }
-      },
-      error: (err:any) => {
-        const apiResponse:IReturn = err.error as IReturn;
-        this.notificationService.toastError(apiResponse.message);
-        this.isCheckingLogin = false;
-      },
-      complete: () => {}
-    });
+    this.isCheckingLogin = true;
+    // this.userService.login(this.loginForm.getRawValue()).subscribe({
+    //   next: (res:any) => {
+    //     console.log(res)
+    //     const apiResponse:IReturn = res as IReturn;
+
+    //     if(this.utils.validateApiResponse(apiResponse)){
+    //       if(apiResponse.data.token){
+    //         this.loggedUser.setUser(apiResponse.data.user);
+    //         this.loggedUser.setToken(apiResponse.data.token);
+    //         this.notificationService.toastSuccess(apiResponse.message);
+    //         this.isCheckingLogin = false;
+    //         this.router.navigate(['/home']);
+    //       }
+    //       else{
+    //         this.notificationService.toastError(apiResponse.message);
+    //         if(apiResponse.data.failed){
+    //           this.timePending = apiResponse.data.time;
+    //           this.startCountdown();
+    //         }
+    //         else{
+    //           this.isCheckingLogin = false;
+    //         }
+    //       }
+    //     }
+    //   },
+    //   error: (err:any) => {
+    //     const apiResponse:IReturn = err.error as IReturn;
+    //     this.notificationService.toastError(apiResponse.message);
+    //     this.isCheckingLogin = false;
+    //   },
+    //   complete: () => {}
+    // });
   }
 
   startCountdown() {

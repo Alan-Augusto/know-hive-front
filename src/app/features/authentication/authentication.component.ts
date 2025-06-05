@@ -6,8 +6,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { MessageService } from 'primeng/api';
-import { NotificationService } from '../../services/notification.service';
-import { UserService } from '../../services/user.service';
+import { NotificationService } from '../../services/notification/notification.service';
 import { IReturn } from '../../entity/return.interface';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../services/utils.service';
@@ -18,7 +17,7 @@ import { KhButtonComponent } from "../../components/kh-button/kh-button.componen
 @Component({
   selector: 'app-authentication',
   imports: [InputTextModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, AuthBaseComponent, KhButtonComponent],
-  providers: [UserService],
+  providers: [],
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.scss'
 })
@@ -28,7 +27,6 @@ export class AuthenticationComponent {
   private fb = inject(FormBuilder);
   private formService = inject(FormService);
   private notificationService = inject(NotificationService);
-  private userService = inject(UserService);
   private router = inject(Router);
 
   authForm!: FormGroup;
@@ -50,29 +48,29 @@ export class AuthenticationComponent {
       this.notificationService.toastError('Email inválido');
       return;
     }
-    
-    this.userService.existsByEmail(this.authForm.controls['email'].value).subscribe({
-      next: (res:any) => {
-        const apiResponse:IReturn = res as IReturn;
 
-        if(this.utils.validateApiResponse(apiResponse)){
-          this.userExists = apiResponse.data;
-          this.isCheckingEmail = false;
-        }
-      },
-      error: (error) => {
-        this.notificationService.toastError('Erro ao verificar email');
-        this.isCheckingEmail = false
-      },
-      complete: () => {
-        if(this.userExists){
-            this.router.navigate(['/login'], { queryParams: { email: this.authForm.controls['email'].value } });
-        }
-        else{
-            this.router.navigate(['/register'], { queryParams: { email: this.authForm.controls['email'].value } });
-        }
-      }
-    });
+    // this.userService.existsByEmail(this.authForm.controls['email'].value).subscribe({
+    //   next: (res:any) => {
+    //     const apiResponse:IReturn = res as IReturn;
+
+    //     if(this.utils.validateApiResponse(apiResponse)){
+    //       this.userExists = apiResponse.data;
+    //       this.isCheckingEmail = false;
+    //     }
+    //   },
+    //   error: (error) => {
+    //     this.notificationService.toastError('Erro ao verificar email');
+    //     this.isCheckingEmail = false
+    //   },
+    //   complete: () => {
+    //     if(this.userExists){
+    //         this.router.navigate(['/login'], { queryParams: { email: this.authForm.controls['email'].value } });
+    //     }
+    //     else{
+    //         this.router.navigate(['/register'], { queryParams: { email: this.authForm.controls['email'].value } });
+    //     }
+    //   }
+    // });
 
     this.isCheckingEmail = true;
 
