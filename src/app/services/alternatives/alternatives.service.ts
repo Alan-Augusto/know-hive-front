@@ -9,8 +9,8 @@ export class AlternativesService extends BaseApiService {
 
   override entityUrl = '/alternatives';
 
-  create(createAlternativeDto: IAlternative) {
-    return this.post('', createAlternativeDto);
+  create(alternative: IAlternative) {
+    return this.post('', alternative);
   }
 
   findAll() {
@@ -21,8 +21,8 @@ export class AlternativesService extends BaseApiService {
     return this.get(`/${id}`);
   }
 
-  update(id: string, updateAlternativeDto: IAlternative) {
-    return this.put(`/${id}`, updateAlternativeDto);
+  update(id: string, alternative: IAlternative) {
+    return this.put(`/${id}`, alternative);
   }
 
   remove(id: string) {
