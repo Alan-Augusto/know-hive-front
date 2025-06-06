@@ -1,6 +1,11 @@
-<div class="img-profile">
-  <img
-    [src]="profile_picture()"
-    alt="notion avatar"
-  >
+<div class="img-profile" (click)="menu_user.toggle($event)">
+  <img [src]="profile_picture()" alt="user_img">
 </div>
+<p-menu [model]="menuOptions()" [popup]="true" #menu_user appendTo="body">
+  <ng-template pTemplate="menu-item" let-item>
+    <div class="menu-item flex flex-row gap-2 p-1 cursor-pointer" (click)="item.command ? item.command() : null">
+      <i class="{{item.icon}}"></i>
+      <span>{{ item.label }}</span>
+    </div>
+  </ng-template>
+</p-menu>

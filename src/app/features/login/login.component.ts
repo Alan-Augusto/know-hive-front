@@ -70,8 +70,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.getRawValue()).subscribe({
       next: (res: any) => {
         if(res?.token && res?.user) {
-          this.loggedUserService.setUser(res.user);
-          this.loggedUserService.setToken(res.token);
+          this.loggedUserService.login(res.user, res.token);
 
           this.notificationService.toastSuccess('Login realizado com sucesso!');
           this.router.navigate(['/home']);

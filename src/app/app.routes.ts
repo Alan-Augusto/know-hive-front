@@ -6,11 +6,6 @@ export const routes: Routes = [
         redirectTo: 'auth',
         pathMatch: 'full'
     },
-    // {
-    //     path: '**',
-    //     redirectTo: 'not-found',
-    //     pathMatch: 'full'
-    // },
     {
         path: 'not-found',
         loadComponent: () => import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
@@ -33,8 +28,9 @@ export const routes: Routes = [
     },
     {
         path: 'home',
-        loadComponent: () => import('./features/home-page/home-page.component').then(m => m.HomePageComponent)
-        
+        loadComponent: () => import('./features/home-page/home-page.component').then(m => m.HomePageComponent),
+        data: {showMenu: true}
+
     },
     {
         path: 'color-preview',

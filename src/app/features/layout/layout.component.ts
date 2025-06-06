@@ -20,12 +20,21 @@ export class LayoutComponent {
   )
   {
     this.router.events.pipe(
-      filter(evt => evt instanceof RouteConfigLoadEnd)
+      filter(evt => evt instanceof RouteConfigLoadEnd || evt instanceof NavigationEnd)
     )
     .subscribe(data => {
-      this.showMenu.set(data.route.data?.['showMenu'] != false);
+      if (data instanceof RouteConfigLoadEnd) {
+        this.showMenu.set(data.route.data?.['showMenu'] != false);
+      } else if (data instanceof NavigationEnd) {
+        // Get the activated route data for NavigationEnd events
+        const route = this.getActivatedRoute();
+        this.showMenu.set(route?.snapshot.data?.['showMenu'] != false);
+      }
       console.log('showMenu', this.showMenu());
     });
+  }
+  getActivatedRoute() {
+    return this.router.routerState.root.firstChild;
   }
 
 }
