@@ -16,9 +16,13 @@ export class LoggedUserService {
     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
   }
 
-  getUser(): IUser | null {
+  getUser(): IUser {
     const user = localStorage.getItem(this.USER_KEY);
-    return user ? JSON.parse(user) as IUser : null;
+    if (!user) {
+      this.logout()
+      throw new Error('No user found');
+    }
+    return JSON.parse(user) as IUser
   }
 
   setToken(token: string): void {

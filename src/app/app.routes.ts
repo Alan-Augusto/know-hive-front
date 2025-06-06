@@ -33,6 +33,10 @@ export const routes: Routes = [
 
     },
     {
+      path: 'profile',
+      loadComponent: () => import('./features/user-edit/user-edit.component').then(m => m.UserEditComponent),
+    },
+    {
         path: 'color-preview',
         loadComponent: () => import('./features/color-preview/color-preview.component').then(m => m.ColorPreviewComponent)
     }

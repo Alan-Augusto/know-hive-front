@@ -1,0 +1,52 @@
+.user-edit-container{
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  .img-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+
+
+    img {
+      width: 10rem;
+      height: 10rem;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .cam-icon{
+      position: absolute;
+      bottom: 2rem;
+      right: .5rem;
+      background-color: var(--p-surface-card);
+      color: var(--p-surface-inverse);
+      box-shadow: var(--p-shadow-lg);
+      cursor: pointer;
+      padding: .25rem;
+      border-radius: 50%;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        transform: translateY(-2px);
+      }
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .user-edit-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 20rem;
+    gap: 1rem;
+
+  }
+
+}

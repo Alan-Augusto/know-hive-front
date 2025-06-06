@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user/logged-user.service';
 import { MenuModule } from 'primeng/menu';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { Router } from '@angular/router';
 
 interface MenuOption {
   label: string;
@@ -16,6 +17,7 @@ interface MenuOption {
 })
 export class UserIconComponent {
   private loggedUser = inject(LoggedUserService)
+  private router = inject(Router);
 
   profile_picture = signal<string>(
     this.loggedUser.getUser()?.profile_picture ??
@@ -26,7 +28,9 @@ export class UserIconComponent {
     {
       label: 'Editar usuário',
       icon: 'ti ti-user-edit',
-      command: () => {}
+      command: () => {
+        this.router.navigate(['/profile']);
+      }
     },
     {
       label: 'Sair',
