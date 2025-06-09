@@ -5,6 +5,12 @@
         </div>
 
         <div class="menu-body">
+          @for (item of menuItems(); track $index) {
+            <div class="menu-item" [class.active]="item.active" (click)="redirectTo(item.url)">
+              <i [class]="item.icon"></i>
+              <span class="menu-item-text">{{item.label}}</span>
+            </div>
+          }
         </div>
 
         <div class="menu-footer">

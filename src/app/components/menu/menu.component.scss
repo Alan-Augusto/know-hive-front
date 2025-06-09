@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1rem;
+  padding: .5rem;
   transition: cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
 
   .menu-header {
@@ -22,10 +22,11 @@
     border-bottom: 1px solid var(--p-surface-secondary);
     width: 100%;
     transition: width 0.5s ease;
-    ;
+    padding: .5rem;
 
     h3 {
       margin: 0;
+      padding: 0;
       font-size: 1.25rem;
       font-weight: 600;
       color: var(--text-color);
@@ -58,6 +59,10 @@
     .menu-footer {
       width: 100%;
     }
+
+    .menu-item .menu-item-text {
+      width: 100%;
+    }
   }
 
   &.collapse {
@@ -65,11 +70,15 @@
     min-width: 3.75rem;
 
     .menu-header {
-      width: 1.5rem;
+      width: 2.5rem;
     }
 
     .menu-footer {
       width: 2rem;
+    }
+
+    .menu-item .menu-item-text {
+      width: 2.5rem;
     }
   }
 
@@ -110,13 +119,47 @@
   cursor: pointer;
 }
 
-.center {
-  flex: 1;
-}
-
 .menu-body {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: .5rem;
   flex: 1;
+  padding-top: .5rem;
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    padding: .5rem .7rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+
+    &:hover {
+      background-color: var(--p-surface-card);
+    }
+
+    &.active {
+      background-color: var(--p-surface-card);
+      opacity: 0.8;
+      color: var(--p-primary-color-text);
+    }
+
+    i {
+      font-size: 1.25rem;
+      min-width: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-item-text {
+      transition: opacity 0.3s ease, width 0.3s ease;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }

@@ -17,11 +17,25 @@ export class MenuComponent {
   private router = inject(Router);
 
   isExpanded = signal(false);
-  iconMenu = signal('ti ti-menu-2');
   titlePage = signal('🐝 KnowHive');
+
+  menuItems = signal([
+    // { label: 'Home', icon: 'ti ti-home', command: () => this.goHome() },
+    { id: 2, label: 'Início', url:'home', icon: 'ti ti-home', active:true},
+    { id: 2, label: 'Questões', url:'questions', icon: 'ti ti-help', active:false},
+    { id: 3, label: 'Coleções', url:'collections', icon: 'ti ti-folder', active:false},
+    { id: 4, label: 'Compartilhados Comigo', url:'shared-with-me', icon: 'ti ti-users', active:false},
+    { id: 5, label: 'Estatísticas', url:'statistics', icon: 'ti ti-chart-bar', active:false}
+  ]);
 
   goHome(){
     this.router.navigate(['/home']);
   }
+
+  redirectTo(url: string) {
+    this.router.navigate([`/${url}`]);
+    this.isExpanded.set(false);
+  }
+
 
 }
