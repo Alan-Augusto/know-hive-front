@@ -37,6 +37,26 @@ export const routes: Routes = [
       loadComponent: () => import('./features/user-edit/user-edit.component').then(m => m.UserEditComponent),
     },
     {
+      path: 'questions',
+      loadComponent: () => import('./features/questions/questions.component').then(m => m.QuestionsComponent),
+      data: {showMenu: true}
+    },
+    {
+      path: 'collections',
+      loadComponent: () => import('./features/collections/collections.component').then(m => m.CollectionsComponent),
+      data: {showMenu: true}
+    },
+    {
+      path: 'shared-with-me',
+      loadComponent: () => import('./features/shared-with-me/shared-with-me.component').then(m => m.SharedWithMeComponent),
+      data: {showMenu: true}
+    },
+    {
+      path: 'statistics',
+      loadComponent: () => import('./features/statistics/statistics.component').then(m => m.StatisticsComponent),
+      data: {showMenu: true}
+    },
+    {
         path: 'color-preview',
         loadComponent: () => import('./features/color-preview/color-preview.component').then(m => m.ColorPreviewComponent)
     }
