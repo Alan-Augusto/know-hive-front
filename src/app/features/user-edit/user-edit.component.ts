@@ -10,6 +10,7 @@ import { KhButtonComponent } from "../../components/kh-button/kh-button.componen
 import { FormService } from '../../services/utils/form.service';
 import { UsersService } from '../../services/users/users.service';
 import { NotificationService } from '../../services/notification/notification.service';
+import { MediaService } from '../../services/media/media.service';
 
 @Component({
   selector: 'user-edit',
@@ -23,6 +24,7 @@ export class UserEditComponent {
   private formService = inject(FormService);
   private userService = inject(UsersService);
   private notificationService = inject(NotificationService);
+  private mediaService = inject(MediaService);
 
   user = signal<IUser>(this.loggedUserService.getUser());
   img_upload = signal<File | null>(null);
@@ -45,17 +47,40 @@ export class UserEditComponent {
     console.log(typeof file, file);
     if (file) {
       this.img_upload.set(file);
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.user.update((u) => {
-          if (u) {
-            u.profile_picture = e.target.result;
-          }
-          return u;
-        });
-      };
-      reader.readAsDataURL(file);
+      this.uploadImageToImgur();
     }
+  }
+
+  uploadImageToImgur(){
+    if (!this.img_upload() || !(this.img_upload() instanceof File)) {
+      this.notificationService.toastError('No image selected');
+      return;
+    }
+    else{
+      this.mediaService.uploadImage(this.img_upload() as File).subscribe({
+        next: (res:any) => {
+          if (!res || !res.url ) {
+            this.notificationService.toastError('Image upload failed');
+            return;
+          }
+          console.log('Image uploaded successfully:', res);
+          const imageUrl = res.url;
+          this.user.update(user => ({
+            ...user,
+            profile_picture: imageUrl
+          }));
+          this.loggedUserService.setUser(this.user());
+          this.userForm.patchValue({ profile_picture: imageUrl });
+          this.notificationService.toastSuccess('Image uploaded successfully');
+        },
+        error: (err:any) => {
+          console.error('Error uploading image:', err);
+          this.notificationService.toastError('Error uploading image');
+        }
+      });
+    }
+
+
   }
 
   handleSave() {

@@ -1,7 +1,7 @@
 <div class="user-edit-container">
   <h3 class="user-edit-title">Editar usuário</h3>
   <div class="img-container">
-    <img class="user-edit-image" [src]="user()?.profile_picture || undefined" alt="User Image" />
+    <img class="user-edit-image" [src]="user().profile_picture" alt="User Image" />
     <i class="cam-icon ti ti-camera-up btn" (click)="fileInput.click()"></i>
     <label>Escolha sua foto!</label>
   </div>
