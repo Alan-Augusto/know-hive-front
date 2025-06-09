@@ -3,42 +3,65 @@
 @import"https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded";
 
 @font-face {
-    font-family: 'SF Pro Display';
-    src: url('assets/fonts/SFPRODISPLAYREGULAR.OTF') format('opentype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFPRODISPLAYREGULAR.OTF') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Apple Color Emoji';
-    src: url('assets/fonts/AppleColorEmoji.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Apple Color Emoji';
+  src: url('assets/fonts/AppleColorEmoji.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 .emoji {
-    font-family: "Apple Color Emoji", "Sf Pro Display", sans-serif;
+  font-family: "Apple Color Emoji", "Sf Pro Display", sans-serif;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+  }
 }
 
 html,
 body {
-    height: 100%;
-    width: 100%;
-    font-size: 16px;
-    font-family: 'SF Pro Display', sans-serif;
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  font-family: 'SF Pro Display', sans-serif;
 }
 
 body {
-    background-color: var(--p-surface-base);
+  background-color: var(--p-surface-base);
 }
 
-.ti{
-    font-size: 1.2rem;
-    color: var(--p-text-base);
+.ti {
+  font-size: 1.2rem;
+  color: var(--p-text-base);
 }
