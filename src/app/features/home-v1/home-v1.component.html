@@ -1,153 +1,37 @@
 <div class="home-container">
-  <!-- Barra de pesquisa -->
-  <div class="search-section">
-    <div class="search-bar">
-      <i class="ti ti-search"></i>
-      <input type="text" placeholder="Pesquisar questões, coleções ou tags...">
+  <div>
+    <div class="flex align-items-center gap-2" [style.color]="'var(--p-text-base)'" >
+      <h2 class="m-0 emoji">👋</h2>
+      <h2>Bem vindo de volta, </h2>
+      <h2 class="m-0" [style.color]="'var(--p-accent-400)'">{{ user().name}}.</h2>
     </div>
+    <p class="home-description">Você está preparadao para explorar novas questões e provas?</p>
   </div>
 
-  <!-- Tabs de navegação -->
-  <div class="tabs-section">
-    <button class="tab active">Todas as Questões</button>
-    <button class="tab">Minhas Coleções</button>
-    <button class="tab">Compartilhado comigo</button>
+  <div class="search-container">
+      <input pInputText class="flex-1" autocomplete="off" placeholder="Digite algo para procurar..." [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" />
+      <kh-button type="secondary" class="w-10rem ml-2 ">
+        <i class="ti ti-search"></i>
+        <span>Pesquisar</span>
+      </kh-button>
   </div>
 
-  <!-- Cards de estatísticas -->
-  <div class="stats-section">
-    <div class="stat-card">
-      <div class="stat-header">
-        <span class="stat-title">Total de Questões</span>
-        <i class="ti ti-help-circle"></i>
-      </div>
-      <div class="stat-value">2.547</div>
-      <div class="stat-subtitle">+23 neste mês</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-header">
-        <span class="stat-title">Coleções</span>
-        <i class="ti ti-folders"></i>
-      </div>
-      <div class="stat-value">48</div>
-      <div class="stat-subtitle">+2 esta semana</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-header">
-        <span class="stat-title">Testes Criados</span>
-        <i class="ti ti-file-text"></i>
-      </div>
-      <div class="stat-value">156</div>
-      <div class="stat-subtitle">12 este mês</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-header">
-        <span class="stat-title">Correções</span>
-        <i class="ti ti-check-circle"></i>
-      </div>
-      <div class="stat-value">1.234</div>
-      <div class="stat-subtitle">89 pendentes</div>
-    </div>
+  <div class="list-options">
+    <kh-button [type]="optionSelect()=='question' ? 'primary' : 'secondary'" class="w-15rem" (click)="setOptionSelect('question')" >Todas as questões</kh-button>
+    <kh-button [type]="optionSelect()=='collection' ? 'primary' : 'secondary'" class="w-15rem" (click)="setOptionSelect('collection')" >Minhas coleções</kh-button>
+    <kh-button [type]="optionSelect()=='share_with_me' ? 'primary' : 'secondary'" class="w-15rem" (click)="setOptionSelect('share_with_me')" >Compartilhados comigo</kh-button>
   </div>
 
-  <!-- Seção principal com duas colunas -->
-  <div class="main-content">
-    <!-- Coluna esquerda - Atividade recente -->
-    <div class="left-column">
-      <div class="section-header">
-        <h2>Atividade Recente</h2>
-        <button class="view-all-btn">Ver tudo</button>
-      </div>
-
-      <div class="activity-list">
-        <div class="activity-item">
-          <div class="activity-icon physics">
-            <i class="ti ti-atom"></i>
-          </div>
-          <div class="activity-content">
-            <h3>Física Meio Termo Gerado</h3>
-            <p>45 questões • 8 de maio, 2025</p>
-          </div>
-          <i class="ti ti-chevron-right"></i>
-        </div>
-
-        <div class="activity-item">
-          <div class="activity-icon chemistry">
-            <i class="ti ti-flask"></i>
-          </div>
-          <div class="activity-content">
-            <h3>Nova Coleção: Química Finals</h3>
-            <p>32 questões • 7 de maio, 2025</p>
-          </div>
-          <i class="ti ti-chevron-right"></i>
-        </div>
-
-        <div class="activity-item">
-          <div class="activity-icon shared">
-            <i class="ti ti-users"></i>
-          </div>
-          <div class="activity-content">
-            <h3>Coleção Compartilhada com Equipe</h3>
-            <p>Math Fundamentals • 6 de maio, 2025</p>
-          </div>
-          <i class="ti ti-chevron-right"></i>
-        </div>
-      </div>
-
-      <!-- Ações principais -->
-      <div class="action-cards">
-        <div class="action-card">
-          <div class="action-icon">
-            <i class="ti ti-pencil-plus"></i>
-          </div>
-          <div class="action-content">
-            <h3>Criar Questão</h3>
-            <p>Adicionar novas questões à sua base de dados</p>
-          </div>
-        </div>
-
-        <div class="action-card">
-          <div class="action-icon">
-            <i class="ti ti-folder-plus"></i>
-          </div>
-          <div class="action-content">
-            <h3>Nova Coleção</h3>
-            <p>Organizar questões em conjuntos</p>
-          </div>
-        </div>
-
-        <div class="action-card">
-          <div class="action-icon">
-            <i class="ti ti-file-plus"></i>
-          </div>
-          <div class="action-content">
-            <h3>Gerar Teste</h3>
-            <p>Criar PDF a partir das coleções</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Coluna direita - Tags em destaque -->
-    <div class="right-column">
-      <div class="section-header">
-        <h2>Tags em Destaque</h2>
-        <button class="view-all-btn">Ver tudo</button>
-      </div>
-
-      <div class="tags-container">
-        <button class="tag-btn primary">Matemática</button>
-        <button class="tag-btn">Física</button>
-        <button class="tag-btn">Química</button>
-        <button class="tag-btn">Biologia</button>
-        <button class="tag-btn">Cálculo</button>
-        <button class="tag-btn">Álgebra</button>
-        <button class="tag-btn">Estatística</button>
-        <button class="tag-btn">Mais...</button>
-      </div>
-    </div>
+  <div class="list-container">
+    @if (optionSelect()=='question') {
+      <list-questions/>
+    }
+    @else if (optionSelect()=='collection') {
+      <list-collection/>
+    }
+    @else if (optionSelect()=='share_with_me') {
+      <list-share-with-me/>
+    }
   </div>
+
 </div>
