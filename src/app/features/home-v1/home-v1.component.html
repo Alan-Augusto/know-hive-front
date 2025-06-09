@@ -1,18 +1,19 @@
 <div class="home-container">
   <div>
-    <div class="flex align-items-center gap-2" [style.color]="'var(--p-text-base)'" >
+    <!-- Melhoria: flex-wrap para quebrar linha em telas pequenas -->
+    <div class="flex align-items-center gap-2 flex-wrap" [style.color]="'var(--p-text-base)'" >
       <h2 class="m-0 emoji">👋</h2>
       <h2>Bem vindo de volta, </h2>
       <h2 class="m-0" [style.color]="'var(--p-accent-400)'">{{ user().name}}.</h2>
     </div>
-    <p class="home-description">Você está preparadao para explorar novas questões e provas?</p>
+    <p class="home-description">Você está preparado para explorar novas questões e provas?</p>
   </div>
 
   <div class="search-container">
       <input pInputText class="flex-1" autocomplete="off" placeholder="Digite algo para procurar..." [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" />
-      <kh-button type="secondary" class="w-10rem ml-2 ">
+      <kh-button type="secondary" class="w-10rem ml-2">
         <i class="ti ti-search"></i>
-        <span>Pesquisar</span>
+        <span class="search-text">Pesquisar</span>
       </kh-button>
   </div>
 
