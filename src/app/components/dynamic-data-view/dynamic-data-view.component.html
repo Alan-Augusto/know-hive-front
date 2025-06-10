@@ -1,0 +1,56 @@
+@if (isLoading()) {
+  <div class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Carregando dados...</p>
+  </div>
+} @else {
+  @if (viewMode() === 'table') {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            @for (col of columnDefs(); track col.field) {
+              <th [style.width]="col.width">{{ col.header }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of data(); track item.id) {
+            <tr (click)="onItemClicked(item)">
+              @for (col of columnDefs(); track col.field) {
+                <td>
+                  {{
+                    (item | getNestedProperty:col.field) | formatData:col.dataType:col.formatOptions
+                  }}
+                </td>
+              }
+            </tr>
+          } @empty {
+            <tr>
+              <td [attr.colspan]="columnDefs().length" class="empty-state">
+                Nenhum dado encontrado.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @else {
+    <div class="cards-container">
+      @for (item of data(); track item.id) {
+        <div class="card" (click)="onItemClicked(item)">
+          <ng-container
+            [ngTemplateOutlet]="cardTemplate()!"
+            [ngTemplateOutletContext]="{ $implicit: item }">
+          </ng-container>
+        </div>
+      }
+      @empty {
+        <div class="empty-state">
+          Nenhum dado encontrado.
+        </div>
+      }
+    </div>
+  }
+}

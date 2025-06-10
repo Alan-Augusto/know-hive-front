@@ -8,9 +8,13 @@ import { IQuestion } from '../../entity/question.interface';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogService } from 'primeng/dynamicdialog';
 import { QuestionFormComponent } from './question-form/question-form.component';
+import { QuestionsService } from '../../services/questions/questions.service';
+import { Observable } from 'rxjs';
+import { DynamicDataViewComponent } from "../../components/dynamic-data-view/dynamic-data-view.component";
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'questions',
-  imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule ],
+  imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule, DynamicDataViewComponent, DatePipe],
   providers:[DialogService],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.scss'
@@ -18,10 +22,25 @@ import { QuestionFormComponent } from './question-form/question-form.component';
 export class QuestionsComponent extends BaseListComponent<IQuestion> {
 
   private dialogService = inject(DialogService)
+  private questionService = inject(QuestionsService);
 
   ngOnInit() {
+    this.configureData();
     this.setOptionSelect('question');
-    // loadData();
+    this.loadData(() => this.questionService.findAll());
+  }
+
+  configureData() {
+    this.columnDefs.set([
+      {
+        field: 'statement',
+        header: 'Descrição'
+      },
+      {
+        field: 'type.name',
+        header: 'Tipo',
+      }
+    ]);
   }
 
   createQuestion(){

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseApiService } from '../base-api.service';
 import { IQuestion } from '../../entity/question.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class QuestionsService extends BaseApiService {
     return this.post('', data);
   }
 
-  findAll() {
+  findAll(): Observable<IQuestion[]> {
     return this.get('');
   }
 

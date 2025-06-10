@@ -1,5 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { LoggedUserService } from '../../../services/logged-user/logged-user.service';
+import { Observable } from 'rxjs';
+import { ColumnDefinition } from '../../dynamic-data-view/dynamic-data-view.interface';
 
 export class BaseListComponent<T = any> {
   // Services
@@ -8,8 +10,9 @@ export class BaseListComponent<T = any> {
   // Signals
   searchTerm = signal<string>('');
   optionSelect = signal<string>('');
-  displayMode = signal<'card' | 'list'>('card');
+  displayMode = signal<'table' | 'card'>('card');
   dataSource = signal<T[]>([]);
+  columnDefs = signal<ColumnDefinition[]>([]);
 
   // Computed properties
   user = computed(() => this.loggedUserService.loggedUser());
@@ -17,7 +20,7 @@ export class BaseListComponent<T = any> {
 
   // Methods
   toggleDisplayMode(): void {
-    this.displayMode.set(this.displayMode() === 'card' ? 'list' : 'card');
+    this.displayMode.set(this.displayMode() === 'card' ? 'table' : 'card');
   }
 
   setSearchTerm(term: string): void {
@@ -26,5 +29,17 @@ export class BaseListComponent<T = any> {
 
   setOptionSelect(option: string): void {
     this.optionSelect.set(option);
+  }
+
+  loadData(asyncMethod: () => Observable<T[]>): void {
+    asyncMethod().subscribe({
+      next: (data: T[]) => {
+        this.dataSource.set(data);
+        console.log('Data loaded successfully:', data);
+      },
+      error: (error) => {
+        console.error('Error loading data:', error);
+      }
+    });
   }
 }

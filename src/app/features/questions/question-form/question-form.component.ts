@@ -6,7 +6,6 @@ import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { AuthBaseComponent } from '../../../components/auth-base/auth-base.component';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TextareaModule } from 'primeng/textarea';
@@ -20,7 +19,7 @@ import { NotificationService } from '../../../services/notification/notification
 
 @Component({
   selector: 'question-form',
-  imports: [InputTextModule, SelectModule, TextareaModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, AuthBaseComponent, KhButtonComponent],
+  imports: [InputTextModule, SelectModule, TextareaModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, KhButtonComponent],
   templateUrl: './question-form.component.html',
   styleUrl: './question-form.component.scss'
 })
