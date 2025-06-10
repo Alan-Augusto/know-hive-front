@@ -34,7 +34,7 @@
     // Types
     &.primary {
         background-color: var(--p-surface-inverse);
-        color: var(--p-text-inverse);
+        color: var(--p-text-inverse) !important;
     }
     &.secondary {
         border: 1.5px solid var(--p-surface-inverse);
@@ -89,7 +89,11 @@
 }
 
 ::ng-deep .kh-button.primary i {
-    color: var(--p-text-inverse) !important;
+  color: var(--p-text-inverse) !important;
+}
+
+::ng-deep .kh-button.danger i {
+  color: var(--p-text-inverse) !important;
 }
 
 @keyframes spin {

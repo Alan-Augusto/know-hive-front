@@ -12,9 +12,10 @@ import { QuestionsService } from '../../services/questions/questions.service';
 import { Observable } from 'rxjs';
 import { DynamicDataViewComponent } from "../../components/dynamic-data-view/dynamic-data-view.component";
 import { DatePipe } from '@angular/common';
+import { QuestionCardComponent } from "./question-card/question-card.component";
 @Component({
   selector: 'questions',
-  imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule, DynamicDataViewComponent, DatePipe],
+  imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule, DynamicDataViewComponent, QuestionCardComponent],
   providers:[DialogService],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.scss'

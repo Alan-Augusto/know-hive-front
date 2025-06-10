@@ -8,31 +8,31 @@
 /* --- Estilos da Tabela --- */
 .table-container {
   overflow-x: auto;
-  border-radius: 1rem;
+  border-radius: .5rem;
   box-shadow: var(--p-shadow-sm);
-  background-color: var(--p-surface-card);
+  background-color: var(--p-surface-base);
   margin-bottom: 1.5rem;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
-  border-radius: 1rem;
+  border: 1px solid var(--p-primary-100);
+  // border-collapse: collapse;
+  border-radius: .5rem;
   overflow: hidden;
 }
 
 th, td {
-  padding: 1rem 1.25rem;
+  padding: .75rem 1rem;
   text-align: left;
   border-bottom: 1px solid var(--p-primary-100);
 }
 
 th {
-  background-color: var(--p-surface-secondary);
+  // background-color: var(--p-surface-secondary);
   font-weight: 600;
   color: var(--p-text-base);
   font-size: 0.875rem;
-  text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
@@ -43,13 +43,15 @@ td {
 
 tbody tr {
   transition: all 0.2s ease-in-out;
-  background-color: var(--p-surface-card);
+  background-color: var(--p-surface-base);
 }
 
 tbody tr:hover {
-  background-color: var(--p-primary-50);
+  // background-color: var(--p-surface-card);
   cursor: pointer;
-  transform: translateY(-1px);
+  transform: translateY(-.1rem);
+  // scale: 1.0005;
+  box-shadow: var(--p-shadow-sm);
 }
 
 tbody tr:last-child td {
@@ -60,43 +62,10 @@ tbody tr:last-child td {
 .cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: .5rem;
   padding: 0.5rem;
 }
 
-.card {
-  background-color: var(--p-surface-card);
-  border: 1px solid var(--p-primary-100);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: var(--p-shadow-sm);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--p-accent-400), var(--p-accent-600));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.card:hover {
-  cursor: pointer;
-  transform: translateY(-4px);
-  box-shadow: var(--p-shadow-lg);
-  border-color: var(--p-accent-200);
-}
-
-.card:hover::before {
-  opacity: 1;
-}
 
 /* --- Estados Especiais --- */
 .empty-state {
@@ -105,7 +74,7 @@ tbody tr:last-child td {
   padding: 3rem 1.5rem;
   color: var(--p-text-secondary);
   background-color: var(--p-surface-card);
-  border-radius: 1rem;
+  border-radius: .5rem;
   border: 2px dashed var(--p-primary-200);
   font-size: 1rem;
   font-weight: 500;
@@ -119,7 +88,7 @@ tbody tr:last-child td {
   padding: 4rem 2rem;
   color: var(--p-text-secondary);
   background-color: var(--p-surface-base);
-  border-radius: 1rem;
+  border-radius: .5rem;
   margin: 2rem 0;
 }
 
