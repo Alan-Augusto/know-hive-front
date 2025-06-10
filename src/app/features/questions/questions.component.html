@@ -29,7 +29,7 @@
       <kh-button size="small" type="secondary" [onlyIcon]="true" (click)="toggleDisplayMode()" [pTooltip]="'Mudar modo de exibição'" tooltipPosition="top">
         <i [class]="iconDisplayMode()"></i>
       </kh-button>
-      <kh-button size="small">
+      <kh-button size="small" (click)="createQuestion()">
         <i class="ti ti-plus" ></i>
         <span class="ml-2">Nova Questão</span>
       </kh-button>

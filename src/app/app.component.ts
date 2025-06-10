@@ -7,6 +7,7 @@ import { Toast } from 'primeng/toast';
 import { MenuComponent } from './components/menu/menu.component';
 import { LayoutComponent } from "./features/layout/layout.component";
 import { NotificationService } from './services/notification/notification.service';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ import { NotificationService } from './services/notification/notification.servic
     ReactiveFormsModule,
     CommonModule,
     Toast,
-    LayoutComponent
+    LayoutComponent,
+    DialogModule
 ],
   providers: [
     MessageService,
