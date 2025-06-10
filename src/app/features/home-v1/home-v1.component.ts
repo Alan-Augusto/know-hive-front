@@ -7,6 +7,7 @@ import { KhButtonComponent } from "../../components/kh-button/kh-button.componen
 import { ListQuestionsComponent } from './list-questions/list-questions.component';
 import { ListCollectionComponent } from './list-collection/list-collection.component';
 import { ListShareWithMeComponent } from './list-share-with-me/list-share-with-me.component';
+import { BaseListComponent } from '../../components/base/base-list/base-list.component';
 
 @Component({
   selector: 'home-v1',
@@ -14,14 +15,6 @@ import { ListShareWithMeComponent } from './list-share-with-me/list-share-with-m
   templateUrl: './home-v1.component.html',
   styleUrl: './home-v1.component.scss'
 })
-export class HomeV1Component {
-
-  private loggedUserService = inject(LoggedUserService);
-  user = signal<IUser>(this.loggedUserService.getUser())
-  searchTerm = signal<string>('');
-  optionSelect = signal<'question' | 'collection' | 'share_with_me'>('question');
-  setOptionSelect(option: 'question' | 'collection' | 'share_with_me') {
-    this.optionSelect.set(option);
-  }
+export class HomeV1Component extends BaseListComponent{
 
 }
