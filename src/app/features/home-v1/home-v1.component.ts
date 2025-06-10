@@ -17,4 +17,8 @@ import { BaseListComponent } from '../../components/base/base-list/base-list.com
 })
 export class HomeV1Component extends BaseListComponent{
 
+  ngOnInit() {
+    this.setOptionSelect('question')
+  }
+
 }

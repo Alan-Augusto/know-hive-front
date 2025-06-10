@@ -17,9 +17,9 @@
   </div>
 
   <div class="list-options">
-    <kh-button [type]="optionSelect()=='question' ? 'primary' : 'secondary'" class="w-15rem" (click)="setOptionSelect('question')" >Todas as questões</kh-button>
-    <kh-button [type]="optionSelect()=='collection' ? 'primary' : 'secondary'" class="w-15rem" (click)="setOptionSelect('collection')" >Minhas coleções</kh-button>
-    <kh-button [type]="optionSelect()=='share_with_me' ? 'primary' : 'secondary'" class="w-15rem" (click)="setOptionSelect('share_with_me')" >Compartilhados comigo</kh-button>
+    <kh-button size="small" [type]="optionSelect()=='question' ? 'secondary' : 'tertiary'" class="w-10rem" (click)="setOptionSelect('question')" >Todas as questões</kh-button>
+    <kh-button size="small" [type]="optionSelect()=='collection' ? 'secondary' : 'tertiary'" class="w-10rem" (click)="setOptionSelect('collection')" >Minhas coleções</kh-button>
+    <kh-button size="small" [type]="optionSelect()=='share_with_me' ? 'secondary' : 'tertiary'" class="w-10rem" (click)="setOptionSelect('share_with_me')" >Compartilhados comigo</kh-button>
   </div>
 
   <div class="list-container">

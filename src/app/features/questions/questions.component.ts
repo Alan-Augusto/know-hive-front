@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user/logged-user.service';
 import { KhButtonComponent } from "../../components/kh-button/kh-button.component";
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,9 @@ import { IQuestion } from '../../entity/question.interface';
 })
 export class QuestionsComponent extends BaseListComponent<IQuestion> {
 
+
   ngOnInit() {
+    this.setOptionSelect('question');
     // loadData();
   }
 
