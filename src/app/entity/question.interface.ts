@@ -3,6 +3,7 @@ import { IUser } from "./user.interface";
 
 export interface IQuestion {
   id?: string;
+  title: string;
   statement: string;
   type_id: number;
   type?: IQuestionType;

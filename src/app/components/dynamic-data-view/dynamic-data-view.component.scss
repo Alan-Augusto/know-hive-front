@@ -8,71 +8,216 @@
 /* --- Estilos da Tabela --- */
 .table-container {
   overflow-x: auto;
+  border-radius: 1rem;
+  box-shadow: var(--p-shadow-sm);
+  background-color: var(--p-surface-card);
+  margin-bottom: 1.5rem;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
+  border-radius: 1rem;
+  overflow: hidden;
 }
+
 th, td {
-  padding: 12px 15px;
-  border: 1px solid #ddd;
+  padding: 1rem 1.25rem;
   text-align: left;
+  border-bottom: 1px solid var(--p-primary-100);
 }
+
 th {
-  background-color: #f4f4f4;
-  font-weight: bold;
+  background-color: var(--p-surface-secondary);
+  font-weight: 600;
+  color: var(--p-text-base);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
+
+td {
+  color: var(--p-text-base);
+  font-size: 0.9rem;
+}
+
 tbody tr {
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  background-color: var(--p-surface-card);
 }
+
 tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: var(--p-primary-50);
   cursor: pointer;
+  transform: translateY(-1px);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
 }
 
 /* --- Estilos dos Cards --- */
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0.5rem;
 }
+
 .card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  background-color: var(--p-surface-card);
+  border: 1px solid var(--p-primary-100);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--p-shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--p-accent-400), var(--p-accent-600));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
 .card:hover {
   cursor: pointer;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+  box-shadow: var(--p-shadow-lg);
+  border-color: var(--p-accent-200);
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 /* --- Estados Especiais --- */
 .empty-state {
+  grid-column: 1 / -1;
   text-align: center;
-  padding: 20px;
-  color: #777;
+  padding: 3rem 1.5rem;
+  color: var(--p-text-secondary);
+  background-color: var(--p-surface-card);
+  border-radius: 1rem;
+  border: 2px dashed var(--p-primary-200);
+  font-size: 1rem;
+  font-weight: 500;
 }
+
 .loading-overlay {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  color: #555;
+  padding: 4rem 2rem;
+  color: var(--p-text-secondary);
+  background-color: var(--p-surface-base);
+  border-radius: 1rem;
+  margin: 2rem 0;
 }
+
 .spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
+  border: 3px solid var(--p-primary-100);
+  border-top: 3px solid var(--p-accent-500);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 3rem;
+  height: 3rem;
   animation: spin 1s linear infinite;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
+
+.loading-overlay p {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+  .cards-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  th, td {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  th {
+    font-size: 0.8rem;
+  }
+
+  .table-container {
+    margin: 0 -1rem;
+    border-radius: 0;
+  }
+
+  table {
+    border-radius: 0;
+  }
+
+  .empty-state {
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .loading-overlay {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-container {
+    gap: 0.75rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  th, td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .empty-state {
+    padding: 1.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* --- Melhorias de acessibilidade --- */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  tbody tr,
+  .spinner {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* --- Modo escuro (caso implementado) --- */
+@media (prefers-color-scheme: dark) {
+  .spinner {
+    border-color: var(--p-primary-800);
+    border-top-color: var(--p-accent-400);
+  }
 }

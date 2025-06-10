@@ -40,6 +40,7 @@ export class QuestionFormComponent {
 
   formGroup = this.fb.group({
     id: [null, []],
+    title: [null, []],
     statement: [null, []],
     type: [null, []],
     author_id: [this.user().id, []], // This should be set to the logged-in user ID

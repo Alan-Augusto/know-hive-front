@@ -1,5 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe, CurrencyPipe, PercentPipe } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
 
 @Pipe({
   name: 'formatData',

@@ -1,5 +1,9 @@
 <div class="flex flex-column gap-4 align-items-center py-2" [formGroup]="formGroup">
     <p-floatlabel variant="on" class="w-full">
+        <input pInputText id="over_label" formControlName="title" class="w-full" autocomplete="off" />
+        <label for="over_label">Título</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="w-full">
         <textarea pTextarea id="over_label" formControlName="statement" rows="5" cols="30" style="resize: true; width: 100%;"></textarea>
         <label for="over_label">Descrição</label>
     </p-floatlabel>

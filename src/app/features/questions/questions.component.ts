@@ -39,6 +39,18 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
       {
         field: 'type.name',
         header: 'Tipo',
+      },
+      {
+        field: 'author.name',
+        header: 'Autor',
+      },
+      {
+        field: 'created_at',
+        header: 'Criado em',
+        dataType: 'date',
+        formatOptions: {
+          dateFormat: 'dd/MM/yyyy',
+        }
       }
     ]);
   }
@@ -57,6 +69,9 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
             '640px': '90vw'
         },
       });
+    ref.onClose.subscribe(() => {
+      this.loadData(() => this.questionService.findAll());
+    })
   }
 
 }
