@@ -92,3 +92,12 @@
     display: none;
   }
 }
+
+::ng-deep .p-tooltip .p-tooltip-text  {
+  background-color: var(--p-accent-50);
+  color: var(--p-text-base);
+}
+
+::ng-deep .p-tooltip .p-tooltip-arrow{
+  display: none;
+}

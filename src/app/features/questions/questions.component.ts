@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { BaseListComponent } from '../../components/base/base-list/base-list.component';
 import { IQuestion } from '../../entity/question.interface';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'questions',
-  imports: [FormsModule, KhButtonComponent, InputTextModule],
+  imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.scss'
 })

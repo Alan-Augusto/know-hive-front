@@ -26,8 +26,8 @@
     </div>
 
     <div class="flex flex-row gap-1">
-      <kh-button size="small" type="secondary" [onlyIcon]="true">
-        <i class="ti ti-list"></i>
+      <kh-button size="small" type="secondary" [onlyIcon]="true" (click)="toggleDisplayMode()" [pTooltip]="'Mudar modo de exibição'" tooltipPosition="top">
+        <i [class]="iconDisplayMode()"></i>
       </kh-button>
       <kh-button size="small">
         <i class="ti ti-plus" ></i>
