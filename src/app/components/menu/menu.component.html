@@ -6,7 +6,7 @@
 
         <div class="menu-body">
           @for (item of menuItems(); track $index) {
-            <div class="menu-item" [class.active]="item.active" (click)="redirectTo(item.url)">
+            <div class="menu-item" [class.active]="item.active" (click)="redirectTo(item.url); activateMenuItem(item.id)">
               <i [class]="item.icon"></i>
               <span class="menu-item-text">{{item.label}}</span>
             </div>
