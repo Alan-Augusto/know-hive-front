@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { LoggedUserService } from '../../../services/logged-user/logged-user.service';
 
-export class BaseListComponent {
+export class BaseListComponent<T = any> {
 
     private loggedUserService = inject(LoggedUserService);
 
@@ -20,5 +20,7 @@ export class BaseListComponent {
     setOptionSelect(option: string): void {
       this.optionSelect.set(option);
     }
+
+    dataSource = signal<T[]>([]);
 
 }

@@ -4,6 +4,7 @@ import { KhButtonComponent } from "../../components/kh-button/kh-button.componen
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { BaseListComponent } from '../../components/base/base-list/base-list.component';
+import { IQuestion } from '../../entity/question.interface';
 
 @Component({
   selector: 'questions',
@@ -11,7 +12,10 @@ import { BaseListComponent } from '../../components/base/base-list/base-list.com
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.scss'
 })
-export class QuestionsComponent extends BaseListComponent{
+export class QuestionsComponent extends BaseListComponent<IQuestion> {
 
+  ngOnInit() {
+    // loadData();
+  }
 
 }
