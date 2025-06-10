@@ -25,9 +25,21 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
   private dialogService = inject(DialogService)
   private questionService = inject(QuestionsService);
 
+  filteredDataSource = computed<IQuestion[]>(() => {
+    if(this.optionSelect() === 'create_with_me') {
+      return this.dataSource().filter(item => item.author?.id === this.user()?.id);
+    }
+    else if(this.optionSelect() === 'share_with_me') {
+            return this.dataSource().filter(item => item.author?.id !== this.user()?.id);
+    }
+    else{
+      return this.dataSource();
+    }
+  });
+
   ngOnInit() {
     this.configureData();
-    this.setOptionSelect('question');
+    this.setOptionSelect('all_questions');
     this.loadData(() => this.questionService.findAll());
   }
 
