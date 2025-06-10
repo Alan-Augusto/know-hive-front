@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 @Component({
   selector: 'kh-button',
@@ -9,7 +9,10 @@ import { Component, input } from '@angular/core';
 export class KhButtonComponent {
   type = input<'primary' | 'secondary' | 'tertiary' | 'accent' | 'danger'>('primary');
   size = input<'small' | 'medium' | 'large'>('medium');
+  onlyIcon = input<boolean>(false);
   disabled = input<boolean>(false);
   loading = input<boolean>(false);
   label = input<string | null>(null);
+
+  classPadding = computed(() => this.onlyIcon()? 'only-icon':'more-than-icon');
 }

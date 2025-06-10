@@ -15,8 +15,8 @@
     .content{
       flex: 1;
       display: flex;
-    align-items: center;
-    justify-content: center;
+      align-items: center;
+      justify-content: center;
     }
 
     &:hover {
@@ -57,16 +57,28 @@
 
     // Sizes
     &.small {
-        font-size: 0.875rem;
-        padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      padding: 0.25rem 0.5rem;
+      &.only-icon {
+        padding: 0.25rem;
+        width: 2rem !important;
+      }
     }
     &.medium {
-        font-size: 1rem;
-        padding: 0.5rem 1rem;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      &.only-icon {
+        padding: 0.5rem;
+        width: 2rem !important;
+      }
     }
     &.large {
-        font-size: 1.25rem;
-        padding: 0.75rem 1.5rem;
+      font-size: 1.25rem;
+      padding: 0.75rem 1.5rem;
+      &.only-icon {
+        padding: 0.75rem;
+        width: 2rem !important;
+      }
     }
 
     .spinner{
@@ -74,6 +86,10 @@
         animation: spin 1s linear infinite;
     }
 
+}
+
+::ng-deep .kh-button.primary i {
+    color: var(--p-text-inverse) !important;
 }
 
 @keyframes spin {
