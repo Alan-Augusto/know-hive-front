@@ -54,6 +54,13 @@
         background-color: var(--p-feedback-error-main);
         color: var(--p-text-inverse);
     }
+    &.danger-light{
+        color: var(--p-feedback-error-main) !important;
+        &:hover {
+            background-color: var(--p-feedback-error-surface);
+        }
+        // border: 1px solid var(--p-feedback-error-main);
+    }
 
     // Sizes
     &.small {
@@ -95,6 +102,11 @@
 ::ng-deep .kh-button.danger i {
   color: var(--p-text-inverse) !important;
 }
+
+::ng-deep .kh-button.danger-light i {
+  color: var(--p-feedback-error-main) !important;
+}
+
 
 @keyframes spin {
   0% {
