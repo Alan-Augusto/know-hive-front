@@ -13,7 +13,6 @@ import { AuthBaseComponent } from "../../components/auth-base/auth-base.componen
 import { KhButtonComponent } from "../../components/kh-button/kh-button.component";
 import { AuthService } from '../../services/auth/auth.service';
 import { LoggedUserService } from '../../services/logged-user/logged-user.service';
-import { IUser } from '../../entity/user.interface';
 import { IRegisterAuth } from '../../entity/registerAuth.interface';
 
 @Component({

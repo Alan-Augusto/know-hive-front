@@ -1,1 +1,15 @@
-<p>question-form works!</p>
+<div class="flex flex-column gap-4 align-items-center py-2" [formGroup]="formGroup">
+    <p-floatlabel variant="on" class="w-full">
+        <textarea pTextarea id="over_label" formControlName="statement" rows="5" cols="30" style="resize: true; width: 100%;"></textarea>
+        <label for="over_label">Descrição</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="w-full">
+        <p-select inputId="on_label" [options]="questionsTypes()" formControlName="type" optionLabel="name" optionValue="id" styleClass="w-full" />
+        <label for="on_label">Tipo de questão</label>
+    </p-floatlabel>
+    <div class="flex flex-row gap-1 w-full">
+      <kh-button type="secondary" (click)="handleCancel()" widthType="full">Cancelar</kh-button>
+      <kh-button [loading]="isSaving()" (click)="handleSave()" widthType="full">Salvar</kh-button>
+    </div>
+
+</div>

@@ -1,8 +1,8 @@
 export interface IQuestion {
   id?: string;
-  statement?: string;
-  type_id?: number;
+  statement: string;
+  type: number;
   created_at?: Date;
   updated_at?: Date;
-  author_id?: string;
+  author_id: string;
 }
