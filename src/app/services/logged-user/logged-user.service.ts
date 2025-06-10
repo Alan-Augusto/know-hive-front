@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { IUser } from '../../entity/user.interface';
 import { Router } from '@angular/router';
 
@@ -11,9 +11,11 @@ export class LoggedUserService {
 
   private router = inject(Router);
 
+  loggedUser = signal<IUser>(this.getUser());
 
   setUser(user: IUser): void {
     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    this.loggedUser.set(user);
   }
 
   getUser(): IUser {

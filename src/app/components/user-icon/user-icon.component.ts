@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { LoggedUserService } from '../../services/logged-user/logged-user.service';
 import { MenuModule } from 'primeng/menu';
 import { TieredMenuModule } from 'primeng/tieredmenu';
@@ -19,8 +19,7 @@ export class UserIconComponent {
   private loggedUser = inject(LoggedUserService)
   private router = inject(Router);
 
-  profile_picture = signal<string>(
-    this.loggedUser.getUser()?.profile_picture ??
+  profile_picture = computed<string>(()=> this.loggedUser.loggedUser()?.profile_picture ??
     'https://notion-avatar.app/api/svg/eyJmYWNlIjoxMCwibm9zZSI6NCwibW91dGgiOjAsImV5ZXMiOjQsImV5ZWJyb3dzIjowLCJnbGFzc2VzIjowLCJoYWlyIjozLCJhY2Nlc3NvcmllcyI6NywiZGV0YWlscyI6MCwiYmVhcmQiOjcsImZsaXAiOjAsImNvbG9yIjoidHJhbnNwYXJlbnQiLCJzaGFwZSI6ImNpcmNsZSJ9'
   )
 
