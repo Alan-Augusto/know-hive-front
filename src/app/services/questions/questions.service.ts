@@ -30,4 +30,8 @@ export class QuestionsService extends BaseApiService {
     return this.delete(`${id}`);
   }
 
+  findByUser(id: string): Observable<IQuestion[]> {
+    return this.get(`user/${id}`);
+  }
+
 }

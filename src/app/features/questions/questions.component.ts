@@ -43,7 +43,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
   ngOnInit() {
     this.configureData();
     this.setOptionSelect('all_questions');
-    this.loadData(() => this.questionService.findAll());
+    this.loadData(() => this.questionService.findByUser(this.user().id));
   }
 
   configureData() {
@@ -86,7 +86,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
         },
       });
     ref.onClose.subscribe(() => {
-      this.loadData(() => this.questionService.findAll());
+      this.loadData(() => this.questionService.findByUser(this.user().id));
     })
   }
 
@@ -118,7 +118,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
             console.error('Error deleting question:', err);
           },
           complete: () => {
-            this.loadData(() => this.questionService.findAll());
+            this.loadData(() => this.questionService.findByUser(this.user().id));
           }
         });
       }

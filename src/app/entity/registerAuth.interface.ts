@@ -1,3 +1,3 @@
 import { IUser } from "./user.interface";
 
-export interface IRegisterAuth extends IUser{}
+export interface IRegisterAuth extends Omit<IUser, 'id'> {}
