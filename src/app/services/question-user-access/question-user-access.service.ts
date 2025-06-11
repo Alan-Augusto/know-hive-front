@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BaseApiService } from '../base-api.service';
-import { IQuestionType } from '../../entity/quentionType.interface';
+import { IQuestionUserAccess } from '../../entity/questionUserAccess.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuestionTypesService extends BaseApiService {
+export class QuestionUserAccessService extends BaseApiService {
 
-  override entityUrl = '/question-types';
+  override entityUrl = '/question-user-access';
 
-  create(data: IQuestionType) {
+  create(data: IQuestionUserAccess) {
     return this.post('', data);
   }
 
@@ -21,7 +21,7 @@ export class QuestionTypesService extends BaseApiService {
     return this.get(`${id}`);
   }
 
-  update(id: number, data: IQuestionType) {
+  update(id: number, data: IQuestionUserAccess) {
     return this.patch(`${id}`, data);
   }
 
