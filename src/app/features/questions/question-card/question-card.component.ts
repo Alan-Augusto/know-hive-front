@@ -1,8 +1,12 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 import { DatePipe } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { IQuestion } from '../../../entity/question.interface';
+import { DialogService } from 'primeng/dynamicdialog';
+import { QuestionsService } from '../../../services/questions/questions.service';
+import { AskDialogComponent } from '../../../components/ask-dialog/ask-dialog.component';
+import { NotificationService } from '../../../services/notification/notification.service';
 
 @Component({
   selector: 'question-card',
@@ -12,4 +16,11 @@ import { IQuestion } from '../../../entity/question.interface';
 })
 export class QuestionCardComponent {
   item = input.required<IQuestion>();
+  onDelete = output<string>();
+
+  deleteQuestion(id:string|null){
+    if(!id) return;
+    this.onDelete.emit(id);
+  }
+
 }

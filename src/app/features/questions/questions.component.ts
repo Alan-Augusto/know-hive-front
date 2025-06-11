@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
 import { DynamicDataViewComponent } from "../../components/dynamic-data-view/dynamic-data-view.component";
 import { DatePipe } from '@angular/common';
 import { QuestionCardComponent } from "./question-card/question-card.component";
+import { AskDialogComponent } from '../../components/ask-dialog/ask-dialog.component';
+import { NotificationService } from '../../services/notification/notification.service';
 @Component({
   selector: 'questions',
   imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule, DynamicDataViewComponent, QuestionCardComponent],
@@ -24,6 +26,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
 
   private dialogService = inject(DialogService)
   private questionService = inject(QuestionsService);
+  private notificationService = inject(NotificationService);
 
   filteredDataSource = computed<IQuestion[]>(() => {
     if(this.optionSelect() === 'create_with_me') {
@@ -85,6 +88,42 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
     ref.onClose.subscribe(() => {
       this.loadData(() => this.questionService.findAll());
     })
+  }
+
+  deleteQuestion(id: string | null) {
+    if (!id) {
+      console.error('Question ID is null or undefined');
+      return;
+    }
+    const askDialog = this.dialogService.open(
+      AskDialogComponent,
+      {
+        header: 'Excluir pergunta',
+        width: '30rem',
+        data: {
+          prompt: 'Você tem certeza que deseja excluir esta pergunta?'
+        },
+        modal: true,
+        closable: false,
+        focusOnShow: false,
+
+      }
+    ).onClose.subscribe((result: any) => {
+      if (result) {
+        this.questionService.remove(id).subscribe({
+          next: () => {
+            this.notificationService.toastInfo('Pergunta excluída com sucesso!');
+          },
+          error: (err) => {
+            console.error('Error deleting question:', err);
+          },
+          complete: () => {
+            this.loadData(() => this.questionService.findAll());
+          }
+        });
+      }
+    });
+
   }
 
 }

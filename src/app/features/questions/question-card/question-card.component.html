@@ -4,6 +4,17 @@
     <div class="card-actions">
       <kh-button
         size="small"
+        type="danger-light"
+        [onlyIcon]="true"
+        [pTooltip]="'Excluir questão'"
+        tooltipPosition="top"
+        class="delete-btn"
+        (click)="deleteQuestion(item().id||null)">
+        <i class="ti ti-trash"></i>
+      </kh-button>
+
+      <kh-button
+        size="small"
         type="tertiary"
         [onlyIcon]="true"
         [pTooltip]="'Compartilhar questão'"
@@ -18,16 +29,6 @@
         [pTooltip]="'Editar questão'"
         tooltipPosition="top">
         <i class="ti ti-edit"></i>
-      </kh-button>
-
-      <kh-button
-        size="small"
-        type="danger-light"
-        [onlyIcon]="true"
-        [pTooltip]="'Excluir questão'"
-        tooltipPosition="top"
-        class="delete-btn">
-        <i class="ti ti-trash"></i>
       </kh-button>
     </div>
   </div>

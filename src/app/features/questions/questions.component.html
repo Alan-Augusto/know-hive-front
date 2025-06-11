@@ -49,5 +49,8 @@
 </div>
 
 <ng-template #customCard let-item>
-  <question-card [item]="item"/>
+  <question-card
+    [item]="item"
+    (onDelete)="deleteQuestion($event)"
+  />
 </ng-template>

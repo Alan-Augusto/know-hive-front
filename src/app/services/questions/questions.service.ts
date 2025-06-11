@@ -19,15 +19,15 @@ export class QuestionsService extends BaseApiService {
   }
 
   findOne(id: string) {
-    return this.get(`/${id}`);
+    return this.get(`${id}`);
   }
 
   update(id: string, data: IQuestion) {
-    return this.patch(`/${id}`, data);
+    return this.patch(`${id}`, data);
   }
 
   remove(id: string) {
-    return this.delete(`/${id}`);
+    return this.delete(`${id}`);
   }
 
 }
