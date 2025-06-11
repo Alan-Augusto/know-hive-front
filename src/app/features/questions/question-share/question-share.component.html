@@ -34,10 +34,20 @@
           [options]="permissionTypes()"
           optionLabel="name"
           optionValue="id"
-          styleClass="w-full"
+          styleClass="share-item-select"
           appendTo="body"
           [ngModel]="item.permission_type_id"
         />
+
+
+        <kh-button
+          size="small"
+          type="danger-light"
+          [onlyIcon]="true"
+          tooltipPosition="top"
+          class="share-item-trash">
+          <i class="ti ti-trash"></i>
+        </kh-button>
       </div>
     }
 
