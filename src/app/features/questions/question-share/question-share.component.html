@@ -1,0 +1,46 @@
+<div class="share-container">
+  <div class="share-form" [formGroup]="formGroup">
+    <p-floatlabel variant="on" class="w-full">
+      <input
+        pInputText
+        id="email_input"
+        formControlName="email"
+        class="w-full"
+        autocomplete="off"
+      />
+      <label for="email_input">Email</label>
+    </p-floatlabel>
+
+    <kh-button
+        [loading]="isSharing()"
+        (click)="handleShare()"
+        [onlyIcon]="false"
+        class="w-auto ml-1"
+      >
+        <i class="ti ti-send"></i>
+      </kh-button>
+  </div>
+
+  <div class="share-list">
+    @for (item of shareList(); track $index) {
+      <div class="share-item">
+        <img class="share-item-img" src="{{item.user.profile_picture}}"/>
+        <div class="share-item-description">
+          <div class="share-item-name">{{ item.user.name }}</div>
+          <div class="share-item-email">{{ item.user.email }}</div>
+        </div>
+        <p-select
+          inputId="permission_select"
+          [options]="permissionTypes()"
+          optionLabel="name"
+          optionValue="id"
+          styleClass="w-full"
+          appendTo="body"
+          [ngModel]="item.permission_type_id"
+        />
+      </div>
+    }
+
+  </div>
+
+</div>

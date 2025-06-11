@@ -17,10 +17,22 @@ import { NotificationService } from '../../../services/notification/notification
 export class QuestionCardComponent {
   item = input.required<IQuestion>();
   onDelete = output<string>();
+  onShare = output<string>();
+  onEdit = output<string>();
 
   deleteQuestion(id:string|null){
     if(!id) return;
     this.onDelete.emit(id);
+  }
+
+  shareQuestion(id:string|null){
+    if(!id) return;
+    this.onShare.emit(id);
+  }
+
+  editQuestion(id:string|null){
+    if(!id) return;
+    this.onEdit.emit(id);
   }
 
 }

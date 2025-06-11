@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { QuestionCardComponent } from "./question-card/question-card.component";
 import { AskDialogComponent } from '../../components/ask-dialog/ask-dialog.component';
 import { NotificationService } from '../../services/notification/notification.service';
+import { QuestionShareComponent } from './question-share/question-share.component';
 @Component({
   selector: 'questions',
   imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule, DynamicDataViewComponent, QuestionCardComponent],
@@ -90,7 +91,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
     })
   }
 
-  deleteQuestion(id: string | null) {
+  deleteQuestion(id: string) {
     if (!id) {
       console.error('Question ID is null or undefined');
       return;
@@ -124,6 +125,33 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
       }
     });
 
+  }
+
+  editQuestion(id:string){
+
+  }
+
+  shareQuestion(id: string) {
+    const ref = this.dialogService.open(
+      QuestionShareComponent,
+      {
+        header: '🤝 Compartilhar questão',
+        modal: true,
+        closable: true,
+        focusOnShow: false,
+        width: '32rem',
+        breakpoints: {
+          '960px': '75vw',
+          '640px': '90vw'
+        },
+      }
+    );
+
+    ref.onClose.subscribe((result) => {
+      if (result) {
+        console.log('Dados do compartilhamento:', result);
+      }
+    });
   }
 
 }

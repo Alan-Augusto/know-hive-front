@@ -102,9 +102,20 @@ export class FormService {
 
   public requiredValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
 
-      const isValid = control.value && control.value.trim() !== '';
-      return isValid ? null : { message: 'Campo obrigatório.' };
+      // Para strings: verifica se não é vazio ou só espaços
+      if (typeof value === 'string') {
+        return value.trim() !== '' ? null : { message: 'Campo obrigatório.' };
+      }
+
+      // Para números: verifica se não é null ou undefined
+      if (typeof value === 'number') {
+        return value !== null && value !== undefined ? null : { message: 'Campo obrigatório.' };
+      }
+
+      // Para outros tipos (ex: boolean, objetos, arrays)
+      return value ? null : { message: 'Campo obrigatório.' };
     };
   }
 

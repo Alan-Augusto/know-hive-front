@@ -13,21 +13,25 @@
         <i class="ti ti-trash"></i>
       </kh-button>
 
-      <!-- <kh-button
+      <kh-button
         size="small"
         type="tertiary"
         [onlyIcon]="true"
         [pTooltip]="'Compartilhar questão'"
-        tooltipPosition="top">
+        tooltipPosition="top"
+        (click)="shareQuestion(item().id || null)"
+      >
         <i class="ti ti-share"></i>
-      </kh-button> -->
+      </kh-button>
 
       <kh-button
         size="small"
         type="tertiary"
         [onlyIcon]="true"
         [pTooltip]="'Editar questão'"
-        tooltipPosition="top">
+        tooltipPosition="top"
+        (click)="editQuestion(item().id || null)"
+      >
         <i class="ti ti-edit"></i>
       </kh-button>
     </div>

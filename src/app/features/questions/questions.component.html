@@ -52,5 +52,7 @@
   <question-card
     [item]="item"
     (onDelete)="deleteQuestion($event)"
+    (onEdit)="editQuestion($event)"
+    (onShare)="shareQuestion($event)"
   />
 </ng-template>
