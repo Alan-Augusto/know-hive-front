@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 import { FormService } from '../../../services/utils/form.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { ICollectionPermissionType } from '../../../entity/collectionPermissionType.interface';
 import { CollectionPermissionTypeService } from '../../../services/collection-permission-type/collection-permission-type.service';
 import { IQuestionUserAccess } from '../../../entity/questionUserAccess.interface';
+import { QuestionUserAccessService } from '../../../services/question-user-access/question-user-access.service';
+import { LoggedUserService } from '../../../services/logged-user/logged-user.service';
 
 @Component({
   selector: 'question-share',
@@ -32,50 +34,15 @@ export class QuestionShareComponent {
   private formService = inject(FormService);
   private notificationService = inject(NotificationService);
   private collectionPermissionTypeService = inject(CollectionPermissionTypeService);
+  private questionUserAccessService = inject(QuestionUserAccessService);
+  private dynamicDialogConfig = inject(DynamicDialogConfig);
+  private loggedUserService = inject(LoggedUserService);
 
+  user = computed(() => this.loggedUserService.loggedUser());
   isSharing = signal<boolean>(false);
-
-  // Mock data for permission types
+  questionId = signal<string>('');
   permissionTypes = signal<ICollectionPermissionType[]>([]);
-
-  shareList = signal<IQuestionUserAccess[]>([
-    {
-      id: '1',
-      user_id: '123456',
-      question_id: '987654',
-      permission_type_id: 1,
-      user: {
-        id: '123456',
-        email: 'fulaninho@outlook.com',
-        name: 'Fulano de Tal',
-        profile_picture: 'https://notion-avatar.app/api/svg/eyJmYWNlIjo2LCJub3NlIjo1LCJtb3V0aCI6MTcsImV5ZXMiOjAsImV5ZWJyb3dzIjo0LCJnbGFzc2VzIjoxMCwiaGFpciI6MTMsImFjY2Vzc29yaWVzIjowLCJkZXRhaWxzIjowLCJiZWFyZCI6MCwiZmxpcCI6MCwiY29sb3IiOiJyZ2JhKDI1NSwgMCwgMCwgMCkiLCJzaGFwZSI6Im5vbmUifQ=='
-      }
-    },
-    {
-      id: '2',
-      user_id: '654321',
-      question_id: '987654',
-      permission_type_id: 2,
-      user: {
-        id: '654321',
-        email: 'beltrano@gmail.com',
-        name: 'Beltrano Silva',
-        profile_picture: 'https://notion-avatar.app/api/svg/eyJmYWNlIjo0LCJub3NlIjozLCJtb3V0aCI6MTAsImV5ZXMiOjEsImV5ZWJyb3dzIjozLCJnbGFzc2VzIjo4LCJoYWlyIjo4LCJhY2Nlc3NvcmllcyI6MSwiZGV0YWlscyI6MSwiYmVhcmQiOjEsImZsaXAiOjEsImNvbG9yIjoicmdiYSgwLCAxMjgsIDI1NSwgMCkiLCJzaGFwZSI6Im5vbmUifQ=='
-      }
-    },
-    {
-      id: '3',
-      user_id: '789012',
-      question_id: '987654',
-      permission_type_id: 3,
-      user: {
-        id: '789012',
-        email: 'ciclana@empresa.com',
-        name: 'Ciclana Pereira',
-        profile_picture: 'https://notion-avatar.app/api/svg/eyJmYWNlIjozLCJub3NlIjo0LCJtb3V0aCI6MTIsImV5ZXMiOjIsImV5ZWJyb3dzIjo1LCJnbGFzc2VzIjo3LCJoYWlyIjo5LCJhY2Nlc3NvcmllcyI6MiwiZGV0YWlscyI6MiwiYmVhcmQiOjIsImZsaXAiOjIsImNvbG9yIjoicmdiYSgyNTUsIDI1NSwgMCwgMCkiLCJzaGFwZSI6Im5vbmUifQ=='
-      }
-    }
-  ]);
+  shareList = signal<IQuestionUserAccess[]>([]);
 
   formGroup: FormGroup = this.fb.group({
     email: [null, [this.formService.requiredValidator(), this.formService.emailValidator()]],
@@ -83,8 +50,21 @@ export class QuestionShareComponent {
   });
 
   ngOnInit() {
+    this.receiveData();
     this.loadPermissionTypes();
-    this.formGroup.controls['permission'].setValue(this.shareList()[0].id); // Default permission
+    this.loadShareList();
+  }
+
+    receiveData() {
+    const data = this.dynamicDialogConfig.data;
+    if (data && data.questionId) {
+      this.questionId.set(data.questionId);
+      console.log('ID da questão recebida:', this.questionId());
+    }
+    else{
+      this.notificationService.toastError('Dados inválidos recebidos.');
+      this.dynamicDialogRef.close();
+    }
   }
 
   loadPermissionTypes() {
@@ -97,6 +77,23 @@ export class QuestionShareComponent {
         this.notificationService.toastError('Erro ao carregar os tipos de permissão.');
         console.error(error);
         this.dynamicDialogRef.close();
+      },
+      complete:()=>{
+        this.formGroup.controls['permission'].setValue(this.permissionTypes()[0].id);
+      }
+    });
+  }
+
+  loadShareList(){
+    this.questionUserAccessService.findAllByQuestion(this.questionId()).subscribe({
+      next: (data) => {
+        this.shareList.set(data as IQuestionUserAccess[]);
+        console.log('Lista de compartilhamento carregada:', this.shareList());
+      },
+      error: (error) => {
+        this.notificationService.toastError('Erro ao carregar a lista de compartilhamento.');
+        console.error(error);
+        this.dynamicDialogRef.close();
       }
     });
   }
@@ -107,16 +104,26 @@ export class QuestionShareComponent {
       return;
     }
 
+    const email = this.formGroup.value.email;
+    const permissionId = this.formGroup.value.permission;
+
     this.isSharing.set(true);
+    this.questionUserAccessService.grantAccess(this.user().id, this.questionId(), email, permissionId).subscribe({
+      next: (data) => {
+        this.notificationService.toastSuccess('Acesso concedido com sucesso!');
+        this.loadShareList();
+        this.formGroup.reset();
+      },
+      error: (error) => {
+        this.notificationService.toastError('Erro ao conceder acesso.');
+        this.isSharing.set(false);
+        console.error(error);
+      },
+      complete: () => {
+        this.isSharing.set(false);
+      }
+    })
 
-    const shareData = this.formGroup.getRawValue();
-
-    // Simulate API call
-    setTimeout(() => {
-      this.isSharing.set(false);
-      this.notificationService.toastSuccess('Convite enviado com sucesso!');
-      this.dynamicDialogRef.close(shareData);
-    }, 2000);
   }
 
   handleCancel() {

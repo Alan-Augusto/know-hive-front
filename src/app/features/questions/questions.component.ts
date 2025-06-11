@@ -132,6 +132,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
   }
 
   shareQuestion(id: string) {
+    console.log('Compartilhar questão com ID:', id);
     const ref = this.dialogService.open(
       QuestionShareComponent,
       {
@@ -144,6 +145,9 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
           '960px': '75vw',
           '640px': '90vw'
         },
+        data: {
+          questionId: id
+        }
       }
     );
 

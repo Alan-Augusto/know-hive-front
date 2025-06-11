@@ -7,7 +7,7 @@ import { IQuestionUserAccess } from '../../entity/questionUserAccess.interface';
 })
 export class QuestionUserAccessService extends BaseApiService {
 
-  override entityUrl = '/question-user-access';
+  override entityUrl = '/rel-question-user-access';
 
   create(data: IQuestionUserAccess) {
     return this.post('', data);
@@ -27,6 +27,20 @@ export class QuestionUserAccessService extends BaseApiService {
 
   remove(id: number) {
     return this.delete(`${id}`);
+  }
+
+  findAllByQuestion(questionId: string) {
+    return this.get(`question/${questionId}`);
+  }
+
+  grantAccess(giverUserId: string, questionId:string, receiverEmail: string, accessTypeId: number){
+    const data = {
+      giverUserId,
+      questionId,
+      receiverEmail,
+      accessTypeId
+    };
+    return this.post('grant-access', data);
   }
 
 }
