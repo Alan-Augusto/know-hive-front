@@ -6,23 +6,37 @@
 } @else {
   @if (viewMode() === 'table') {
     <div class="table-container">
-      <table>
-        <thead>
+      <table>        <thead>
           <tr>
             @for (col of columnDefs(); track col.field) {
               <th [style.width]="col.width">{{ col.header }}</th>
             }
           </tr>
-        </thead>
-        <tbody>
+        </thead>        <tbody>
           @for (item of data(); track item.id) {
-            <tr (click)="onItemClicked(item)">
+            <tr (click)="onItemClicked(item)" class="table-row">
               @for (col of columnDefs(); track col.field) {
                 <td>
                   {{
                     (item | getNestedProperty:col.field) | formatData:col.dataType:col.formatOptions
                   }}
                 </td>
+              }
+              @if (actions().length > 0) {
+                <div class="actions-overlay">
+                  <div class="actions-container">
+                    @for (action of actions(); track action.label) {
+                      <kh-button
+                        [type]="action.type || 'tertiary'"
+                        [onlyIcon]="true"
+                        [class.disabled]="isActionDisabled(action, item)"
+                        (click)="onActionClick(action, item, $event)"
+                      >
+                        <i class="ti ti-{{ action.icon }}"></i>
+                      </kh-button>
+                    }
+                  </div>
+                </div>
               }
             </tr>
           } @empty {
@@ -36,10 +50,9 @@
       </table>
     </div>
   }
-  @else {
-    <div class="cards-container">
+  @else {    <div class="cards-container">
       @for (item of data(); track item.id) {
-        <div class="card" (click)="onItemClicked(item)">
+        <div (click)="onItemClicked(item)">
           <ng-container
             [ngTemplateOutlet]="cardTemplate()!"
             [ngTemplateOutletContext]="{ $implicit: item }">

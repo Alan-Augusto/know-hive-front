@@ -9,3 +9,13 @@ export interface ColumnDefinition<T = any> {
     locale?: string;       // Ex: 'pt-BR'
   };
 }
+
+export interface ActionDefinition<T = any> {
+  label: string;
+  icon?: string;
+  tooltip?: string;
+  type?: 'primary' | 'secondary' | 'tertiary' | 'accent' | 'danger' | 'danger-light';
+  visible?: (row: T) => boolean;
+  disabled?: (row: T) => boolean;
+  onClick: (row: T) => void;
+}

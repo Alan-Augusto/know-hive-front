@@ -7,7 +7,7 @@ import { Component, computed, input } from '@angular/core';
   styleUrl: './kh-button.component.scss'
 })
 export class KhButtonComponent {
-  type = input<'primary' | 'secondary' | 'tertiary' | 'accent' | 'danger' | 'danger-light' | ''>('primary');
+  type = input<'primary' | 'secondary' | 'tertiary' | 'accent' | 'danger' | 'danger-light'>('primary');
   size = input<'small' | 'medium' | 'large'>('medium');
   onlyIcon = input<boolean>(false);
   disabled = input<boolean>(false);

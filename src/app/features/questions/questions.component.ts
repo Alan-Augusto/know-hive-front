@@ -70,6 +70,29 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
         }
       }
     ]);
+
+    this.actionsDef.set([
+      {
+        label: 'Excluir',
+        icon: 'ti ti-trash',
+        type: 'danger-light',
+        onClick: (row: IQuestion) => this.deleteQuestion(row.id || ''),
+        disabled: (row: IQuestion) => row.author?.id !== this.user()?.id
+      },
+      {
+        label: 'Compartilhar',
+        icon: 'ti ti-share',
+        onClick: (row: IQuestion) => this.shareQuestion(row.id || ''),
+        disabled: (row: IQuestion) => row.author?.id !== this.user()?.id
+      },
+      {
+        label: 'Editar',
+        icon: 'ti ti-pencil',
+        onClick: function (row: any): void {
+          throw new Error('Function not implemented.');
+        }
+      }
+    ])
   }
 
   createQuestion(){

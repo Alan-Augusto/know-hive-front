@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { LoggedUserService } from '../../../services/logged-user/logged-user.service';
 import { Observable } from 'rxjs';
-import { ColumnDefinition } from '../../dynamic-data-view/dynamic-data-view.interface';
+import { ActionDefinition, ColumnDefinition } from '../../dynamic-data-view/dynamic-data-view.interface';
 
 export class BaseListComponent<T = any> {
   // Services
@@ -13,6 +13,7 @@ export class BaseListComponent<T = any> {
   displayMode = signal<'table' | 'card'>('card');
   dataSource = signal<T[]>([]);
   columnDefs = signal<ColumnDefinition[]>([]);
+  actionsDef = signal<ActionDefinition[]>([]);
 
   // Computed properties
   user = computed(() => this.loggedUserService.loggedUser());

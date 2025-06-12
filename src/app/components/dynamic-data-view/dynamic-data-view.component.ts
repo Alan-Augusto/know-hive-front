@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, input, output, TemplateRef } from '@angular/core';
 import { FormatDataPipe } from './format-data.pipe';
 import { CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
-import { ColumnDefinition } from './dynamic-data-view.interface';
+import { ColumnDefinition, ActionDefinition } from './dynamic-data-view.interface';
 import { GetNestedPropertyPipe } from './get-nested-property.pipe';
+import { KhButtonComponent } from "../kh-button/kh-button.component";
 
 @Component({
   selector: 'dynamic-data-view',
   standalone: true,
-  imports: [CommonModule, FormatDataPipe, GetNestedPropertyPipe ], // Importa o pipe aqui
+  imports: [CommonModule, FormatDataPipe, GetNestedPropertyPipe, KhButtonComponent], // Importa o pipe aqui
   changeDetection: ChangeDetectionStrategy.OnPush, // Ideal para componentes baseados em Signals
   providers: [DatePipe, CurrencyPipe, PercentPipe], // Fornece os pipes para o FormatDataPipe
   templateUrl: './dynamic-data-view.component.html',
@@ -19,6 +20,9 @@ export class DynamicDataViewComponent <T extends { id: any }> {
 
   /** Array de objetos que define cada coluna/campo. */
   columnDefs = input.required<ColumnDefinition<T>[]>();
+
+  /** Array de ações disponíveis para cada linha */
+  actions = input<ActionDefinition<T>[]>([]);
 
   /** O modo de visualização: 'table' ou 'card'. Default: 'table' */
   viewMode = input<'table' | 'card'>('table');
@@ -40,5 +44,30 @@ export class DynamicDataViewComponent <T extends { id: any }> {
    */
   onItemClicked(item: T): void {
     this.itemClick.emit(item);
+  }
+
+  /**
+   * Executa uma ação específica em um item
+   * @param action A definição da ação
+   * @param item O item sobre o qual a ação será executada
+   * @param event O evento de clique (para prevenir propagação)
+   */
+  onActionClick(action: ActionDefinition<T>, item: T, event: Event): void {
+    event.stopPropagation(); // Previne o clique na linha
+
+    if (action.disabled && action.disabled(item)) {
+      return;
+    }
+
+    action.onClick(item);
+  }
+
+  /**
+   * Verifica se uma ação está desabilitada para um item específico
+   * @param action A definição da ação
+   * @param item O item a ser verificado
+   */
+  isActionDisabled(action: ActionDefinition<T>, item: T): boolean {
+    return action.disabled ? action.disabled(item) : false;
   }
 }

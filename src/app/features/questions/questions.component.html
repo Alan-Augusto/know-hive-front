@@ -41,6 +41,7 @@
   <div class="list-container">
     <dynamic-data-view
       [data]="filteredDataSource()"
+      [actions]="actionsDef()"
       [columnDefs]="columnDefs()"
       [viewMode]="displayMode()"
       [cardTemplate]="customCard"
