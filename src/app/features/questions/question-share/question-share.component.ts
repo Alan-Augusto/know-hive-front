@@ -112,7 +112,10 @@ export class QuestionShareComponent {
       next: (data) => {
         this.notificationService.toastSuccess('Acesso concedido com sucesso!');
         this.loadShareList();
-        this.formGroup.reset();
+        this.formGroup.reset({
+          email: null,
+          permission: this.permissionTypes()[0]?.id || null
+        });
       },
       error: (error) => {
         this.notificationService.toastError('Erro ao conceder acesso.');
