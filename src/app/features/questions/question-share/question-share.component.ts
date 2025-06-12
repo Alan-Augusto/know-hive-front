@@ -99,13 +99,22 @@ export class QuestionShareComponent {
   }
 
   handleShare() {
+    const email = this.formGroup.value.email;
+    const permissionId = this.formGroup.value.permission;
+
     if (!this.formService.validateForm(this.formGroup)) {
       this.notificationService.toastError('Verifique os campos do formulário.');
       return;
     }
-
-    const email = this.formGroup.value.email;
-    const permissionId = this.formGroup.value.permission;
+    if (this.isSharing()) {
+      this.notificationService.toastInfo('Já está processando o compartilhamento.');
+      return;
+    }
+    if (email == this.user().email) {
+      this.notificationService.toastError('Você não pode compartilhar uma questão com você mesmo.');
+      this.formGroup.controls['email'].setErrors({ 'invalid': true });
+      return;
+    }
 
     this.isSharing.set(true);
     this.questionUserAccessService.grantAccess(this.user().id, this.questionId(), email, permissionId).subscribe({
