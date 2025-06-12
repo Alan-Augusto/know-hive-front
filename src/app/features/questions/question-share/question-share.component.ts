@@ -135,7 +135,26 @@ export class QuestionShareComponent {
         this.isSharing.set(false);
       }
     })
+  }
 
+  handleDeleteShare(shareId: string) {
+    if (!shareId) {
+      this.notificationService.toastError('Erro ao remover o compartilhamento.');
+      this.handleCancel();
+      return;
+    }
+
+    this.questionUserAccessService.remove(shareId).subscribe({
+      next: () => {},
+      error: (error) => {
+        this.notificationService.toastError('Erro ao remover o compartilhamento.');
+        console.error(error);
+      },
+      complete: () => {
+        this.notificationService.toastInfo('Permissão removida!');
+        this.loadShareList();
+      }
+    });
   }
 
   handleCancel() {

@@ -17,15 +17,15 @@ export class QuestionUserAccessService extends BaseApiService {
     return this.get('');
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.get(`${id}`);
   }
 
-  update(id: number, data: IQuestionUserAccess) {
+  update(id: string, data: IQuestionUserAccess) {
     return this.patch(`${id}`, data);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.delete(`${id}`);
   }
 

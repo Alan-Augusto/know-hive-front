@@ -45,7 +45,9 @@
           type="danger-light"
           [onlyIcon]="true"
           tooltipPosition="top"
-          class="share-item-trash">
+          class="share-item-trash"
+          (click)="handleDeleteShare(item.id)"
+          >
           <i class="ti ti-trash"></i>
         </kh-button>
       </div>
