@@ -54,7 +54,6 @@ export class QuestionFormComponent {
   findTypes() {
     this.questionTypesService.findAll().subscribe({
       next: (types) => {
-        console.log('Fetched question types:', types);
         this.questionsTypes.set(types as IQuestionType[]);
       },
       error: (err) => {

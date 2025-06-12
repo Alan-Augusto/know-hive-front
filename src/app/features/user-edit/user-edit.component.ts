@@ -44,7 +44,6 @@ export class UserEditComponent {
 
   handleFileInput(event: any) {
     const file = event.target.files[0];
-    console.log(typeof file, file);
     if (file) {
       this.img_upload.set(file);
       this.uploadImageToImgur();
@@ -63,7 +62,6 @@ export class UserEditComponent {
             this.notificationService.toastError('Image upload failed');
             return;
           }
-          console.log('Image uploaded successfully:', res);
           const imageUrl = res.url;
           this.user.update(user => ({
             ...user,

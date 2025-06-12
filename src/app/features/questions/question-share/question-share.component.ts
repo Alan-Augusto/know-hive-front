@@ -59,10 +59,9 @@ export class QuestionShareComponent {
     const data = this.dynamicDialogConfig.data;
     if (data && data.questionId) {
       this.questionId.set(data.questionId);
-      console.log('ID da questão recebida:', this.questionId());
     }
     else{
-      this.notificationService.toastError('Dados inválidos recebidos.');
+      this.notificationService.toastError('Erro ao abrir opção de compartilhamento.');
       this.dynamicDialogRef.close();
     }
   }
@@ -71,7 +70,6 @@ export class QuestionShareComponent {
     this.collectionPermissionTypeService.findAll().subscribe({
       next: (data) => {
         this.permissionTypes.set(data as ICollectionPermissionType[]);
-        console.log('Tipos de permissão carregados:', this.permissionTypes());
       },
       error: (error) => {
         this.notificationService.toastError('Erro ao carregar os tipos de permissão.');
@@ -88,7 +86,6 @@ export class QuestionShareComponent {
     this.questionUserAccessService.findAllByQuestion(this.questionId()).subscribe({
       next: (data) => {
         this.shareList.set(data as IQuestionUserAccess[]);
-        console.log('Lista de compartilhamento carregada:', this.shareList());
       },
       error: (error) => {
         this.notificationService.toastError('Erro ao carregar a lista de compartilhamento.');

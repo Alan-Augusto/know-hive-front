@@ -29,7 +29,6 @@ export class LayoutComponent {
         const route = this.getActivatedRoute();
         this.showMenu.set(route?.snapshot.data?.['showMenu'] != false);
       }
-      console.log('showMenu', this.showMenu());
     });
   }
   getActivatedRoute() {

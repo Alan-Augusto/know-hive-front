@@ -132,7 +132,6 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
   }
 
   shareQuestion(id: string) {
-    console.log('Compartilhar questão com ID:', id);
     const ref = this.dialogService.open(
       QuestionShareComponent,
       {
@@ -151,11 +150,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
       }
     );
 
-    ref.onClose.subscribe((result) => {
-      if (result) {
-        console.log('Dados do compartilhamento:', result);
-      }
-    });
+    ref.onClose.subscribe((result) => {});
   }
 
 }

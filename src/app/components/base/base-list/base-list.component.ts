@@ -35,7 +35,6 @@ export class BaseListComponent<T = any> {
     asyncMethod().subscribe({
       next: (data: T[]) => {
         this.dataSource.set(data);
-        console.log('Data loaded successfully:', data);
       },
       error: (error) => {
         console.error('Error loading data:', error);

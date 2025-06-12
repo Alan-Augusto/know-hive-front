@@ -42,7 +42,7 @@ export class ColorService {
     },
     blue: {
       50: '#eff6ff',
-      100: '#dbeafe', 
+      100: '#dbeafe',
       200: '#bfdbfe',
       300: '#93c5fd',
       400: '#60a5fa',
@@ -156,11 +156,10 @@ export class ColorService {
   }
 
   setColor(color: string) {
-    console.log(color);
     if (this.colors().includes(color)) {
       this.color = this.colorValues[color];
     }
-    
+
     const theme = definePreset(Noir, {
       semantic: {
         accent: this.color
@@ -175,8 +174,8 @@ export class ColorService {
         }
       }
     })
-  
-    
+
+
   }
-  
+
 }
