@@ -92,6 +92,16 @@
           }
         }
       }
+      .form-alternatives-info{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: .5rem;
+        color: var(--p-text-secondary);
+        i{
+        color: var(--p-text-secondary);
+        }
+      }
     }
   }
 
