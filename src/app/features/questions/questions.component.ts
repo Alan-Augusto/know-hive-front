@@ -151,7 +151,25 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
   }
 
   editQuestion(id:string){
-
+    const ref = this.dialogService.open(
+      QuestionFormComponent,
+      {
+        header: '✍️Editar questão',
+        modal:true,
+        closable: true,
+        focusOnShow: false,
+        width: '30rem',
+        breakpoints: {
+            '960px': '75vw',
+            '640px': '90vw'
+        },
+        data: {
+          question: id
+        }
+      });
+    ref.onClose.subscribe(() => {
+      this.loadData(() => this.questionService.findByUser(this.user().id));
+    })
   }
 
   shareQuestion(id: string) {

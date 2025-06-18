@@ -1,3 +1,4 @@
+import { IAlternative } from "./alternative.interface";
 import { IQuestionType } from "./quentionType.interface";
 import { IUser } from "./user.interface";
 
@@ -11,4 +12,5 @@ export interface IQuestion {
   updated_at?: Date;
   author_id: string;
   author?: IUser;
+  alternatives?: IAlternative[];
 }

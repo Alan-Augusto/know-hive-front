@@ -34,4 +34,8 @@ export class QuestionsService extends BaseApiService {
     return this.get(`user/${id}`);
   }
 
+  createWithAlternatives(data: IQuestion) {
+    return this.post('with-alternatives', data);
+  }
+
 }
