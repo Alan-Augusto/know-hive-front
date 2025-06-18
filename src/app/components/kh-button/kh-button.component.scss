@@ -19,16 +19,17 @@
       justify-content: center;
     }
 
-    &:hover {
+    &:hover:not(.disabled) {
         transform: translateY(-2px);
     }
-    &:active {
+    &:active:not(.disabled) {
         transform: translateY(0);
         opacity: 0.9;
     }
     &.disabled {
         opacity: 0.5;
         cursor: not-allowed;
+        pointer-events: none;
     }
 
     // Types
@@ -42,7 +43,7 @@
     }
     &.tertiary {
         color: var(--p-text-base);
-        &:hover {
+        &:hover:not(.disabled) {
             background-color: var(--p-surface-card);
         }
     }
@@ -56,7 +57,7 @@
     }
     &.danger-light{
         color: var(--p-feedback-error-main) !important;
-        &:hover {
+        &:hover:not(.disabled) {
             background-color: var(--p-feedback-error-surface);
         }
         // border: 1px solid var(--p-feedback-error-main);
@@ -92,7 +93,11 @@
         font-size: 1.2rem;
         animation: spin 1s linear infinite;
     }
+}
 
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 ::ng-deep .kh-button.primary i {
@@ -105,14 +110,4 @@
 
 ::ng-deep .kh-button.danger-light i {
   color: var(--p-feedback-error-main) !important;
-}
-
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }

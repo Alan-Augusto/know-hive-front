@@ -17,6 +17,9 @@ import { IUser } from '../../../entity/user.interface';
   styleUrl: './question-card.component.scss'
 })
 export class QuestionCardComponent {
+
+  private notificationService = inject(NotificationService);
+
   item = input.required<IQuestion>();
   user = input.required<IUser>();
   onDelete = output<string>();
@@ -24,10 +27,8 @@ export class QuestionCardComponent {
   onEdit = output<string>();
 
   permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
-  canEdit = computed(() => {
-    console.log('Checking edit permission:', this.permissionType());
-    return this.permissionType() === en_CollectionPermissionType.EDIT || this.permissionType() === en_CollectionPermissionType.ADMIN
-  });
+  canEdit = computed(() => this.permissionType() === en_CollectionPermissionType.EDIT || this.permissionType() === en_CollectionPermissionType.ADMIN);
+  canShare = computed(() =>  this.permissionType() === en_CollectionPermissionType.ADMIN);
 
   ngOnInit() {
     this.veifyPermissionType();
@@ -55,11 +56,19 @@ export class QuestionCardComponent {
 
   shareQuestion(id:string|null){
     if(!id) return;
+    if(!this.canShare()) {
+      this.notificationService.toastError('Você não tem permissão para compartilhar esta pergunta.');
+      return;
+    }
     this.onShare.emit(id);
   }
 
   editQuestion(id:string|null){
     if(!id) return;
+    if(!this.canEdit()) {
+      this.notificationService.toastError('Você não tem permissão para editar esta pergunta.');
+      return;
+    }
     this.onEdit.emit(id);
   }
 

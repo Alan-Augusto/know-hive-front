@@ -19,6 +19,7 @@
         [onlyIcon]="true"
         [pTooltip]="'Compartilhar questão'"
         tooltipPosition="top"
+        [disabled]="!canShare()"
         (click)="shareQuestion(item().id || null)"
       >
         <i class="ti ti-share"></i>
