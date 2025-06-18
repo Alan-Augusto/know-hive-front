@@ -89,11 +89,9 @@ export class QuestionFormComponent implements OnInit {
   }  private checkEditMode(): void {
     const data = this.dialogConfig.data;
     if (data && data.question) {
-      console.log('Edit mode detected - received question data:', data.question);
       this.isEditMode.set(true);
       this.questionId.set(data.question);
     } else {
-      console.log('Create mode - no question data received');
       this.isEditMode.set(false);
       this.questionId.set(null);
     }
@@ -111,7 +109,6 @@ export class QuestionFormComponent implements OnInit {
   }
 
   private initializeForCreate() {
-    console.log('Initializing form for create mode');
     // Para criação, apenas inicializar com 2 alternativas vazias
     this.initializeEmptyAlternatives();
   }
@@ -128,7 +125,6 @@ export class QuestionFormComponent implements OnInit {
   private async loadQuestionById(id: string): Promise<void> {
     try {
       const question = await firstValueFrom(this.questionsService.findOne(String(id)) as Observable<IQuestion>);
-      console.log('Fetched question from server:', question);
       this.populateFormWithQuestion(question);
     } catch (error) {
       console.error('Error loading question:', error);
@@ -201,7 +197,6 @@ export class QuestionFormComponent implements OnInit {
 
     this.isSaving.set(true);
     const formData = this.prepareFormData();
-    console.log('Prepared form data:', formData);
 
     if (this.isEditMode()) {
       this.updateQuestion(formData);
@@ -283,11 +278,9 @@ export class QuestionFormComponent implements OnInit {
   }
 
   private createQuestion(questionData: IQuestion): void {
-    console.log('Creating new question:', questionData);
 
     this.questionsService.createWithAlternatives(questionData).subscribe({
       next: (question: any) => {
-        console.log('Question created successfully:', question);
         this.notificationService.toastSuccess(SUCCESS_MESSAGES.QUESTION_CREATED);
         this.dialogRef.close(questionData);
       },
@@ -302,7 +295,6 @@ export class QuestionFormComponent implements OnInit {
   }
 
   private updateQuestion(questionData: IQuestion): void {
-    console.log('Updating existing question:', questionData);
 
     if (!questionData.id) {
       console.error('Cannot update question without ID');
@@ -313,7 +305,6 @@ export class QuestionFormComponent implements OnInit {
 
     this.questionsService.update(String(questionData.id), questionData).subscribe({
       next: (question: any) => {
-        console.log('Question updated successfully:', question);
         this.notificationService.toastSuccess(SUCCESS_MESSAGES.QUESTION_UPDATED);
         this.dialogRef.close(questionData);
       },
