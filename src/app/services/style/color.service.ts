@@ -146,7 +146,7 @@ export class ColorService {
     }
   };
 
-  private color = this.colorValues['yellow'];
+  private color = this.colorValues['green'];
 
   getColorsOptions(){
     return this.colors().map(color => ({

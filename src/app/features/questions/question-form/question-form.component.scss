@@ -1,1 +1,104 @@
+.question-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.5rem 0;
 
+  .question-form-main{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.5rem 0;
+    width: 100% ;
+
+    .form-field {
+      width: 100%;
+    }
+
+    .form-input {
+      width: 100%;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      width: 100%;
+    }
+
+    .form-select {
+      width: 100%;
+    }
+  }
+  .question-form-alernatives{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    padding:0;
+    width: 100%;
+
+    .form-alternatives-header{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0;
+      span{
+        font-weight: 550;
+        font-size: .9rem;
+        flex: 1;
+        width: 100%;
+      }
+    }
+
+    .form-alernatives-list {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      width: 100%;
+      padding: 0;
+
+      .alternative-form-item {
+        border: 1px solid var(--p-surface-fluffy);
+        border-radius: .5rem;
+        padding: .5rem;
+        transition: border-color 0.2s;
+
+        &:hover {
+          border-color: var(--p-surface-card);
+        }
+
+        // Destaque visual para alternativa correta
+        &.correct-alternative {
+          background-color: var(--p-feedback-success-surface);
+        }
+
+        .alternative-form-content {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.75rem;
+          width: 100%;
+
+          .form-field {
+            flex: 1;
+          }
+
+          .remove-alternative-btn {
+            width: auto !important;
+          }
+        }
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    width: 100%;
+  }
+}

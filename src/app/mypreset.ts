@@ -43,7 +43,8 @@ export const Noir = definePreset(Aura, {
                 },
                 surface: {
                     base: '#ffffff',
-                    card: '{zinc.100}',
+                    fluffy: '#f5f5f5',
+                    card: '#eaeaea',
                     secondary: '{zinc.200}',
                     inverse: '{zinc.950}'
                 },
@@ -57,7 +58,7 @@ export const Noir = definePreset(Aura, {
                         surface: '#fef3c7'
                     },
                     success: {
-                        main: '#16a34a',
+                        main: '#15803D',
                         surface: '#dcfce7'
                     },
                     info: {
@@ -70,7 +71,6 @@ export const Noir = definePreset(Aura, {
                     md: '0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.2)',
                     lg: '0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.4)'
                 }
-
             },
             dark: {
                 text: {
@@ -81,6 +81,7 @@ export const Noir = definePreset(Aura, {
                 },
                 surface: {
                     base: '{zinc.1000}',
+                    fluffy: '{zinc.900}',
                     card: '{zinc.800}',
                     secondary: '{zinc.700}',
                     inverse: '{zinc.50}'

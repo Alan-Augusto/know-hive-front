@@ -1,19 +1,53 @@
-<div class="flex flex-column gap-4 align-items-center py-2" [formGroup]="formGroup">
-    <p-floatlabel variant="on" class="w-full">
-        <input pInputText id="over_label" formControlName="title" class="w-full" autocomplete="off" />
-        <label for="over_label">Título</label>
+<div class="question-form-container" [formGroup]="formGroup">
+  <div class="question-form-main">
+    <p-floatlabel variant="on" class="form-field">
+      <input pInputText id="title_input" formControlName="title" class="form-input" autocomplete="off" />
+      <label for="title_input">Título</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="w-full">
-        <textarea pTextarea id="over_label" formControlName="statement" rows="5" cols="30" style="resize: true; width: 100%;"></textarea>
-        <label for="over_label">Descrição</label>
+    <p-floatlabel variant="on" class="form-field">
+      <textarea pTextarea id="statement_textarea" formControlName="statement" rows="5" cols="30"
+        class="form-textarea"></textarea>
+      <label for="statement_textarea">Descrição</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="w-full">
-        <p-select inputId="on_label" [options]="questionsTypes()" formControlName="type" optionLabel="name" optionValue="id" styleClass="w-full" />
-        <label for="on_label">Tipo de questão</label>
+    <p-floatlabel variant="on" class="form-field">
+      <p-select inputId="type_select" [options]="questionsTypes()" formControlName="type" optionLabel="name"
+        optionValue="id" styleClass="form-select" />
+      <label for="type_select">Tipo de questão</label>
     </p-floatlabel>
-    <div class="flex flex-row gap-1 w-full">
-      <kh-button type="secondary" (click)="handleCancel()" widthType="full">Cancelar</kh-button>
-      <kh-button [loading]="isSaving()" (click)="handleSave()" widthType="full">Salvar</kh-button>
+  </div>
+
+  <div class="question-form-alernatives">
+    <div class="form-alternatives-header">
+      <span>Alternativas</span>
+      <kh-button type="secondary" size="small" (click)="handleAddAlternative()" class="w-auto">
+        <i class="ti ti-plus"></i>
+        Nova alternativa
+      </kh-button>
     </div>
 
+    <div class="form-alernatives-list">
+      @for (alternative of alternatives.controls; track $index) {
+        <div class="alternative-form-item"
+          [class.correct-alternative]="alternative.get('is_correct')?.value" [formGroup]="$any(alternative)">
+          <div class="alternative-form-content">
+            <p-checkbox [formControlName]="'is_correct'" [binary]="true" />
+            <p-floatlabel variant="on" class="w-full">
+              <input pInputText [id]="'alternative_input_' + $index" formControlName="text" class="form-input"
+                autocomplete="off" class="w-full"/>
+              <label [for]="'alternative_input_' + $index">Alternativa {{ $index + 1 }}</label>
+            </p-floatlabel>
+            <kh-button type="danger-light" size="small" [onlyIcon]="true" (click)="handleRemoveAlternative($index)"
+              class="remove-alternative-btn">
+              <i class="ti ti-trash"></i>
+            </kh-button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <kh-button type="secondary" (click)="handleCancel()" widthType="full">Cancelar</kh-button>
+    <kh-button [loading]="isSaving()" (click)="handleSave()" widthType="full">Salvar</kh-button>
+  </div>
 </div>
