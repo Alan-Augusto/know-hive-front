@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 import { DatePipe } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
@@ -7,6 +7,8 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { QuestionsService } from '../../../services/questions/questions.service';
 import { AskDialogComponent } from '../../../components/ask-dialog/ask-dialog.component';
 import { NotificationService } from '../../../services/notification/notification.service';
+import { en_CollectionPermissionType } from '../../../entity/collectionPermissionType.interface';
+import { IUser } from '../../../entity/user.interface';
 
 @Component({
   selector: 'question-card',
@@ -16,9 +18,35 @@ import { NotificationService } from '../../../services/notification/notification
 })
 export class QuestionCardComponent {
   item = input.required<IQuestion>();
+  user = input.required<IUser>();
   onDelete = output<string>();
   onShare = output<string>();
   onEdit = output<string>();
+
+  permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
+  canEdit = computed(() => {
+    console.log('Checking edit permission:', this.permissionType());
+    return this.permissionType() === en_CollectionPermissionType.EDIT || this.permissionType() === en_CollectionPermissionType.ADMIN
+  });
+
+  ngOnInit() {
+    this.veifyPermissionType();
+  }
+
+  veifyPermissionType(){
+    const item = this.item();
+    if(item && item.permissions && item.permissions.length > 0) {
+      const permission = item.permissions.find(p => p.user_id === this.user().id);
+      if(permission) {
+        this.permissionType.set(permission.permission_type_id);
+        console.log('User permission type:', this.permissionType());
+      } else {
+        this.permissionType.set(en_CollectionPermissionType.VIEW);
+      }
+    } else {
+      this.permissionType.set(en_CollectionPermissionType.VIEW);
+    }
+  }
 
   deleteQuestion(id:string|null){
     if(!id) return;

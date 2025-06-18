@@ -1,5 +1,6 @@
 import { IAlternative } from "./alternative.interface";
 import { IQuestionType } from "./quentionType.interface";
+import { IQuestionUserAccess } from "./questionUserAccess.interface";
 import { IUser } from "./user.interface";
 
 export interface IQuestion {
@@ -13,4 +14,5 @@ export interface IQuestion {
   author_id: string;
   author?: IUser;
   alternatives?: IAlternative[];
+  permissions?: IQuestionUserAccess[];
 }

@@ -52,6 +52,7 @@
 <ng-template #customCard let-item>
   <question-card
     [item]="item"
+    [user]="user()"
     (onDelete)="deleteQuestion($event)"
     (onEdit)="editQuestion($event)"
     (onShare)="shareQuestion($event)"

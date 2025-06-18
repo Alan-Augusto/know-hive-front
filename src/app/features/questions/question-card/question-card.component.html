@@ -30,6 +30,7 @@
         [onlyIcon]="true"
         [pTooltip]="'Editar questão'"
         tooltipPosition="top"
+        [disabled]="!canEdit()"
         (click)="editQuestion(item().id || null)"
       >
         <i class="ti ti-edit"></i>
