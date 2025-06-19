@@ -26,9 +26,10 @@ export class QuestionCardComponent {
   onShare = output<string>();
   onEdit = output<string>();
 
+  isOwner = computed(() => this.item().author_id === this.user().id);
   permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
-  canEdit = computed(() => this.permissionType() === en_CollectionPermissionType.EDIT || this.permissionType() === en_CollectionPermissionType.ADMIN);
-  canShare = computed(() =>  this.permissionType() === en_CollectionPermissionType.ADMIN);
+  canEdit = computed(() => this.permissionType() === en_CollectionPermissionType.EDIT || this.permissionType() === en_CollectionPermissionType.ADMIN || this.isOwner());
+  canShare = computed(() =>  this.permissionType() === en_CollectionPermissionType.ADMIN || this.isOwner());
 
   ngOnInit() {
     this.veifyPermissionType();
