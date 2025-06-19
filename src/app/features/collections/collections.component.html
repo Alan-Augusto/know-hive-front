@@ -1,1 +1,59 @@
-<p>collections works!</p>
+<div class="collection-container">
+  <div class="flex align-items-center gap-2 flex-wrap" [style.color]="'var(--p-text-base)'">
+    <h2 class="m-0 emoji">📚</h2>
+    <h2>Explore suas coleções.</h2>
+  </div>
+
+  @if(dataSource().length > 10){
+  <div class="search-container">
+    <input pInputText class="flex-1" autocomplete="off" placeholder="Procure por suas coleções..."
+      [ngModel]="searchTerm()" (ngModelChange)="setSearchTerm($event)" />
+    <kh-button type="secondary" class="w-10rem ml-2">
+      <i class="ti ti-search"></i>
+      <span class="search-text">Pesquisar</span>
+    </kh-button>
+  </div>
+  }
+
+  <div class="flex flex-row align-items-center gap-2 flex-wrap">
+    <div class="flex-1 list-options">
+      <kh-button size="small" [type]="optionSelect()=='all_collections' ? 'secondary' : 'tertiary'" class="w-10rem"
+        (click)="setOptionSelect('all_collections')">Todas as coleções</kh-button>
+      <kh-button size="small" [type]="optionSelect()=='create_with_me' ? 'secondary' : 'tertiary'" class="w-10rem"
+        (click)="setOptionSelect('create_with_me')">Criadas por mim</kh-button>
+      <kh-button size="small" [type]="optionSelect()=='share_with_me' ? 'secondary' : 'tertiary'" class="w-10rem"
+        (click)="setOptionSelect('share_with_me')">Compartilhados comigo</kh-button>
+    </div>
+
+    <div class="flex flex-row gap-1">
+      <kh-button size="small" type="secondary" [onlyIcon]="true" (click)="toggleDisplayMode()"
+        [pTooltip]="'Mudar modo de exibição'" tooltipPosition="top">
+        <i [class]="iconDisplayMode()"></i>
+      </kh-button>
+      <kh-button size="small" (click)="createCollection()">
+        <i class="ti ti-plus"></i>
+        <span class="ml-2">Nova Coleção</span>
+      </kh-button>
+    </div>
+
+  </div>
+
+  <div class="list-container">
+    <dynamic-data-view
+      [data]="filteredDataSource()"
+      [actions]="actionsDef()"
+      [columnDefs]="columnDefs()"
+      [viewMode]="displayMode()"
+      [cardTemplate]="customCard"
+    />
+  </div>
+</div>
+
+<ng-template #customCard let-item>  <collection-card
+    [item]="item"
+    [user]="user()"
+    (onDelete)="deleteCollection($event)"
+    (onEdit)="editCollection($event)"
+    (onShare)="shareCollection($event)"
+  />
+</ng-template>

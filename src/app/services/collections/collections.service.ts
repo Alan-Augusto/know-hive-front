@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseApiService } from '../base-api.service';
 import { ICollection } from '../../entity/collection.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class CollectionsService extends BaseApiService {
     return this.post('', data);
   }
 
-  findAll() {
+  findAll(): Observable<ICollection[]> {
     return this.get('');
   }
 
@@ -27,6 +28,10 @@ export class CollectionsService extends BaseApiService {
 
   remove(id: string) {
     return this.delete(`/${id}`);
+  }
+
+  findByUser(id: string): Observable<ICollection[]> {
+    return this.get(`user/${id}`);
   }
 
 }

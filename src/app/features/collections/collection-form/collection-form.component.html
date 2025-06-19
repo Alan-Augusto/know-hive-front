@@ -1,1 +1,23 @@
-<p>collection-form works!</p>
+<div class="collection-form-container" [formGroup]="collectionForm">
+  <div class="form-group">
+    <p-floatlabel variant="on" class="w-full">
+      <input pInputText id="title_input" formControlName="title" class="form-input" autocomplete="off" />
+      <label for="title_input">Título</label>
+    </p-floatlabel>
+  </div>
+
+  <div class="form-group">
+    <p-floatlabel variant="on" class="w-full">
+      <textarea pTextarea id="description_input" formControlName="description" class="form-input" rows="4"
+        autocomplete="off"></textarea>
+      <label for="description_input">Descrição</label>
+    </p-floatlabel>
+  </div>
+
+  <div class="form-actions">
+    <kh-button type="secondary" (click)="handleCancel()" widthType="full">Cancelar</kh-button>
+    <kh-button [loading]="isSaving()" [disabled]="isSaving()" (click)="handleSave()" widthType="full">
+      {{ isEditMode() ? 'Atualizar' : 'Salvar' }}
+    </kh-button>
+  </div>
+</div>
