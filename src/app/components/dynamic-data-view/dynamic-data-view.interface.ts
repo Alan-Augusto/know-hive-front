@@ -3,6 +3,7 @@ export interface ColumnDefinition<T = any> {
   header: string;
   width?: string;
   dataType?: 'date' | 'currency' | 'weight' | 'percent';
+  allowWrap?: boolean;
   formatOptions?: {
     currencyCode?: string; // Ex: 'BRL'
     dateFormat?: string;   // Ex: 'dd/MM/yyyy', 'shortDate'

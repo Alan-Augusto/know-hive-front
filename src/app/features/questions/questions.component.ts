@@ -16,6 +16,7 @@ import { QuestionCardComponent } from "./question-card/question-card.component";
 import { AskDialogComponent } from '../../components/ask-dialog/ask-dialog.component';
 import { NotificationService } from '../../services/notification/notification.service';
 import { QuestionShareComponent } from './question-share/question-share.component';
+import { en_CollectionPermissionType } from '../../entity/collectionPermissionType.interface';
 @Component({
   selector: 'questions',
   imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule, DynamicDataViewComponent, QuestionCardComponent],
@@ -50,21 +51,30 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
   configureData() {
     this.columnDefs.set([
       {
+        field: 'title',
+        header: 'Título',
+        width: '15%',
+      },
+      {
         field: 'statement',
-        header: 'Descrição'
+        header: 'Descrição',
+        width: '35%',
       },
       {
         field: 'type.name',
         header: 'Tipo',
+        width: '20%',
       },
       {
         field: 'author.name',
         header: 'Autor',
+        width: '20%',
       },
       {
         field: 'created_at',
         header: 'Criado em',
         dataType: 'date',
+        width: '10%',
         formatOptions: {
           dateFormat: 'dd/MM/yyyy',
         }
@@ -76,23 +86,51 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
         label: 'Excluir',
         icon: 'ti ti-trash',
         type: 'danger-light',
-        onClick: (row: IQuestion) => this.deleteQuestion(row.id || ''),
+        onClick: (row: IQuestion) => this.deleteQuestion(row.id || '', row.author?.id == this.user()?.id),
         disabled: (row: IQuestion) => row.author?.id !== this.user()?.id
       },
       {
         label: 'Compartilhar',
         icon: 'ti ti-share',
-        onClick: (row: IQuestion) => this.shareQuestion(row.id || ''),
-        disabled: (row: IQuestion) => row.author?.id !== this.user()?.id
+        onClick: (row: IQuestion) => this.shareQuestion(row.id || '', this.canShareQuestion(row)),
+        disabled: (row: IQuestion) => !this.canShareQuestion(row),
       },
       {
         label: 'Editar',
         icon: 'ti ti-pencil',
-        onClick: function (row: any): void {
-          throw new Error('Function not implemented.');
-        }
+        onClick: (row: IQuestion) => this.editQuestion(row.id || '', this.canEditQuestion(row)),
+        disabled: (row: IQuestion) =>  !this.canEditQuestion(row)
       }
     ])
+  }
+
+  getUserQuestionAcess(row: IQuestion): number {
+    if (!row.author || !this.user()) {
+      return en_CollectionPermissionType.VIEW;
+    }
+    if(row && row.permissions && row.permissions.length > 0) {
+      const permission = row.permissions.find(p => p.user_id === this.user().id);
+      if(permission) {
+        return permission.permission_type_id;
+      }
+    }
+    return en_CollectionPermissionType.VIEW;
+  }
+
+  canEditQuestion(row: IQuestion): boolean {
+    if (!row.author || !this.user()) {
+      return false;
+    }
+    const userAccess = this.getUserQuestionAcess(row);
+    return userAccess === en_CollectionPermissionType.EDIT || userAccess === en_CollectionPermissionType.ADMIN || row.author.id === this.user().id;
+  }
+
+  canShareQuestion(row: IQuestion): boolean {
+    if (!row.author || !this.user()) {
+      return false;
+    }
+    const userAccess = this.getUserQuestionAcess(row);
+    return userAccess === en_CollectionPermissionType.ADMIN || row.author.id === this.user().id;
   }
 
   createQuestion(){
@@ -114,9 +152,13 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
     })
   }
 
-  deleteQuestion(id: string) {
+  deleteQuestion(id: string, canDelete: boolean = false) {
     if (!id) {
       console.error('Question ID is null or undefined');
+      return;
+    }
+    if (!canDelete) {
+      this.notificationService.toastError('Você não tem permissão para excluir esta questão.');
       return;
     }
     const askDialog = this.dialogService.open(
@@ -150,7 +192,15 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
 
   }
 
-  editQuestion(id:string){
+  editQuestion(id:string, canEditQuestion: boolean = false) {
+    if (!id) {
+      console.error('Question ID is null or undefined');
+      return;
+    }
+    if (!canEditQuestion) {
+      this.notificationService.toastError('Você não tem permissão para editar esta questão.');
+      return;
+    }
     const ref = this.dialogService.open(
       QuestionFormComponent,
       {
@@ -172,7 +222,15 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
     })
   }
 
-  shareQuestion(id: string) {
+  shareQuestion(id: string, canShareQuestion: boolean = false) {
+    if (!id) {
+      console.error('Question ID is null or undefined');
+      return;
+    }
+    if (!canShareQuestion) {
+      this.notificationService.toastError('Você não tem permissão para compartilhar esta questão.');
+      return;
+    }
     const ref = this.dialogService.open(
       QuestionShareComponent,
       {

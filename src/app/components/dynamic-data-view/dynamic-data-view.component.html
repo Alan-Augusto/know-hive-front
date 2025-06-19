@@ -9,14 +9,13 @@
       <table>        <thead>
           <tr>
             @for (col of columnDefs(); track col.field) {
-              <th [style.width]="col.width">{{ col.header }}</th>
+              <th [style.width]="col.width" [class.allow-wrap]="col.allowWrap">{{ col.header }}</th>
             }
           </tr>
-        </thead>        <tbody>
-          @for (item of data(); track item.id) {
-            <tr (click)="onItemClicked(item)" class="table-row">
+        </thead><tbody>
+          @for (item of data(); track item.id) {            <tr (click)="onItemClicked(item)" class="table-row">
               @for (col of columnDefs(); track col.field) {
-                <td>
+                <td [class.allow-wrap]="col.allowWrap">
                   {{
                     (item | getNestedProperty:col.field) | formatData:col.dataType:col.formatOptions
                   }}
@@ -29,7 +28,7 @@
                       <kh-button
                         [type]="action.type || 'tertiary'"
                         [onlyIcon]="true"
-                        [class.disabled]="isActionDisabled(action, item)"
+                        [disabled]="isActionDisabled(action, item)"
                         (click)="onActionClick(action, item, $event)"
                       >
                         <i class="ti ti-{{ action.icon }}"></i>

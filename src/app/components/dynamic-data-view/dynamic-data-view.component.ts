@@ -71,3 +71,33 @@ export class DynamicDataViewComponent <T extends { id: any }> {
     return action.disabled ? action.disabled(item) : false;
   }
 }
+
+/**
+ * Componente de visualização dinâmica de dados
+ *
+ * ATUALIZAÇÃO: Agora as células da tabela usam text-overflow: ellipsis por padrão
+ *
+ * Características:
+ * - Os textos não quebram mais linha por padrão
+ * - Quando o texto é maior que a célula, aparece "..." (ellipsis)
+ * - A largura das colunas é respeitada, mesmo em telas menores
+ * - Para permitir quebra de texto em colunas específicas, use a propriedade `allowWrap: true`
+ *
+ * Exemplo de uso:
+ * ```typescript
+ * this.columnDefs.set([
+ *   {
+ *     field: 'title',
+ *     header: 'Título',
+ *     width: '30%',
+ *     // Esta coluna usará ellipsis (comportamento padrão)
+ *   },
+ *   {
+ *     field: 'description',
+ *     header: 'Descrição',
+ *     width: '50%',
+ *     allowWrap: true // Esta coluna permitirá quebra de linha
+ *   }
+ * ]);
+ * ```
+ */

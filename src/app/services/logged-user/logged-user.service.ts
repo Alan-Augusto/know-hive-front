@@ -7,10 +7,6 @@ import { Router } from '@angular/router';
 })
 export class LoggedUserService {
 
-  constructor() {
-    console.log('LoggedUserService initialized');
-  }
-
   private readonly USER_KEY = 'loggedUser';
   private readonly TOKEN_KEY = 'authToken';
 

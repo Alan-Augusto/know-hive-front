@@ -42,7 +42,6 @@ export class QuestionCardComponent {
       const permission = item.permissions.find(p => p.user_id === this.user().id);
       if(permission) {
         this.permissionType.set(permission.permission_type_id);
-        console.log('User permission type:', this.permissionType());
       } else {
         this.permissionType.set(en_CollectionPermissionType.VIEW);
       }

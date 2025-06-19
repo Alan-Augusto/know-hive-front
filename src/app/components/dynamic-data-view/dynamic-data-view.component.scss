@@ -17,12 +17,17 @@ table {
   border: 1px solid var(--p-primary-100);
   border-radius: .5rem;
   overflow: hidden;
+  table-layout: fixed;
 }
 
 th, td {
   padding: .75rem 1rem;
   text-align: left;
   border-bottom: 1px solid var(--p-primary-100);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 0;
 }
 
 th {
@@ -135,10 +140,13 @@ tbody tr:last-child td {
     gap: 1rem;
     padding: 0;
   }
-
   th, td {
     padding: 0.75rem 1rem;
     font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0;
   }
 
   th {
@@ -174,10 +182,13 @@ tbody tr:last-child td {
   .cards-container {
     gap: 0.75rem;
   }
-
   th, td {
     padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0;
   }
   .empty-state {
     padding: 1.5rem 0.75rem;
@@ -205,4 +216,13 @@ tbody tr:last-child td {
     border-color: var(--p-primary-800);
     border-top-color: var(--p-accent-400);
   }
+}
+
+/* Classe para permitir quebra de texto em colunas específicas */
+th.allow-wrap,
+td.allow-wrap {
+  white-space: normal !important;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: none !important;
 }

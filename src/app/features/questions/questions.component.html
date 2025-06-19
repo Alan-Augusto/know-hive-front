@@ -53,8 +53,8 @@
   <question-card
     [item]="item"
     [user]="user()"
-    (onDelete)="deleteQuestion($event)"
-    (onEdit)="editQuestion($event)"
-    (onShare)="shareQuestion($event)"
+    (onDelete)="deleteQuestion($event, true)"
+    (onEdit)="editQuestion($event, true)"
+    (onShare)="shareQuestion($event, true)"
   />
 </ng-template>
