@@ -49,11 +49,12 @@
   </div>
 </div>
 
-<ng-template #customCard let-item>  <collection-card
+<ng-template #customCard let-item>
+  <collection-card
     [item]="item"
     [user]="user()"
-    (onDelete)="deleteCollection($event)"
-    (onEdit)="editCollection($event)"
-    (onShare)="shareCollection($event)"
+    (onDelete)="deleteCollection($event, true)"
+    (onEdit)="editCollection($event, true)"
+    (onShare)="shareCollection($event, true)"
   />
 </ng-template>

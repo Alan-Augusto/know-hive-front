@@ -151,14 +151,7 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
       return;
     }
 
-    // Se foi chamado do card, verificar permissões
-    if (canDelete === undefined) {
-      const collection = this.dataSource().find(c => c.id === id);
-      if (!collection || collection.author?.id !== this.user()?.id) {
-        this.notificationService.toastError('Você não tem permissão para excluir esta coleção.');
-        return;
-      }
-    } else if (!canDelete) {
+    if (!canDelete) {
       this.notificationService.toastError('Você não tem permissão para excluir esta coleção.');
       return;
     }
@@ -206,14 +199,7 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
       return;
     }
 
-    // Se foi chamado do card, verificar permissões
-    if (canEditCollection === undefined) {
-      const collection = this.dataSource().find(c => c.id === id);
-      if (!collection || !this.canEditCollection(collection)) {
-        this.notificationService.toastError('Você não tem permissão para editar esta coleção.');
-        return;
-      }
-    } else if (!canEditCollection) {
+    if (!canEditCollection) {
       this.notificationService.toastError('Você não tem permissão para editar esta coleção.');
       return;
     }
@@ -245,14 +231,7 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
       return;
     }
 
-    // Se foi chamado do card, verificar permissões
-    if (canShareCollection === undefined) {
-      const collection = this.dataSource().find(c => c.id === id);
-      if (!collection || !this.canShareCollection(collection)) {
-        this.notificationService.toastError('Você não tem permissão para compartilhar esta coleção.');
-        return;
-      }
-    } else if (!canShareCollection) {
+    if (!canShareCollection) {
       this.notificationService.toastError('Você não tem permissão para compartilhar esta coleção.');
       return;
     }
