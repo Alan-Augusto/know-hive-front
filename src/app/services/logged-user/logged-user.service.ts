@@ -38,7 +38,13 @@ export class LoggedUserService {
   getUser(): IUser {
     const user = localStorage.getItem(this.USER_KEY);
     if (!user) {
+      this.logout();
       throw new Error('No user found');
+    }
+    const userParse = JSON.parse(user);
+    if(!userParse || userParse.id === 'error') {
+      this.logout();
+      throw new Error('Invalid user data');
     }
     return JSON.parse(user) as IUser;
   }
