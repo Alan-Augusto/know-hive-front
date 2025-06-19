@@ -8,7 +8,7 @@
       <textarea pTextarea id="statement_textarea" formControlName="statement" rows="5" cols="30"
         class="form-textarea"></textarea>
       <label for="statement_textarea">Descrição</label>
-    </p-floatlabel>    <p-floatlabel variant="on" class="form-field">
+    </p-floatlabel> <p-floatlabel variant="on" class="form-field">
       <p-select inputId="type_select" [options]="questionTypes()" formControlName="type" optionLabel="name"
         optionValue="id" styleClass="form-select" />
       <label for="type_select">Tipo de questão</label>
@@ -26,25 +26,51 @@
 
     <div class="form-alernatives-list">
       @for (alternative of alternatives.controls; track $index) {
-        <div class="alternative-form-item"
-          [class.correct-alternative]="alternative.get('is_correct')?.value" [formGroup]="$any(alternative)">
-          <div class="alternative-form-content">
-            <p-checkbox [formControlName]="'is_correct'" [binary]="true" />
-            <p-floatlabel variant="on" class="w-full">
-              <input pInputText [id]="'alternative_input_' + $index" formControlName="text" class="form-input"
-                autocomplete="off" class="w-full"/>
-              <label [for]="'alternative_input_' + $index">Alternativa {{ $index + 1 }}</label>
-            </p-floatlabel>
-            <kh-button type="danger-light" size="small" [onlyIcon]="true" (click)="handleRemoveAlternative($index)"
-              class="remove-alternative-btn">
-              <i class="ti ti-trash"></i>
-            </kh-button>
-          </div>
+      <div class="alternative-form-item" [class.correct-alternative]="alternative.get('is_correct')?.value"
+        [formGroup]="$any(alternative)">
+        <div class="alternative-form-content">
+          <p-checkbox [formControlName]="'is_correct'" [binary]="true" />
+          <p-floatlabel variant="on" class="w-full">
+            <input pInputText [id]="'alternative_input_' + $index" formControlName="text" class="form-input"
+              autocomplete="off" class="w-full" />
+            <label [for]="'alternative_input_' + $index">Alternativa {{ $index + 1 }}</label>
+          </p-floatlabel>
+          <kh-button type="danger-light" size="small" [onlyIcon]="true" (click)="handleRemoveAlternative($index)"
+            class="remove-alternative-btn">
+            <i class="ti ti-trash"></i>
+          </kh-button>
         </div>
+      </div>
       }
       <div class="form-alternatives-info">
         <i class="ti ti-info-circle"></i>
         <span>Marque a checkbox para indicar a resposta correta</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="visibility-config">
+    <h3 class="visibility-title">Configurações de Visibilidade</h3>
+
+    <div class="visibility-options">
+      <div class="visibility-option">
+        <p-radiobutton inputId="public" size="small" [value]="true" formControlName="is_public" />
+        <label for="public" class="visibility-label">
+          <i class="ti ti-world"></i>
+          <div class="visibility-text">
+            <span class="visibility-main">Público - Visível para todos os usuários</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="visibility-option">
+        <p-radiobutton inputId="private" size="small" [value]="false" formControlName="is_public" />
+        <label for="private" class="visibility-label">
+          <i class="ti ti-lock"></i>
+          <div class="visibility-text">
+            <span class="visibility-main">Privado - Visível apenas para você e para quem compartilhar</span>
+          </div>
+        </label>
       </div>
     </div>
   </div>

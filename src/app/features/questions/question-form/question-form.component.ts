@@ -6,6 +6,7 @@ import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TextareaModule } from 'primeng/textarea';
@@ -28,7 +29,7 @@ import {
 
 @Component({
   selector: 'question-form',
-  imports: [InputTextModule, SelectModule, TextareaModule, FloatLabelModule, CheckboxModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, KhButtonComponent],
+  imports: [InputTextModule, SelectModule, TextareaModule, FloatLabelModule, CheckboxModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, KhButtonComponent],
   templateUrl: './question-form.component.html',
   styleUrl: './question-form.component.scss'
 })
@@ -57,7 +58,6 @@ export class QuestionFormComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.initializeComponent();
   }
-
   // Form creation method
   private createFormGroup(): FormGroup {
     return this.fb.group({
@@ -67,7 +67,7 @@ export class QuestionFormComponent implements OnInit {
       type: [null as number | null, Validators.required],
       alternatives: this.fb.array([]),
       author_id: [this.currentUser().id as string],
-      is_public:  [false],
+      is_public: [false],
       created_at: [null as Date | null],
     });
   }
@@ -131,8 +131,7 @@ export class QuestionFormComponent implements OnInit {
       console.error('Error loading question:', error);
       this.notificationService.toastError(ERROR_MESSAGES.LOAD_QUESTION);
     }
-  }
-  private populateFormWithQuestion(question: IQuestion): void {
+  }  private populateFormWithQuestion(question: IQuestion): void {
     // Preencher o formulário com os dados da questão
     this.formGroup.patchValue({
       id: question.id || null,
@@ -140,6 +139,7 @@ export class QuestionFormComponent implements OnInit {
       statement: question.statement || null,
       type: question.type_id,
       author_id: question.author_id || this.currentUser().id,
+      is_public: question.is_public || false,
       created_at: question.created_at || null
     });
 
