@@ -6,12 +6,29 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class LoggedUserService {
+
+  constructor() {
+    console.log('LoggedUserService initialized');
+  }
+
   private readonly USER_KEY = 'loggedUser';
   private readonly TOKEN_KEY = 'authToken';
 
   private router = inject(Router);
 
-  loggedUser = signal<IUser>(this.getUser());
+  loggedUser = signal<IUser>(this.initializeUser());
+
+  errorUser: IUser = {
+    id: 'error',
+    name: 'error',
+    email: 'error'
+  }
+
+
+  private initializeUser(): IUser {
+    const user = localStorage.getItem(this.USER_KEY);
+    return user ? JSON.parse(user) as IUser : this.errorUser;
+  }
 
   setUser(user: IUser): void {
     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
@@ -21,10 +38,9 @@ export class LoggedUserService {
   getUser(): IUser {
     const user = localStorage.getItem(this.USER_KEY);
     if (!user) {
-      this.logout()
       throw new Error('No user found');
     }
-    return JSON.parse(user) as IUser
+    return JSON.parse(user) as IUser;
   }
 
   setToken(token: string): void {
@@ -44,7 +60,7 @@ export class LoggedUserService {
   logout(): void {
     localStorage.removeItem(this.USER_KEY);
     localStorage.removeItem(this.TOKEN_KEY);
+    this.loggedUser.set(this.errorUser);
     this.router.navigate(['/login']);
   }
-
 }
