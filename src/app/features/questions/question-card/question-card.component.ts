@@ -58,7 +58,7 @@ export class QuestionCardComponent {
   shareQuestion(id:string|null){
     if(!id) return;
     if(!this.canShare()) {
-      this.notificationService.toastError('Você não tem permissão para compartilhar esta pergunta.');
+      this.notificationService.toastError('Você não tem permissão para compartilhar esta questão.');
       return;
     }
     this.onShare.emit(id);
@@ -67,7 +67,7 @@ export class QuestionCardComponent {
   editQuestion(id:string|null){
     if(!id) return;
     if(!this.canEdit()) {
-      this.notificationService.toastError('Você não tem permissão para editar esta pergunta.');
+      this.notificationService.toastError('Você não tem permissão para editar esta questão.');
       return;
     }
     this.onEdit.emit(id);

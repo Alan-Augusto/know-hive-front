@@ -122,10 +122,10 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
     const askDialog = this.dialogService.open(
       AskDialogComponent,
       {
-        header: 'Excluir pergunta',
+        header: 'Excluir questão',
         width: '30rem',
         data: {
-          prompt: 'Você tem certeza que deseja excluir esta pergunta?'
+          prompt: 'Você tem certeza que deseja excluir esta questão?'
         },
         modal: true,
         closable: false,
@@ -136,7 +136,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
       if (result) {
         this.questionService.remove(id).subscribe({
           next: () => {
-            this.notificationService.toastInfo('Pergunta excluída com sucesso!');
+            this.notificationService.toastInfo('Questão excluída com sucesso!');
           },
           error: (err) => {
             console.error('Error deleting question:', err);
