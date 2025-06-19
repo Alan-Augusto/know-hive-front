@@ -21,7 +21,7 @@ export class QuestionUserAccessService extends BaseApiService {
     return this.get(`${id}`);
   }
 
-  update(id: string, data: IQuestionUserAccess) {
+  update(id: string, data: Partial<IQuestionUserAccess>) {
     return this.patch(`${id}`, data);
   }
 

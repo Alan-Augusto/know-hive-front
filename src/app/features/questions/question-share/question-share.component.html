@@ -37,6 +37,7 @@
           styleClass="share-item-select"
           appendTo="body"
           [ngModel]="item.permission_type_id"
+          (ngModelChange)="handlePermissionChange(item.id, $event)"
         />
 
 

@@ -154,6 +154,25 @@ export class QuestionShareComponent {
     });
   }
 
+  handlePermissionChange(id:string, permissionId: number) {
+    if (!id || !permissionId) {
+      this.notificationService.toastError('Erro ao atualizar a permissão.');
+      return;
+    }
+
+    this.questionUserAccessService.update(id, {permission_type_id:permissionId}).subscribe({
+      next: () => {},
+      error: (error) => {
+        this.notificationService.toastError('Erro ao atualizar a permissão.');
+        console.error(error);
+      },
+      complete: () => {
+        this.notificationService.toastInfo('Permissão atualizada!');
+        this.loadShareList();
+      }
+    });
+  }
+
   handleCancel() {
     this.dynamicDialogRef.close();
   }
