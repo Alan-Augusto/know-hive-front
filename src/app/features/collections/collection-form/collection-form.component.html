@@ -5,13 +5,38 @@
       <label for="title_input">Título</label>
     </p-floatlabel>
   </div>
-
   <div class="form-group">
     <p-floatlabel variant="on" class="w-full">
       <textarea pTextarea id="description_input" formControlName="description" class="form-input" rows="4"
         autocomplete="off"></textarea>
       <label for="description_input">Descrição</label>
     </p-floatlabel>
+  </div>
+
+  <div class="visibility-config">
+    <h3 class="visibility-title">Configurações de Visibilidade</h3>
+
+    <div class="visibility-options">
+      <div class="visibility-option">
+        <p-radiobutton inputId="public" size="small" [value]="true" formControlName="is_public" />
+        <label for="public" class="visibility-label">
+          <i class="ti ti-world"></i>
+          <div class="visibility-text">
+            <span class="visibility-main">Público - Visível para todos os usuários</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="visibility-option">
+        <p-radiobutton inputId="private" size="small" [value]="false" formControlName="is_public" />
+        <label for="private" class="visibility-label">
+          <i class="ti ti-lock"></i>
+          <div class="visibility-text">
+            <span class="visibility-main">Privado - Visível apenas para você e para quem compartilhar</span>
+          </div>
+        </label>
+      </div>
+    </div>
   </div>
 
   <div class="form-actions">

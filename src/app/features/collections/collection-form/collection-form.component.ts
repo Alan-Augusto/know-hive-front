@@ -3,6 +3,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TextareaModule } from 'primeng/textarea';
@@ -14,7 +15,7 @@ import { FormService } from '../../../services/utils/form.service';
 
 @Component({
   selector: 'collection-form',
-  imports: [InputTextModule, TextareaModule, FloatLabelModule, FormsModule, ReactiveFormsModule, CommonModule, KhButtonComponent],
+  imports: [InputTextModule, TextareaModule, FloatLabelModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, KhButtonComponent],
   templateUrl: './collection-form.component.html',
   styleUrl: './collection-form.component.scss'
 })
@@ -43,11 +44,11 @@ export class CollectionFormComponent implements OnInit {
     this.initializeForm();
     this.handleDialogData();
   }
-
   private initializeForm(): void {
     this.collectionForm = this.fb.group({
       title: ['', [this.formService.requiredValidator()]],
-      description: ['', [this.formService.requiredValidator()]]
+      description: ['', [this.formService.requiredValidator()]],
+      is_public: [false]
     });
   }
 
@@ -62,11 +63,11 @@ export class CollectionFormComponent implements OnInit {
 
   private async loadCollectionData(collectionId: string): Promise<void> {
     try {
-      const collection = await this.collectionsService.findOne(collectionId).toPromise() as ICollection;
-      if (collection) {
+      const collection = await this.collectionsService.findOne(collectionId).toPromise() as ICollection;      if (collection) {
         this.collectionForm.patchValue({
           title: collection.title,
-          description: collection.description
+          description: collection.description,
+          is_public: collection.is_public || false
         });
       }
     } catch (error) {
@@ -81,13 +82,11 @@ export class CollectionFormComponent implements OnInit {
     }
 
     this.isSaving.set(true);
-    const formData = this.collectionForm.getRawValue();
-
-    const collectionData: ICollection = {
+    const formData = this.collectionForm.getRawValue();    const collectionData: ICollection = {
       title: formData.title,
       description: formData.description,
       author_id: this.user().id,
-      is_public: false
+      is_public: formData.is_public
     };
 
     const saveOperation = this.isEditMode()
