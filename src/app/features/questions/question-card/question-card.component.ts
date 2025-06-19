@@ -9,10 +9,11 @@ import { AskDialogComponent } from '../../../components/ask-dialog/ask-dialog.co
 import { NotificationService } from '../../../services/notification/notification.service';
 import { en_CollectionPermissionType } from '../../../entity/collectionPermissionType.interface';
 import { IUser } from '../../../entity/user.interface';
+import { ButtonLikeComponent } from "../../../components/button-like/button-like.component";
 
 @Component({
   selector: 'question-card',
-  imports: [KhButtonComponent, DatePipe, TooltipModule],
+  imports: [KhButtonComponent, DatePipe, TooltipModule, ButtonLikeComponent],
   templateUrl: './question-card.component.html',
   styleUrl: './question-card.component.scss'
 })
