@@ -5,7 +5,7 @@ export interface ICollectionUserAccess {
   user_id: string;
   collection_id: string;
   permission_type_id: number;
-  user?: IUser;
+  user: IUser;
   created_at?: Date;
   updated_at?: Date;
 }

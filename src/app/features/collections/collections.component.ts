@@ -243,7 +243,7 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
         modal: true,
         closable: true,
         focusOnShow: false,
-        width: '25rem',
+        width: '32rem',
         breakpoints: {
           '960px': '75vw',
           '640px': '90vw'

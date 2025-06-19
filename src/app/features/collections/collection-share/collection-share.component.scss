@@ -89,6 +89,8 @@
   }
 }
 
+
+
 // Responsividade
 @media (max-width: 480px) {
   .share-container {
@@ -97,14 +99,7 @@
     gap: 1.25rem;
   }
 
-  .share-item {
-    .share-item-description {
-      width: 8rem !important;
-    }
-
-    .share-item-trash {
-      width: 2rem !important;
-      opacity: 1 !important;
-    }
+  .share-form {
+    gap: 1rem;
   }
 }

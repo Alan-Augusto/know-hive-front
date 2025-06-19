@@ -34,7 +34,7 @@ export class CollectionShareComponent {
   private formService = inject(FormService);
   private notificationService = inject(NotificationService);
   private collectionPermissionTypeService = inject(CollectionPermissionTypeService);
-  private collectionUserAccessService = inject(CollectionUserAccessService);
+  private collectionUserAccesService = inject(CollectionUserAccessService);
   private dynamicDialogConfig = inject(DynamicDialogConfig);
   private loggedUserService = inject(LoggedUserService);
 
@@ -57,8 +57,12 @@ export class CollectionShareComponent {
 
   receiveData() {
     const data = this.dynamicDialogConfig.data;
-    if (data?.collectionId) {
+    if (data && data.collectionId) {
       this.collectionId.set(data.collectionId);
+    }
+    else {
+      this.notificationService.toastError('Erro ao abrir opção de compartilhamento.');
+      this.dynamicDialogRef.close();
     }
   }
 
@@ -72,18 +76,18 @@ export class CollectionShareComponent {
         console.error(error);
         this.dynamicDialogRef.close();
       },
-      complete:()=>{
+      complete: () => {
         this.formGroup.controls['permission'].setValue(this.permissionTypes()[0].id);
       }
     });
   }
 
-  loadShareList(){
-    this.collectionUserAccessService.findAllByCollection(this.collectionId()).subscribe({
-      next: (data) => {
+  loadShareList() {
+    this.collectionUserAccesService.findAllByCollection(this.collectionId()).subscribe({
+      next: (data:any) => {
         this.shareList.set(data as ICollectionUserAccess[]);
       },
-      error: (error) => {
+      error: (error:any) => {
         this.notificationService.toastError('Erro ao carregar a lista de compartilhamento.');
         console.error(error);
         this.dynamicDialogRef.close();
@@ -92,54 +96,81 @@ export class CollectionShareComponent {
   }
 
   handleShare() {
-    if(!this.formService.validateForm(this.formGroup)) {
+    const email = this.formGroup.value.email;
+    const permissionId = this.formGroup.value.permission;
+
+    if (!this.formService.validateForm(this.formGroup)) {
+      this.notificationService.toastError('Verifique os campos do formulário.');
       return;
     }
+    if (this.isSharing()) {
+      this.notificationService.toastInfo('Já está processando o compartilhamento.');
+      return;
+    }
+    if (email == this.user().email) {
+      this.notificationService.toastError('Você não pode compartilhar uma questão com você mesmo.');
+      this.formGroup.controls['email'].setErrors({ 'invalid': true });
+      return;
+    }
+
     this.isSharing.set(true);
-
-    const email = this.formGroup.controls['email'].value;
-    const permissionId = this.formGroup.controls['permission'].value;
-
-    this.collectionUserAccessService.grantAccess(this.user().id, this.collectionId(), email, permissionId).subscribe({
+    this.collectionUserAccesService.grantAccess(this.user().id, this.collectionId(), email, permissionId).subscribe({
       next: (data) => {
-        this.notificationService.toastSuccess('Coleção compartilhada com sucesso!');
+        this.notificationService.toastSuccess('Acesso concedido com sucesso!');
         this.loadShareList();
-        this.formGroup.reset();
-        this.formGroup.controls['permission'].setValue(this.permissionTypes()[0].id);
-        this.isSharing.set(false);
+        this.formGroup.reset({
+          email: null,
+          permission: this.permissionTypes()[0]?.id || null
+        });
       },
       error: (error) => {
-        this.notificationService.toastError('Erro ao compartilhar coleção.');
+        this.notificationService.toastError('Erro ao conceder acesso.');
+        this.isSharing.set(false);
         console.error(error);
+      },
+      complete: () => {
         this.isSharing.set(false);
       }
     })
   }
 
-  handleDeleteShare(shareId: string) {
-    this.collectionUserAccessService.remove(shareId).subscribe({
-      next: (data) => {
-        this.notificationService.toastSuccess('Compartilhamento removido com sucesso!');
-        this.loadShareList();
-      },
+  handleDeleteShare(shareId: string|undefined) {
+    if (!shareId) {
+      this.notificationService.toastError('Erro ao remover o compartilhamento.');
+      this.handleCancel();
+      return;
+    }
+
+    this.collectionUserAccesService.remove(shareId).subscribe({
+      next: () => { },
       error: (error) => {
-        this.notificationService.toastError('Erro ao remover compartilhamento.');
+        this.notificationService.toastError('Erro ao remover o compartilhamento.');
         console.error(error);
+      },
+      complete: () => {
+        this.notificationService.toastInfo('Permissão removida!');
+        this.loadShareList();
       }
-    })
+    });
   }
 
-  handlePermissionChange(id:string, permissionId: number) {
-    this.collectionUserAccessService.update(id, {permission_type_id: permissionId}).subscribe({
-      next: (data) => {
-        this.notificationService.toastSuccess('Permissão atualizada com sucesso!');
-        this.loadShareList();
-      },
+  handlePermissionChange(id: string|undefined, permissionId: number) {
+    if (!id || !permissionId) {
+      this.notificationService.toastError('Erro ao atualizar a permissão.');
+      return;
+    }
+
+    this.collectionUserAccesService.update(id, { permission_type_id: permissionId }).subscribe({
+      next: () => { },
       error: (error) => {
-        this.notificationService.toastError('Erro ao atualizar permissão.');
+        this.notificationService.toastError('Erro ao atualizar a permissão.');
         console.error(error);
+      },
+      complete: () => {
+        this.notificationService.toastInfo('Permissão atualizada!');
+        this.loadShareList();
       }
-    })
+    });
   }
 
   handleCancel() {
