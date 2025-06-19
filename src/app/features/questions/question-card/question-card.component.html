@@ -1,42 +1,45 @@
 <div class="card">
   <div class="card-header">
     <h3 class="card-title">{{ item().title }}</h3>
-    <div class="card-actions">
-      <kh-button
-        size="small"
-        type="danger-light"
-        [onlyIcon]="true"
-        [pTooltip]="'Excluir questão'"
-        tooltipPosition="top"
-        class="delete-btn"
-        (click)="deleteQuestion(item().id||null)">
-        <i class="ti ti-trash"></i>
-      </kh-button>
+    @if(canEdit() || canDelete() || canShare()) {
+      <div class="card-actions">
+        <kh-button
+          size="small"
+          type="danger-light"
+          [onlyIcon]="true"
+          [pTooltip]="'Excluir questão'"
+          tooltipPosition="top"
+          class="delete-btn"
+          [disabled]="!canDelete()"
+          (click)="deleteQuestion(item().id||null)">
+          <i class="ti ti-trash"></i>
+        </kh-button>
 
-      <kh-button
-        size="small"
-        type="tertiary"
-        [onlyIcon]="true"
-        [pTooltip]="'Compartilhar questão'"
-        tooltipPosition="top"
-        [disabled]="!canShare()"
-        (click)="shareQuestion(item().id || null)"
-      >
-        <i class="ti ti-share"></i>
-      </kh-button>
+        <kh-button
+          size="small"
+          type="tertiary"
+          [onlyIcon]="true"
+          [pTooltip]="'Compartilhar questão'"
+          tooltipPosition="top"
+          [disabled]="!canShare()"
+          (click)="shareQuestion(item().id || null)"
+        >
+          <i class="ti ti-share"></i>
+        </kh-button>
 
-      <kh-button
-        size="small"
-        type="tertiary"
-        [onlyIcon]="true"
-        [pTooltip]="'Editar questão'"
-        tooltipPosition="top"
-        [disabled]="!canEdit()"
-        (click)="editQuestion(item().id || null)"
-      >
-        <i class="ti ti-edit"></i>
-      </kh-button>
-    </div>
+        <kh-button
+          size="small"
+          type="tertiary"
+          [onlyIcon]="true"
+          [pTooltip]="'Editar questão'"
+          tooltipPosition="top"
+          [disabled]="!canEdit()"
+          (click)="editQuestion(item().id || null)"
+        >
+          <i class="ti ti-edit"></i>
+        </kh-button>
+      </div>
+      }
   </div>
 
   <div class="card-content">

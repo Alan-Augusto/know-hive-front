@@ -30,6 +30,7 @@ export class QuestionCardComponent {
   permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
   canEdit = computed(() => this.permissionType() === en_CollectionPermissionType.EDIT || this.permissionType() === en_CollectionPermissionType.ADMIN || this.isOwner());
   canShare = computed(() =>  this.permissionType() === en_CollectionPermissionType.ADMIN || this.isOwner());
+  canDelete = computed(() => this.isOwner());
 
   ngOnInit() {
     this.veifyPermissionType();
@@ -52,6 +53,10 @@ export class QuestionCardComponent {
 
   deleteQuestion(id:string|null){
     if(!id) return;
+    if(!this.canDelete()) {
+      this.notificationService.toastError('Você não tem permissão para excluir esta questão.');
+      return;
+    }
     this.onDelete.emit(id);
   }
 
