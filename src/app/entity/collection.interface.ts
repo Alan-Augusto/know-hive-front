@@ -6,6 +6,7 @@ export interface ICollection {
   title: string;
   description: string;
   author_id: string;
+  is_public: boolean;
   author?: IUser;
   permissions?: ICollectionUserAccess[];
   created_at?: Date;

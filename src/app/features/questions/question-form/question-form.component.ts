@@ -67,6 +67,7 @@ export class QuestionFormComponent implements OnInit {
       type: [null as number | null, Validators.required],
       alternatives: this.fb.array([]),
       author_id: [this.currentUser().id as string],
+      is_public:  [false],
       created_at: [null as Date | null],
     });
   }
@@ -200,7 +201,8 @@ export class QuestionFormComponent implements OnInit {
 
     if (this.isEditMode()) {
       this.updateQuestion(formData);
-    } else {
+    }
+    else {
       this.createQuestion(formData);
     }
   }

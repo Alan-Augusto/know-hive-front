@@ -12,6 +12,7 @@ export interface IQuestion {
   created_at?: Date;
   updated_at?: Date;
   author_id: string;
+  is_public: boolean;
   author?: IUser;
   alternatives?: IAlternative[];
   permissions?: IQuestionUserAccess[];

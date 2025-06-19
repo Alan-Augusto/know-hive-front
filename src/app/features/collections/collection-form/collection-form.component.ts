@@ -86,7 +86,8 @@ export class CollectionFormComponent implements OnInit {
     const collectionData: ICollection = {
       title: formData.title,
       description: formData.description,
-      author_id: this.user().id
+      author_id: this.user().id,
+      is_public: false
     };
 
     const saveOperation = this.isEditMode()
