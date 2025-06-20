@@ -1,18 +1,32 @@
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">{{ item().title }}</h3>
+    <div class="card-title-container">
+      <!-- <i class="ti ti-file-info"></i> -->
+      <h3 class="card-title">{{ item().title }}</h3>
+    </div>
     <button-like/>
   </div>
 
   <div class="card-content">
     <p class="card-description">{{ item().statement }}</p>
     <span class="question-type">{{ item().type?.name }}</span>
+
   </div>
 
   <div class="card-footer">
     <div class="author-info">
       <img [src]="item().author?.profile_picture" [alt]="item().author?.name" class="author-avatar" />
-      <span class="author-name">{{ item().author?.name }}</span>
+      <span class="author-name">{{ item().author?.name }} |</span>
+      <div  class="icon-public">
+        @if(item().is_public){
+          <i class="ti ti-world" pTooltip="Pública" tooltipPosition="top"></i>
+          <!-- <span>Pública</span> -->
+        }
+        @else {
+          <i class="ti ti-lock" pTooltip="Privada" tooltipPosition="top"></i>
+          <!-- <span>Privada</span> -->
+        }
+      </div>
     </div>
     <!-- <span class="created-date">{{ item().created_at | date }}</span> -->
     @if(canEdit() || canDelete() || canShare()) {

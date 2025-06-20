@@ -94,10 +94,16 @@
 }
 
 ::ng-deep .p-tooltip .p-tooltip-text  {
-  background-color: var(--p-surface-secondary);
-  color: var(--p-text-base);
+  padding: 0.4rem 0.5rem;
+  font-size: .8rem;
+  font-family: 'Geist', sans-serif;
+  // background-color: var(--p-surface-base);
+  // box-shadow: var(--p-shadow-md);
+  // color: var(--p-text-base);
 }
 
 ::ng-deep .p-tooltip .p-tooltip-arrow{
-  display: none;
+  // display: none;
+  // background-color: var(--p-surface-fluffy);
+  // border-color: var(--p-surface-fluffy);
 }
