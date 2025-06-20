@@ -83,3 +83,8 @@
     }
   }
 }
+
+::ng-deep.p-checkbox-checked .p-checkbox-box{
+  border-color: var(--p-surface-inverse) !important ;
+  background-color: var(--p-surface-inverse) !important ;
+}
