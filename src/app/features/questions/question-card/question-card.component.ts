@@ -1,11 +1,7 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
-import { DatePipe } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { IQuestion } from '../../../entity/question.interface';
-import { DialogService } from 'primeng/dynamicdialog';
-import { QuestionsService } from '../../../services/questions/questions.service';
-import { AskDialogComponent } from '../../../components/ask-dialog/ask-dialog.component';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { en_CollectionPermissionType } from '../../../entity/collectionPermissionType.interface';
 import { IUser } from '../../../entity/user.interface';
@@ -13,7 +9,7 @@ import { ButtonLikeComponent } from "../../../components/button-like/button-like
 
 @Component({
   selector: 'question-card',
-  imports: [KhButtonComponent, DatePipe, TooltipModule, ButtonLikeComponent],
+  imports: [KhButtonComponent, TooltipModule, ButtonLikeComponent],
   templateUrl: './question-card.component.html',
   styleUrl: './question-card.component.scss'
 })

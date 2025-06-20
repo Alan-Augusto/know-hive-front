@@ -1,18 +1,14 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
-import { DatePipe } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { ICollection } from '../../../entity/collection.interface';
-import { DialogService } from 'primeng/dynamicdialog';
-import { CollectionsService } from '../../../services/collections/collections.service';
-import { AskDialogComponent } from '../../../components/ask-dialog/ask-dialog.component';
-import { NotificationService } from '../../../services/notification/notification.service';
 import { en_CollectionPermissionType } from '../../../entity/collectionPermissionType.interface';
 import { IUser } from '../../../entity/user.interface';
+import { NotificationService } from '../../../services/notification/notification.service';
 
 @Component({
   selector: 'collection-card',
-  imports: [KhButtonComponent, DatePipe, TooltipModule],
+  imports: [KhButtonComponent, TooltipModule],
   templateUrl: './collection-card.component.html',
   styleUrl: './collection-card.component.scss'
 })
