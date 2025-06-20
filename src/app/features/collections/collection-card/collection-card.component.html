@@ -1,6 +1,27 @@
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">{{ item().title }}</h3>
+    <div class="card-title-container">
+      <h3 class="card-title">{{ item().title }}</h3>
+    </div>
+  </div>
+
+  <div class="card-content">
+    <p class="card-description">{{ item().description }}</p>
+  </div>
+
+  <div class="card-footer">
+    <div class="author-info">
+      <img [src]="item().author?.profile_picture" [alt]="item().author?.name" class="author-avatar" />
+      <span class="author-name">{{ item().author?.name }} |</span>
+      <div class="icon-public">
+        @if(item().is_public){
+          <i class="ti ti-world" pTooltip="Pública" tooltipPosition="top"></i>
+        }
+        @else {
+          <i class="ti ti-lock" pTooltip="Privada" tooltipPosition="top"></i>
+        }
+      </div>
+    </div>
     @if(canEdit() || canDelete() || canShare()) {
       <div class="card-actions">
         <kh-button
@@ -39,18 +60,6 @@
           <i class="ti ti-edit"></i>
         </kh-button>
       </div>
-      }
-  </div>
-
-  <div class="card-content">
-    <p class="card-description">{{ item().description }}</p>
-  </div>
-
-  <div class="card-footer">
-    <div class="author-info">
-      <img [src]="item().author?.profile_picture" [alt]="item().author?.name" class="author-avatar" />
-      <span class="author-name">{{ item().author?.name }}</span>
-    </div>
-    <span class="created-date">{{ item().created_at | date }}</span>
+    }
   </div>
 </div>
