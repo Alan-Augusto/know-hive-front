@@ -97,6 +97,7 @@ export class CollectionFormComponent implements OnInit {
 
     this.isSaving.set(true);
     const formData = this.collectionForm.getRawValue();    const collectionData: ICollection = {
+      id: this.isEditMode() ? (this.collectionId() ?? undefined) : undefined,
       title: formData.title,
       description: formData.description,
       author_id: this.user().id,
@@ -104,11 +105,7 @@ export class CollectionFormComponent implements OnInit {
       questions_ids: this.selectedQuestions() || []
     };
 
-    const saveOperation = this.isEditMode()
-      ? this.collectionsService.update(this.collectionId()!, collectionData)
-      : this.collectionsService.createWithQuestions(collectionData);
-
-    saveOperation.subscribe({
+    this.collectionsService.createOrUpdateWithQuestions(collectionData).subscribe({
       next: () => {
         const message = this.isEditMode()
           ? 'Coleção atualizada com sucesso!'
