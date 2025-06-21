@@ -19,6 +19,10 @@ export class QuestionsService extends BaseApiService {
     return this.get('');
   }
 
+  findAllForUser(id: string): Observable<IQuestion[]> {
+    return this.get(`all-for-user/${id}`);
+  }
+
   findOne(id: string) {
     return this.get(`${id}`);
   }

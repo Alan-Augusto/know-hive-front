@@ -19,6 +19,10 @@ export class CollectionsService extends BaseApiService {
     return this.get('');
   }
 
+  findAllForUser(id: string): Observable<ICollection[]> {
+    return this.get(`all-for-user/${id}`);
+  }
+
   findOne(id: string) {
     return this.get(id);
   }
