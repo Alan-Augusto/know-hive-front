@@ -81,9 +81,9 @@ export const Noir = definePreset(Aura, {
                 },
                 surface: {
                     base: '{zinc.1000}',
-                    fluffy: '{zinc.900}',
-                    card: '{zinc.800}',
-                    secondary: '{zinc.700}',
+                    fluffy: '{zinc.700}',
+                    card: '{zinc.600}',
+                    secondary: '{zinc.500}',
                     inverse: '{zinc.50}'
                 },
                 feedback: {

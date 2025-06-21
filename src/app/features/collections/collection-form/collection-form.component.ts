@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, model, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -12,10 +12,15 @@ import { CollectionsService } from '../../../services/collections/collections.se
 import { LoggedUserService } from '../../../services/logged-user/logged-user.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { FormService } from '../../../services/utils/form.service';
+import { firstValueFrom, Observable } from 'rxjs';
+import { QuestionsService } from '../../../services/questions/questions.service';
+import { IQuestion } from '../../../entity/question.interface';
+import { CheckboxChangeEvent, CheckboxModule } from 'primeng/checkbox';
+import { QuestionSelectListComponent } from "../question-select-list/question-select-list.component";
 
 @Component({
   selector: 'collection-form',
-  imports: [InputTextModule, TextareaModule, FloatLabelModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, KhButtonComponent],
+  imports: [InputTextModule, TextareaModule, CheckboxModule, FloatLabelModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, KhButtonComponent, QuestionSelectListComponent],
   templateUrl: './collection-form.component.html',
   styleUrl: './collection-form.component.scss'
 })
@@ -25,14 +30,15 @@ export class CollectionFormComponent implements OnInit {
   private readonly dialogRef = inject(DynamicDialogRef);
   private readonly dialogConfig = inject(DynamicDialogConfig);
   private readonly collectionsService = inject(CollectionsService);
+  private readonly questionService = inject(QuestionsService); // Assuming this service is used to fetch questions
   private readonly loggedUserService = inject(LoggedUserService);
   private readonly notificationService = inject(NotificationService);
   private readonly formService = inject(FormService);
-
   // Reactive state
   readonly isSaving = signal<boolean>(false);
   readonly isEditMode = signal<boolean>(false);
   readonly collectionId = signal<string | null>(null);
+  selectedQuestions = signal<string[]>([]);
 
   // Computed properties
   readonly user = computed(() => this.loggedUserService.loggedUser());
@@ -44,11 +50,13 @@ export class CollectionFormComponent implements OnInit {
     this.initializeForm();
     this.handleDialogData();
   }
+
   private initializeForm(): void {
     this.collectionForm = this.fb.group({
       title: ['', [this.formService.requiredValidator()]],
       description: ['', [this.formService.requiredValidator()]],
-      is_public: [false]
+      is_public: [false],
+      questions_ids:[[]]
     });
   }
 
@@ -63,53 +71,60 @@ export class CollectionFormComponent implements OnInit {
 
   private async loadCollectionData(collectionId: string): Promise<void> {
     try {
-      const collection = await this.collectionsService.findOne(collectionId).toPromise() as ICollection;      if (collection) {
+      const collection = await firstValueFrom(this.collectionsService.findOne(collectionId) as Observable<ICollection>);
+      if (collection) {
         this.collectionForm.patchValue({
           title: collection.title,
           description: collection.description,
-          is_public: collection.is_public || false
+          is_public: collection.is_public || false,
+          questions_ids: collection.questions_ids || []
         });
       }
-    } catch (error) {
+    }
+    catch (error) {
       this.notificationService.toastError('Erro ao carregar dados da coleção.');
       this.handleCancel();
     }
   }
 
+
   handleSave(): void {
-    if (!this.formService.validateForm(this.collectionForm)) {
-      return;
-    }
+    console.log('handleSave called');
+    console.log('Collection Form Value:', this.collectionForm.value);
+    console.log('aaaa', this.selectedQuestions());
+    // if (!this.formService.validateForm(this.collectionForm)) {
+    //   return;
+    // }
 
-    this.isSaving.set(true);
-    const formData = this.collectionForm.getRawValue();    const collectionData: ICollection = {
-      title: formData.title,
-      description: formData.description,
-      author_id: this.user().id,
-      is_public: formData.is_public
-    };
+    // this.isSaving.set(true);
+    // const formData = this.collectionForm.getRawValue();    const collectionData: ICollection = {
+    //   title: formData.title,
+    //   description: formData.description,
+    //   author_id: this.user().id,
+    //   is_public: formData.is_public
+    // };
 
-    const saveOperation = this.isEditMode()
-      ? this.collectionsService.update(this.collectionId()!, collectionData)
-      : this.collectionsService.create(collectionData);
+    // const saveOperation = this.isEditMode()
+    //   ? this.collectionsService.update(this.collectionId()!, collectionData)
+    //   : this.collectionsService.create(collectionData);
 
-    saveOperation.subscribe({
-      next: () => {
-        const message = this.isEditMode()
-          ? 'Coleção atualizada com sucesso!'
-          : 'Coleção criada com sucesso!';
-        this.notificationService.toastSuccess(message);
-        this.dialogRef.close(true);
-      },
-      error: (error) => {
-        const message = this.isEditMode()
-          ? 'Erro ao atualizar coleção.'
-          : 'Erro ao criar coleção.';
-        this.notificationService.toastError(message);
-        console.error(error);
-        this.isSaving.set(false);
-      }
-    });
+    // saveOperation.subscribe({
+    //   next: () => {
+    //     const message = this.isEditMode()
+    //       ? 'Coleção atualizada com sucesso!'
+    //       : 'Coleção criada com sucesso!';
+    //     this.notificationService.toastSuccess(message);
+    //     this.dialogRef.close(true);
+    //   },
+    //   error: (error) => {
+    //     const message = this.isEditMode()
+    //       ? 'Erro ao atualizar coleção.'
+    //       : 'Erro ao criar coleção.';
+    //     this.notificationService.toastError(message);
+    //     console.error(error);
+    //     this.isSaving.set(false);
+    //   }
+    // });
   }
 
   handleCancel(): void {

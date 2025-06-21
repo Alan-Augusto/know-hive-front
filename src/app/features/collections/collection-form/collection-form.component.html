@@ -8,10 +8,16 @@
   <div class="form-group">
     <p-floatlabel variant="on" class="w-full">
       <textarea pTextarea id="description_input" formControlName="description" class="form-input" rows="4"
-        autocomplete="off"></textarea>
+        autocomplete="off" style="resize: vertical;"></textarea>
       <label for="description_input">Descrição</label>
     </p-floatlabel>
   </div>
+
+  <!-- lista de questóes a serem adicionadas na coleção -->
+  <question-select-list
+    [(selectedQuestions)]="selectedQuestions"
+  />
+
 
   <div class="visibility-config">
     <h3 class="visibility-title">Configurações de Visibilidade</h3>

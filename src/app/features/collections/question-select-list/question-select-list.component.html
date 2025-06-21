@@ -1,0 +1,20 @@
+<div class="questions-container">
+  <div class="quetsion-find-container">
+    <input pInputText pSize="small" id="search_question_input" class="w-full" autocomplete="on"
+      placeholder="Digite para buscar uma questão..." (input)="handleSearchQuestion($event)" />
+
+  </div>
+  <div class="questions-list-container">
+    @for (item of questionsList(); track $index) {
+    <div class="question-item" [class.selected]="item.id ? selectedQuestions().includes(item.id) : false">
+      <p-checkbox [inputId]="item.id" name="group" [value]="item.id" [ngModel]="selectedQuestions()"
+        (ngModelChange)="selectedQuestions.set($event);" />
+      <div class="question-description">
+        <h3 class="question-title">{{ item.title }}</h3>
+        <p class="question-statement">{{ item.statement }}</p>
+      </div>
+    </div>
+    }
+  </div>
+
+</div>

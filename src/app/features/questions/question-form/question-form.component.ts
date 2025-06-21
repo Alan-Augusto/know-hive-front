@@ -87,7 +87,9 @@ export class QuestionFormComponent implements OnInit {
     }
 
     this.isFormInitialized.set(true);
-  }  private checkEditMode(): void {
+  }
+
+  private checkEditMode(): void {
     const data = this.dialogConfig.data;
     if (data && data.question) {
       this.isEditMode.set(true);
@@ -113,11 +115,13 @@ export class QuestionFormComponent implements OnInit {
     // Para criação, apenas inicializar com 2 alternativas vazias
     this.initializeEmptyAlternatives();
   }
+
   private async initializeForEdit(): Promise<void> {
     const questionId = this.questionId();
     if (questionId != null) {
       await this.loadQuestionById(questionId);
-    } else {
+    }
+    else {
       this.notificationService.toastError(ERROR_MESSAGES.LOAD_QUESTION);
       this.dialogRef.close();
     }
@@ -127,7 +131,8 @@ export class QuestionFormComponent implements OnInit {
     try {
       const question = await firstValueFrom(this.questionsService.findOne(String(id)) as Observable<IQuestion>);
       this.populateFormWithQuestion(question);
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Error loading question:', error);
       this.notificationService.toastError(ERROR_MESSAGES.LOAD_QUESTION);
     }
