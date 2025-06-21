@@ -4,7 +4,10 @@
       <!-- <i class="ti ti-file-info"></i> -->
       <h3 class="card-title">{{ item().title }}</h3>
     </div>
-    <button-like/>
+    <button-like
+      [(liked)]="liked"
+      (onLike)="likeQuestion(item().id ?? '')"
+    />
   </div>
 
   <div class="card-content">

@@ -151,6 +151,7 @@ export class QuestionFormComponent implements OnInit {
     // Preencher alternativas
     this.populateAlternatives(question.alternatives || []);
   }
+
   private populateAlternatives(alternatives: any[]): void {
     // Limpar alternativas existentes
     this.alternatives.clear();

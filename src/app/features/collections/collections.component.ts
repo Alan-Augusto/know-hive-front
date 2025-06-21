@@ -15,6 +15,7 @@ import { CollectionShareComponent } from './collection-share/collection-share.co
 import { ICollection } from '../../entity/collection.interface';
 import { CollectionsService } from '../../services/collections/collections.service';
 import { en_CollectionPermissionType } from '../../entity/collectionPermissionType.interface';
+import { ILikeCollection } from '../../entity/likeCollection.interface';
 
 @Component({
   selector: 'collections',
@@ -252,9 +253,20 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
           collectionId: id
         }
       }
-    );
+    );    ref.onClose.subscribe((result) => {});
+  }
 
-    ref.onClose.subscribe((result) => {});
+  likeCollection(event: { id: string, liked: boolean }, item: ICollection) {
+    const form: ILikeCollection = {
+      user_id: this.user().id,
+      collection_id: event.id
+    }
+    this.collectionService.like(form).subscribe({
+      error: (err) => {
+        console.error('Error liking collection:', err);
+        item.is_liked = !item.is_liked;
+      }
+    })
   }
 
 }

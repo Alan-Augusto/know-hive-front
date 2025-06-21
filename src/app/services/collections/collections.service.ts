@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '../base-api.service';
 import { ICollection } from '../../entity/collection.interface';
 import { Observable } from 'rxjs';
+import { ILikeCollection } from '../../entity/likeCollection.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +34,12 @@ export class CollectionsService extends BaseApiService {
   findByUser(id: string): Observable<ICollection[]> {
     return this.get(`user/${id}`);
   }
-
   createOrUpdateWithQuestions(data: ICollection): Observable<ICollection> {
     return this.post('with-questions', data);
+  }
+
+  like(data: ILikeCollection) {
+    return this.post('like', data);
   }
 
 }

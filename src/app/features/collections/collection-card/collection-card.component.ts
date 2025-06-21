@@ -5,22 +5,23 @@ import { ICollection } from '../../../entity/collection.interface';
 import { en_CollectionPermissionType } from '../../../entity/collectionPermissionType.interface';
 import { IUser } from '../../../entity/user.interface';
 import { NotificationService } from '../../../services/notification/notification.service';
+import { ButtonLikeComponent } from "../../../components/button-like/button-like.component";
 
 @Component({
   selector: 'collection-card',
-  imports: [KhButtonComponent, TooltipModule],
+  imports: [KhButtonComponent, TooltipModule, ButtonLikeComponent],
   templateUrl: './collection-card.component.html',
   styleUrl: './collection-card.component.scss'
 })
 export class CollectionCardComponent {
 
   private notificationService = inject(NotificationService);
-
   item = input.required<ICollection>();
   user = input.required<IUser>();
   onDelete = output<string>();
   onShare = output<string>();
   onEdit = output<string>();
+  onLike = output<{id:string, liked:boolean}>();
 
   isOwner = computed(() => this.item().author_id === this.user().id);
   permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
@@ -28,8 +29,10 @@ export class CollectionCardComponent {
   canShare = computed(() =>  this.permissionType() === en_CollectionPermissionType.ADMIN || this.isOwner());
   canDelete = computed(() => this.isOwner());
 
+  liked = signal<boolean>(false);
   ngOnInit() {
     this.verifyPermissionType();
+    this.liked.set(this.item()?.is_liked ?? false);
   }
 
   verifyPermissionType(){
@@ -63,7 +66,6 @@ export class CollectionCardComponent {
     }
     this.onShare.emit(id);
   }
-
   editCollection(id:string|null){
     if(!id) return;
     if(!this.canEdit()) {
@@ -71,6 +73,17 @@ export class CollectionCardComponent {
       return;
     }
     this.onEdit.emit(id);
+  }
+
+  likeCollection(id:string){
+    if(!id) return;
+    this.item().is_liked = this.liked();
+    this.onLike.emit(
+      {
+        id: id,
+        liked: this.liked()
+      }
+    );
   }
 
 }

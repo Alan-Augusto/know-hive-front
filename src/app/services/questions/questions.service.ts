@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '../base-api.service';
 import { IQuestion } from '../../entity/question.interface';
 import { Observable } from 'rxjs';
+import { ILikeQuestion } from '../../entity/likeQuestion.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,10 @@ export class QuestionsService extends BaseApiService {
 
   createWithAlternatives(data: IQuestion) {
     return this.post('with-alternatives', data);
+  }
+
+  like(data:ILikeQuestion){
+    return this.post('like', data);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, model } from '@angular/core';
+import { Component, model, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,11 +9,13 @@ import { CommonModule } from '@angular/common';
 })
 export class ButtonLikeComponent {
   liked = model<boolean>(false);
+  onLike = output<boolean>();
   showParticles = false;
   particles = Array(6).fill(0); // 6 partículas
 
   toggleLike() {
     this.liked.set(!this.liked());
+    this.onLike.emit(this.liked());
 
     // Se foi curtido, mostra as partículas
     if (this.liked()) {

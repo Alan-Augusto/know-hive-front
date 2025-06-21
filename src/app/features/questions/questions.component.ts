@@ -17,6 +17,7 @@ import { AskDialogComponent } from '../../components/ask-dialog/ask-dialog.compo
 import { NotificationService } from '../../services/notification/notification.service';
 import { QuestionShareComponent } from './question-share/question-share.component';
 import { en_CollectionPermissionType } from '../../entity/collectionPermissionType.interface';
+import { ILikeQuestion } from '../../entity/likeQuestion.interface';
 @Component({
   selector: 'questions',
   imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule, DynamicDataViewComponent, QuestionCardComponent],
@@ -250,6 +251,19 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
     );
 
     ref.onClose.subscribe((result) => {});
+  }
+
+  likeQuestion(event: { id: string, liked: boolean }, item: IQuestion) {
+    const form:ILikeQuestion ={
+      user_id: this.user().id,
+      question_id: event.id
+    }
+    this.questionService.like(form).subscribe({
+      error: (err) => {
+        console.error('Error liking question:', err);
+        item.is_liked = !item.is_liked;
+      }
+    })
   }
 
 }

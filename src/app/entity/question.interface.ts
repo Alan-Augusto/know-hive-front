@@ -9,6 +9,7 @@ export interface IQuestion {
   statement: string;
   type_id: number;
   type?: IQuestionType;
+  is_liked: boolean;
   created_at?: Date;
   updated_at?: Date;
   author_id: string;

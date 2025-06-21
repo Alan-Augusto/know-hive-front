@@ -96,12 +96,14 @@ export class CollectionFormComponent implements OnInit {
     }
 
     this.isSaving.set(true);
-    const formData = this.collectionForm.getRawValue();    const collectionData: ICollection = {
+    const formData = this.collectionForm.getRawValue();
+    const collectionData: ICollection = {
       id: this.isEditMode() ? (this.collectionId() ?? undefined) : undefined,
       title: formData.title,
       description: formData.description,
       author_id: this.user().id,
       is_public: formData.is_public,
+      is_liked: false,
       questions_ids: this.selectedQuestions() || []
     };
 

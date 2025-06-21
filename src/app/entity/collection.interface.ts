@@ -8,6 +8,7 @@ export interface ICollection {
   description: string;
   author_id: string;
   is_public: boolean;
+  is_liked: boolean;
   author?: IUser;
   permissions?: ICollectionUserAccess[];
   created_at?: Date;

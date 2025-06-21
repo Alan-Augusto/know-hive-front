@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { IQuestion } from '../../../entity/question.interface';
@@ -22,6 +22,7 @@ export class QuestionCardComponent {
   onDelete = output<string>();
   onShare = output<string>();
   onEdit = output<string>();
+  onLike = output<{id:string, liked:boolean}>();
 
   isOwner = computed(() => this.item().author_id === this.user().id);
   permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
@@ -29,8 +30,11 @@ export class QuestionCardComponent {
   canShare = computed(() =>  this.permissionType() === en_CollectionPermissionType.ADMIN || this.isOwner());
   canDelete = computed(() => this.isOwner());
 
+  liked = signal<boolean>(false);
+
   ngOnInit() {
     this.veifyPermissionType();
+    this.liked.set(this.item()?.is_liked ?? false);
   }
 
   veifyPermissionType(){
@@ -72,6 +76,17 @@ export class QuestionCardComponent {
       return;
     }
     this.onEdit.emit(id);
+  }
+
+  likeQuestion(id:string){
+    if(!id) return;
+    this.item().is_liked = this.liked();
+    this.onLike.emit(
+      {
+        id: id,
+        liked: this.liked()
+      }
+    );
   }
 
 }

@@ -1,8 +1,11 @@
-<div class="card">
-  <div class="card-header">
+<div class="card">  <div class="card-header">
     <div class="card-title-container">
       <h3 class="card-title">{{ item().title }}</h3>
     </div>
+    <button-like
+      [(liked)]="liked"
+      (onLike)="likeCollection(item().id ?? '')"
+    />
   </div>
 
   <div class="card-content">
