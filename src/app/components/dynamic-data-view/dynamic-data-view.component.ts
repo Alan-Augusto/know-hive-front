@@ -4,11 +4,12 @@ import { CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/comm
 import { ColumnDefinition, ActionDefinition } from './dynamic-data-view.interface';
 import { GetNestedPropertyPipe } from './get-nested-property.pipe';
 import { KhButtonComponent } from "../kh-button/kh-button.component";
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'dynamic-data-view',
   standalone: true,
-  imports: [CommonModule, FormatDataPipe, GetNestedPropertyPipe, KhButtonComponent], // Importa o pipe aqui
+  imports: [SkeletonModule, CommonModule, FormatDataPipe, GetNestedPropertyPipe, KhButtonComponent], // Importa o pipe aqui
   changeDetection: ChangeDetectionStrategy.OnPush, // Ideal para componentes baseados em Signals
   providers: [DatePipe, CurrencyPipe, PercentPipe], // Fornece os pipes para o FormatDataPipe
   templateUrl: './dynamic-data-view.component.html',

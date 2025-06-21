@@ -14,6 +14,7 @@ export class BaseListComponent<T = any> {
   dataSource = signal<T[]>([]);
   columnDefs = signal<ColumnDefinition[]>([]);
   actionsDef = signal<ActionDefinition[]>([]);
+  loadingData = signal<boolean>(false);
 
   // Computed properties
   user = computed(() => this.loggedUserService.loggedUser());
@@ -33,13 +34,17 @@ export class BaseListComponent<T = any> {
   }
 
   loadData(asyncMethod: () => Observable<T[]>): void {
+    this.loadingData.set(true);
     asyncMethod().subscribe({
       next: (data: T[]) => {
         this.dataSource.set(data);
+        this.loadingData.set(false);
       },
       error: (error) => {
         console.error('Error loading data:', error);
+        this.loadingData.set(false);
       }
+
     });
   }
 }

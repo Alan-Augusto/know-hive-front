@@ -1,9 +1,73 @@
 @if (isLoading()) {
-  <div class="loading-overlay">
-    <div class="spinner"></div>
-    <p>Carregando dados...</p>
-  </div>
-} @else {
+  @if (viewMode() === 'table') {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            @for (col of columnDefs(); track col.field) {
+              <th [style.width]="col.width">
+                <p-skeleton width="80%" height="1rem" />
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of [1,2,3,4,5]; track item) {
+            <tr>
+              @for (col of columnDefs(); track col.field) {
+                <td>
+                  <p-skeleton width="90%" height="1rem" />
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <div class="cards-container">
+      @for (item of [1,2,3,4,5,6]; track item) {
+        <div class="skeleton-card">
+          <!-- Card Header -->
+          <div class="skeleton-card-header">
+            <p-skeleton
+              [width]="item % 2 === 0 ? '5rem' : '10rem'"
+              height="1.5rem"
+              styleClass="mb-2" />
+            <p-skeleton width="2rem" height="2rem" shape="circle" />
+          </div>
+
+          <!-- Card Content -->
+          <div class="skeleton-card-content">
+            <p-skeleton width="100%" height="1rem" styleClass="mb-1" />
+            <p-skeleton
+              [width]="item % 3 === 0 ? '90%' : '80%'"
+              height="1rem"
+              styleClass="mb-2" />
+            <p-skeleton
+              [width]="item % 2 === 0 ? '35%' : '25%'"
+              height="1.25rem"
+              borderRadius="0.35rem" />
+          </div>
+
+          <!-- Card Footer -->
+          <div class="skeleton-card-footer">
+            <div class="skeleton-author-info">
+              <p-skeleton width="2rem" height="2rem" shape="circle" />
+              <p-skeleton
+                [width]="item % 2 === 0 ? '7rem' : '5rem'"
+                height="1rem" />
+            </div>
+            <!-- <div class="skeleton-actions">
+              <p-skeleton width="2rem" height="2rem" shape="circle" />
+              <p-skeleton width="2rem" height="2rem" shape="circle" />
+            </div> -->
+          </div>
+        </div>
+      }
+    </div>
+  }
+}@else {
   @if (viewMode() === 'table') {
     <div class="table-container">
       <table>        <thead>
@@ -60,7 +124,8 @@
       }
       @empty {
         <div class="empty-state">
-          Nenhum dado encontrado.
+          <div>Nenhum dado encontrado.</div>
+
         </div>
       }
     </div>
