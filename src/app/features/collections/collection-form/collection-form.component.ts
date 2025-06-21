@@ -79,6 +79,8 @@ export class CollectionFormComponent implements OnInit {
           is_public: collection.is_public || false,
           questions_ids: collection.questions_ids || []
         });
+
+        this.selectedQuestions.set(collection.questions_ids || []);
       }
     }
     catch (error) {
@@ -89,42 +91,40 @@ export class CollectionFormComponent implements OnInit {
 
 
   handleSave(): void {
-    console.log('handleSave called');
-    console.log('Collection Form Value:', this.collectionForm.value);
-    console.log('aaaa', this.selectedQuestions());
-    // if (!this.formService.validateForm(this.collectionForm)) {
-    //   return;
-    // }
+    if (!this.formService.validateForm(this.collectionForm)) {
+      return;
+    }
 
-    // this.isSaving.set(true);
-    // const formData = this.collectionForm.getRawValue();    const collectionData: ICollection = {
-    //   title: formData.title,
-    //   description: formData.description,
-    //   author_id: this.user().id,
-    //   is_public: formData.is_public
-    // };
+    this.isSaving.set(true);
+    const formData = this.collectionForm.getRawValue();    const collectionData: ICollection = {
+      title: formData.title,
+      description: formData.description,
+      author_id: this.user().id,
+      is_public: formData.is_public,
+      questions_ids: this.selectedQuestions() || []
+    };
 
-    // const saveOperation = this.isEditMode()
-    //   ? this.collectionsService.update(this.collectionId()!, collectionData)
-    //   : this.collectionsService.create(collectionData);
+    const saveOperation = this.isEditMode()
+      ? this.collectionsService.update(this.collectionId()!, collectionData)
+      : this.collectionsService.createWithQuestions(collectionData);
 
-    // saveOperation.subscribe({
-    //   next: () => {
-    //     const message = this.isEditMode()
-    //       ? 'Coleção atualizada com sucesso!'
-    //       : 'Coleção criada com sucesso!';
-    //     this.notificationService.toastSuccess(message);
-    //     this.dialogRef.close(true);
-    //   },
-    //   error: (error) => {
-    //     const message = this.isEditMode()
-    //       ? 'Erro ao atualizar coleção.'
-    //       : 'Erro ao criar coleção.';
-    //     this.notificationService.toastError(message);
-    //     console.error(error);
-    //     this.isSaving.set(false);
-    //   }
-    // });
+    saveOperation.subscribe({
+      next: () => {
+        const message = this.isEditMode()
+          ? 'Coleção atualizada com sucesso!'
+          : 'Coleção criada com sucesso!';
+        this.notificationService.toastSuccess(message);
+        this.dialogRef.close(true);
+      },
+      error: (error) => {
+        const message = this.isEditMode()
+          ? 'Erro ao atualizar coleção.'
+          : 'Erro ao criar coleção.';
+        this.notificationService.toastError(message);
+        console.error(error);
+        this.isSaving.set(false);
+      }
+    });
   }
 
   handleCancel(): void {

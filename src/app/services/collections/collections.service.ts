@@ -34,4 +34,8 @@ export class CollectionsService extends BaseApiService {
     return this.get(`user/${id}`);
   }
 
+  createWithQuestions(data: ICollection): Observable<ICollection> {
+    return this.post('with-questions', data);
+  }
+
 }

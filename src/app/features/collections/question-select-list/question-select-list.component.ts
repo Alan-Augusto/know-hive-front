@@ -10,11 +10,10 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TextareaModule } from 'primeng/textarea';
-import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 
 @Component({
   selector: 'question-select-list',
-  imports: [InputTextModule, TextareaModule, CheckboxModule, FloatLabelModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, KhButtonComponent],
+  imports: [InputTextModule, TextareaModule, CheckboxModule, FloatLabelModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './question-select-list.component.html',
   styleUrl: './question-select-list.component.scss'
 })
