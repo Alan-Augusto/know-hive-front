@@ -131,7 +131,7 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
     const ref = this.dialogService.open(
       CollectionFormComponent,
       {
-        header: '📚Nova coleção',
+        header: '📚 Nova coleção',
         modal:true,
         closable: true,
         focusOnShow: false,
@@ -207,7 +207,7 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
     const ref = this.dialogService.open(
       CollectionFormComponent,
       {
-        header: '✍️Editar coleção',
+        header: '✍️ Editar coleção',
         modal:true,
         closable: true,
         focusOnShow: false,
@@ -239,7 +239,7 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
     const ref = this.dialogService.open(
       CollectionShareComponent,
       {
-        header: '🤝Compartilhar coleção',
+        header: '🤝  Compartilhar coleção',
         modal: true,
         closable: true,
         focusOnShow: false,

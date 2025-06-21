@@ -33,7 +33,7 @@ export class UserIconComponent {
         this.dialogService.open(
               UserEditComponent,
               {
-                header: 'Editar usuário',
+                header: '🫣 Editar usuário',
                 modal:true,
                 closable: true,
                 focusOnShow: false,

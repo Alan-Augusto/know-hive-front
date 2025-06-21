@@ -137,15 +137,15 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
     const ref = this.dialogService.open(
       QuestionFormComponent,
       {
-        header: '✍️Nova questão',
-        modal:true,
-        closable: true,
-        focusOnShow: false,
-        width: '30rem',
-        breakpoints: {
-            '960px': '75vw',
-            '640px': '90vw'
-        },
+      header: '📝 Nova questão',
+      modal: true,
+      closable: true,
+      focusOnShow: false,
+      width: '30rem',
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
       });
     ref.onClose.subscribe(() => {
       this.loadData(() => this.questionService.findByUser(this.user().id));
@@ -204,7 +204,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
     const ref = this.dialogService.open(
       QuestionFormComponent,
       {
-        header: '✍️Editar questão',
+        header: '✍️ Editar questão',
         modal:true,
         closable: true,
         focusOnShow: false,
