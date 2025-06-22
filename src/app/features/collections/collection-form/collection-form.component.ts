@@ -14,8 +14,8 @@ import { NotificationService } from '../../../services/notification/notification
 import { FormService } from '../../../services/utils/form.service';
 import { firstValueFrom, Observable } from 'rxjs';
 import { QuestionsService } from '../../../services/questions/questions.service';
-import { IQuestion } from '../../../entity/question.interface';
-import { CheckboxChangeEvent, CheckboxModule } from 'primeng/checkbox';
+import { CheckboxModule } from 'primeng/checkbox';
+
 import { QuestionSelectListComponent } from "../question-select-list/question-select-list.component";
 
 @Component({
@@ -30,7 +30,6 @@ export class CollectionFormComponent implements OnInit {
   private readonly dialogRef = inject(DynamicDialogRef);
   private readonly dialogConfig = inject(DynamicDialogConfig);
   private readonly collectionsService = inject(CollectionsService);
-  private readonly questionService = inject(QuestionsService); // Assuming this service is used to fetch questions
   private readonly loggedUserService = inject(LoggedUserService);
   private readonly notificationService = inject(NotificationService);
   private readonly formService = inject(FormService);
@@ -56,7 +55,8 @@ export class CollectionFormComponent implements OnInit {
       title: ['', [this.formService.requiredValidator()]],
       description: ['', [this.formService.requiredValidator()]],
       is_public: [false],
-      questions_ids:[[]]
+      questions_ids:[[]],
+      tags: ['']
     });
   }
 
@@ -77,7 +77,8 @@ export class CollectionFormComponent implements OnInit {
           title: collection.title,
           description: collection.description,
           is_public: collection.is_public || false,
-          questions_ids: collection.questions_ids || []
+          questions_ids: collection.questions_ids || [],
+          tags: collection.tags ? collection.tags.join(', ') : ''
         });
 
         this.selectedQuestions.set(collection.questions_ids || []);
@@ -89,6 +90,9 @@ export class CollectionFormComponent implements OnInit {
     }
   }
 
+  normalizeTags(tags: string): string[] {
+    return tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+  }
 
   handleSave(): void {
     if (!this.formService.validateForm(this.collectionForm)) {
@@ -104,7 +108,8 @@ export class CollectionFormComponent implements OnInit {
       author_id: this.user().id,
       is_public: formData.is_public,
       is_liked: false,
-      questions_ids: this.selectedQuestions() || []
+      questions_ids: this.selectedQuestions() || [],
+      tags: formData.tags ? this.normalizeTags(formData.tags): []
     };
 
     this.collectionsService.createOrUpdateWithQuestions(collectionData).subscribe({

@@ -4,8 +4,7 @@
       <input pInputText id="title_input" formControlName="title" class="form-input" autocomplete="off" />
       <label for="title_input">Título</label>
     </p-floatlabel>
-  </div>
-  <div class="form-group">
+
     <p-floatlabel variant="on" class="w-full">
       <textarea pTextarea id="description_input" formControlName="description" class="form-input" rows="4"
         autocomplete="off" style="resize: vertical;"></textarea>
@@ -18,6 +17,13 @@
     [(selectedQuestions)]="selectedQuestions"
   />
 
+  <div class="tag-form">
+    <p-floatlabel variant="on" class="w-full">
+      <input pInputText id="tags_input" formControlName="tags" class="form-input" autocomplete="off" />
+      <label for="tags_input">Tags</label>
+    </p-floatlabel>
+    <small class="tag-helper">Separe as tags por vírgula</small>
+  </div>
 
   <div class="visibility-config">
     <h3 class="visibility-title">Configurações de Visibilidade</h3>

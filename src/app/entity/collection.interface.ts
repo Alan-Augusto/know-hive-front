@@ -10,6 +10,7 @@ export interface ICollection {
   is_public: boolean;
   is_liked: boolean;
   author?: IUser;
+  tags?: string[];
   permissions?: ICollectionUserAccess[];
   created_at?: Date;
   updated_at?: Date;

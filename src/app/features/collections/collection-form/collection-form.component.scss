@@ -8,7 +8,7 @@
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .form-input {
@@ -68,6 +68,16 @@
           }
         }
       }
+    }
+  }
+
+  .tag-form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    .tag-helper{
+      font-size: 0.8rem;
+      color: var(--p-text-secondary);
     }
   }
 
