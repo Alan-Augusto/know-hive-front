@@ -13,14 +13,14 @@ import { LoggedUserService } from '../../../services/logged-user/logged-user.ser
 import { NotificationService } from '../../../services/notification/notification.service';
 import { FormService } from '../../../services/utils/form.service';
 import { firstValueFrom, Observable } from 'rxjs';
-import { QuestionsService } from '../../../services/questions/questions.service';
+import { AccordionModule } from 'primeng/accordion';
 import { CheckboxModule } from 'primeng/checkbox';
 
 import { QuestionSelectListComponent } from "../question-select-list/question-select-list.component";
 
 @Component({
   selector: 'collection-form',
-  imports: [InputTextModule, TextareaModule, CheckboxModule, FloatLabelModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, KhButtonComponent, QuestionSelectListComponent],
+  imports: [InputTextModule, AccordionModule, TextareaModule, CheckboxModule, FloatLabelModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, KhButtonComponent, QuestionSelectListComponent],
   templateUrl: './collection-form.component.html',
   styleUrl: './collection-form.component.scss'
 })

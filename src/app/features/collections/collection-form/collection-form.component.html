@@ -1,29 +1,45 @@
 <div class="collection-form-container" [formGroup]="collectionForm">
-  <div class="form-group">
-    <p-floatlabel variant="on" class="w-full">
-      <input pInputText id="title_input" formControlName="title" class="form-input" autocomplete="off" />
-      <label for="title_input">Título</label>
-    </p-floatlabel>
+  <p-accordion value="0">
+    <p-accordion-panel value="0">
+      <p-accordion-header>Informações principais</p-accordion-header>
+      <p-accordion-content>
+        <div class="form-group">
+          <p-floatlabel variant="on" class="w-full">
+            <input pInputText id="title_input" formControlName="title" class="form-input" autocomplete="off" />
+            <label for="title_input">Título</label>
+          </p-floatlabel>
 
-    <p-floatlabel variant="on" class="w-full">
-      <textarea pTextarea id="description_input" formControlName="description" class="form-input" rows="4"
-        autocomplete="off" style="resize: vertical;"></textarea>
-      <label for="description_input">Descrição</label>
-    </p-floatlabel>
-  </div>
+          <p-floatlabel variant="on" class="w-full">
+            <textarea pTextarea id="description_input" formControlName="description" class="form-input" rows="4"
+              autocomplete="off" style="resize: vertical;"></textarea>
+            <label for="description_input">Descrição</label>
+          </p-floatlabel>
+        </div>
+      </p-accordion-content>
+    </p-accordion-panel>
 
-  <!-- lista de questóes a serem adicionadas na coleção -->
-  <question-select-list
-    [(selectedQuestions)]="selectedQuestions"
-  />
+    <p-accordion-panel value="1">
+      <p-accordion-header>Questões</p-accordion-header>
+      <p-accordion-content>
+        <question-select-list [(selectedQuestions)]="selectedQuestions" />
+      </p-accordion-content>
+    </p-accordion-panel>
 
-  <div class="tag-form">
-    <p-floatlabel variant="on" class="w-full">
-      <input pInputText id="tags_input" formControlName="tags" class="form-input" autocomplete="off" />
-      <label for="tags_input">Tags</label>
-    </p-floatlabel>
-    <small class="tag-helper">Separe as tags por vírgula</small>
-  </div>
+    <p-accordion-panel value="2">
+      <p-accordion-header>Categorias</p-accordion-header>
+      <p-accordion-content>
+        <div class="tag-form">
+          <p-floatlabel variant="on" class="w-full">
+            <input pInputText id="tags_input" formControlName="tags" class="form-input" autocomplete="off" />
+            <label for="tags_input">Tags</label>
+          </p-floatlabel>
+          <small class="tag-helper">Separe as tags por vírgula</small>
+        </div>
+
+      </p-accordion-content>
+    </p-accordion-panel>
+  </p-accordion>
+
 
   <div class="visibility-config">
     <h3 class="visibility-title">Configurações de Visibilidade</h3>
@@ -44,7 +60,7 @@
         <label for="private" class="visibility-label">
           <i class="ti ti-lock"></i>
           <div class="visibility-text">
-            <span class="visibility-main">Privado - Visível apenas para você e para quem compartilhar</span>
+            <span class="visibility-main">Privado - Visível só para você e convidados</span>
           </div>
         </label>
       </div>
