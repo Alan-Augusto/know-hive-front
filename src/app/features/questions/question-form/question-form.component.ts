@@ -7,6 +7,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { AccordionModule } from 'primeng/accordion';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TextareaModule } from 'primeng/textarea';
@@ -26,10 +27,11 @@ import {
   FORM_CONSTANTS,
   AlternativeFormData
 } from './question-form.types';
+import { FormService } from '../../../services/utils/form.service';
 
 @Component({
   selector: 'question-form',
-  imports: [InputTextModule, SelectModule, TextareaModule, FloatLabelModule, CheckboxModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, KhButtonComponent],
+  imports: [InputTextModule, AccordionModule, SelectModule, TextareaModule, FloatLabelModule, CheckboxModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, KhButtonComponent],
   templateUrl: './question-form.component.html',
   styleUrl: './question-form.component.scss'
 })
@@ -42,6 +44,7 @@ export class QuestionFormComponent implements OnInit {
   private readonly questionsService = inject(QuestionsService);
   private readonly loggedUserService = inject(LoggedUserService);
   private readonly notificationService = inject(NotificationService);
+  private readonly formService = inject(FormService)
 
   // Reactive state
   readonly isSaving = signal<boolean>(false);
@@ -57,8 +60,7 @@ export class QuestionFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.initializeComponent();
-  }
-  // Form creation method
+  }  // Form creation method
   private createFormGroup(): FormGroup {
     return this.fb.group({
       id: [null as string | null],
@@ -69,6 +71,7 @@ export class QuestionFormComponent implements OnInit {
       author_id: [this.currentUser().id as string],
       is_public: [false],
       created_at: [null as Date | null],
+      tags: ['']
     });
   }
 
@@ -136,7 +139,9 @@ export class QuestionFormComponent implements OnInit {
       console.error('Error loading question:', error);
       this.notificationService.toastError(ERROR_MESSAGES.LOAD_QUESTION);
     }
-  }  private populateFormWithQuestion(question: IQuestion): void {
+  }
+
+  private populateFormWithQuestion(question: IQuestion): void {
     // Preencher o formulário com os dados da questão
     this.formGroup.patchValue({
       id: question.id || null,
@@ -145,7 +150,8 @@ export class QuestionFormComponent implements OnInit {
       type: question.type_id,
       author_id: question.author_id || this.currentUser().id,
       is_public: question.is_public || false,
-      created_at: question.created_at || null
+      created_at: question.created_at || null,
+      tags: question.tags ? question.tags.join(', ') : ''
     });
 
     // Preencher alternativas
@@ -197,58 +203,17 @@ export class QuestionFormComponent implements OnInit {
       return;
     }
     this.alternatives.removeAt(index);
-  }  handleSave(): void {
-    if (!this.isFormValid()) {
+  }
+
+  handleSave(): void {
+    if (!this.formService.validateForm(this.formGroup) || !this.validateAlternatives()) {
       return;
     }
 
     this.isSaving.set(true);
+
     const formData = this.prepareFormData();
-
-    if (this.isEditMode()) {
-      this.updateQuestion(formData);
-    }
-    else {
-      this.createQuestion(formData);
-    }
-  }
-
-  private isFormValid(): boolean {
-    // Verificar validações básicas do formulário
-    if (this.formGroup.invalid) {
-      this.markFormGroupTouched();
-      this.showValidationErrors();
-      return false;
-    }
-
-    // Validar alternativas específicamente
-    return this.validateAlternatives();
-  }
-
-  private markFormGroupTouched(): void {
-    Object.keys(this.formGroup.controls).forEach(key => {
-      const control = this.formGroup.get(key);
-      control?.markAsTouched();
-    });
-  }
-
-  private showValidationErrors(): void {
-    const { title, statement, type } = this.formGroup.value;
-
-    if (!title) {
-      this.notificationService.toastError(VALIDATION_MESSAGES.TITLE_REQUIRED);
-      return;
-    }
-
-    if (!statement) {
-      this.notificationService.toastError(VALIDATION_MESSAGES.STATEMENT_REQUIRED);
-      return;
-    }
-
-    if (!type) {
-      this.notificationService.toastError(VALIDATION_MESSAGES.TYPE_REQUIRED);
-      return;
-    }
+    this.saveQuestion(formData);
   }
 
   private validateAlternatives(): boolean {
@@ -268,11 +233,15 @@ export class QuestionFormComponent implements OnInit {
 
     return true;
   }
+
   private prepareFormData(): IQuestion {
     const form = this.formGroup.getRawValue();
 
     // Filtrar apenas alternativas válidas (com texto)
     form.alternatives = form.alternatives.filter((alt: any) => alt.text && alt.text.trim() !== '');
+
+    // Processar tags
+    form.tags = form.tags ? this.normalizeTags(form.tags) : [];
 
     // Remover campos nulos/undefined apenas se for criação
     if (!this.isEditMode()) {
@@ -285,9 +254,9 @@ export class QuestionFormComponent implements OnInit {
     return form as unknown as IQuestion;
   }
 
-  private createQuestion(questionData: IQuestion): void {
+  private saveQuestion(questionData: IQuestion): void {
 
-    this.questionsService.createWithAlternatives(questionData).subscribe({
+    this.questionsService.createOrUpdateWithAlternatives(questionData).subscribe({
       next: (question: any) => {
         this.notificationService.toastSuccess(SUCCESS_MESSAGES.QUESTION_CREATED);
         this.dialogRef.close(questionData);
@@ -302,31 +271,11 @@ export class QuestionFormComponent implements OnInit {
     });
   }
 
-  private updateQuestion(questionData: IQuestion): void {
-
-    if (!questionData.id) {
-      console.error('Cannot update question without ID');
-      this.isSaving.set(false);
-      this.notificationService.toastError(ERROR_MESSAGES.MISSING_ID);
-      return;
-    }
-
-    this.questionsService.update(String(questionData.id), questionData).subscribe({
-      next: (question: any) => {
-        this.notificationService.toastSuccess(SUCCESS_MESSAGES.QUESTION_UPDATED);
-        this.dialogRef.close(questionData);
-      },
-      error: (error: any) => {
-        console.error('Error updating question:', error);
-        this.notificationService.toastError(ERROR_MESSAGES.UPDATE_QUESTION);
-      },
-      complete: () => {
-        this.isSaving.set(false);
-      }
-    });
-  }
-
   handleCancel(): void {
     this.dialogRef.close();
+  }
+
+  normalizeTags(tags: string): string[] {
+    return tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
   }
 }

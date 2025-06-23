@@ -17,4 +17,5 @@ export interface IQuestion {
   author?: IUser;
   alternatives?: IAlternative[];
   permissions?: IQuestionUserAccess[];
+  tags?: string[];
 }

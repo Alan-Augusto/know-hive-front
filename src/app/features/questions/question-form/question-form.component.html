@@ -1,53 +1,80 @@
 <div class="question-form-container" [formGroup]="formGroup">
-  <div class="question-form-main">
-    <p-floatlabel variant="on" class="form-field">
-      <input pInputText id="title_input" formControlName="title" class="form-input" autocomplete="off" />
-      <label for="title_input">Título</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on" class="form-field">
-      <textarea pTextarea id="statement_textarea" formControlName="statement" rows="5" cols="30"
-        class="form-textarea"></textarea>
-      <label for="statement_textarea">Descrição</label>
-    </p-floatlabel> <p-floatlabel variant="on" class="form-field">
-      <p-select inputId="type_select" [options]="questionTypes()" formControlName="type" optionLabel="name"
-        optionValue="id" styleClass="form-select" />
-      <label for="type_select">Tipo de questão</label>
-    </p-floatlabel>
-  </div>
-
-  <div class="question-form-alernatives">
-    <div class="form-alternatives-header">
-      <span>Alternativas</span>
-      <kh-button type="secondary" size="small" (click)="handleAddAlternative()" class="w-auto">
-        <i class="ti ti-plus"></i>
-        Nova alternativa
-      </kh-button>
-    </div>
-
-    <div class="form-alernatives-list">
-      @for (alternative of alternatives.controls; track $index) {
-      <div class="alternative-form-item" [class.correct-alternative]="alternative.get('is_correct')?.value"
-        [formGroup]="$any(alternative)">
-        <div class="alternative-form-content">
-          <p-checkbox [formControlName]="'is_correct'" [binary]="true" />
+  <p-accordion value="0">
+    <p-accordion-panel value="0">
+      <p-accordion-header>Informações principais</p-accordion-header>
+      <p-accordion-content>
+        <div class="form-group">
           <p-floatlabel variant="on" class="w-full">
-            <input pInputText [id]="'alternative_input_' + $index" formControlName="text" class="form-input"
-              autocomplete="off" class="w-full" />
-            <label [for]="'alternative_input_' + $index">Alternativa {{ $index + 1 }}</label>
+            <input pInputText id="title_input" formControlName="title" class="form-input" autocomplete="off" />
+            <label for="title_input">Título</label>
           </p-floatlabel>
-          <kh-button type="danger-light" size="small" [onlyIcon]="true" (click)="handleRemoveAlternative($index)"
-            class="remove-alternative-btn">
-            <i class="ti ti-trash"></i>
-          </kh-button>
+
+          <p-floatlabel variant="on" class="w-full">
+            <textarea pTextarea id="statement_textarea" formControlName="statement" rows="4" cols="30"
+              class="form-input" style="resize: vertical;" autocomplete="off"></textarea>
+            <label for="statement_textarea">Descrição</label>
+          </p-floatlabel>
+
+          <p-floatlabel variant="on" class="w-full">
+            <p-select inputId="type_select" [options]="questionTypes()" formControlName="type" optionLabel="name"
+              optionValue="id" styleClass="form-input" appendTo="body" />
+            <label for="type_select">Tipo de questão</label>
+          </p-floatlabel>
         </div>
-      </div>
-      }
-      <div class="form-alternatives-info">
-        <i class="ti ti-info-circle"></i>
-        <span>Marque a checkbox para indicar a resposta correta</span>
-      </div>
-    </div>
-  </div>
+      </p-accordion-content>
+    </p-accordion-panel>
+
+    <p-accordion-panel value="1">
+      <p-accordion-header>Alternativas</p-accordion-header>
+      <p-accordion-content>
+        <div class="alternatives-section">
+          <div class="form-alternatives-header">
+            <kh-button type="secondary" size="small" (click)="handleAddAlternative()" class="w-auto">
+              <i class="ti ti-plus"></i>
+              Nova alternativa
+            </kh-button>
+          </div>
+
+          <div class="form-alernatives-list">
+            @for (alternative of alternatives.controls; track $index) {
+            <div class="alternative-form-item" [class.correct-alternative]="alternative.get('is_correct')?.value"
+              [formGroup]="$any(alternative)">
+              <div class="alternative-form-content">
+                <p-checkbox [formControlName]="'is_correct'" [binary]="true" />
+                <p-floatlabel variant="on" class="w-full">
+                  <input pInputText [id]="'alternative_input_' + $index" formControlName="text" class="form-input"
+                    autocomplete="off" class="w-full" />
+                  <label [for]="'alternative_input_' + $index">Alternativa {{ $index + 1 }}</label>
+                </p-floatlabel>
+                <kh-button type="danger-light" size="small" [onlyIcon]="true" (click)="handleRemoveAlternative($index)"
+                  class="remove-alternative-btn">
+                  <i class="ti ti-trash"></i>
+                </kh-button>
+              </div>
+            </div>
+            }
+            <div class="form-alternatives-info">
+              <i class="ti ti-info-circle"></i>
+              <span>Marque a checkbox para indicar a resposta correta</span>
+            </div>
+          </div>
+        </div>
+      </p-accordion-content>
+    </p-accordion-panel>
+
+    <p-accordion-panel value="2">
+      <p-accordion-header>Categorias</p-accordion-header>
+      <p-accordion-content>
+        <div class="tag-form">
+          <p-floatlabel variant="on" class="w-full">
+            <input pInputText id="tags_input" formControlName="tags" class="form-input" autocomplete="off" />
+            <label for="tags_input">Tags</label>
+          </p-floatlabel>
+          <small class="tag-helper">Separe as tags por vírgula</small>
+        </div>
+      </p-accordion-content>
+    </p-accordion-panel>
+  </p-accordion>
 
   <div class="visibility-config">
     <h3 class="visibility-title">Configurações de Visibilidade</h3>
