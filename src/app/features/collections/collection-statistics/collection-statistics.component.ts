@@ -28,7 +28,7 @@ export class CollectionStatisticsComponent implements AfterViewInit {
   private questionResponseService = inject(QuestionResponseService);
   private dynamicDialogConfig = inject(DynamicDialogConfig);
 
-  data = signal<ICollectionStats|null>(null);
+  data = signal<ICollectionStats | null>(null);
   isLoading = signal<boolean>(true);
 
   // Computed values for easier access to stats
@@ -185,7 +185,8 @@ export class CollectionStatisticsComponent implements AfterViewInit {
             position: 'bottom',
             labels: {
               padding: 20,
-              usePointStyle: true
+              usePointStyle: true,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--p-text-base').trim() || '#22223b'
             }
           },
           tooltip: {
@@ -201,24 +202,24 @@ export class CollectionStatisticsComponent implements AfterViewInit {
         scales: {
           x: {
             grid: {
-              display: false
+              display: false,
             },
             ticks: {
-              color: '#22223b',
+              color: getComputedStyle(document.documentElement).getPropertyValue('--p-text-base').trim() || '#22223b',
               font: {
-                weight: 'bold'
+                family: 'Geist, sans-serif',
+                weight: 'normal',
               }
             }
           },
           y: {
             beginAtZero: true,
             grid: {
-              color: '#f1f5f9',
-              // borderDash: [4, 4]
+              color: getComputedStyle(document.documentElement).getPropertyValue('--p-text-secondary').trim() || '#22223b',
             },
             ticks: {
               stepSize: 1,
-              color: '#22223b'
+              color: getComputedStyle(document.documentElement).getPropertyValue('--p-text-base').trim() || '#22223b',
             }
           }
         }
