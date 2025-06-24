@@ -47,6 +47,18 @@
           size="small"
           type="tertiary"
           [onlyIcon]="true"
+          [pTooltip]="'Estatísticas'"
+          tooltipPosition="top"
+          [disabled]="false"
+          (click)="showStatistics(item().id || null)"
+        >
+          <i class="ti ti-chart-bar"></i>
+        </kh-button>
+
+        <kh-button
+          size="small"
+          type="tertiary"
+          [onlyIcon]="true"
           [pTooltip]="'Compartilhar coleção'"
           tooltipPosition="top"
           [disabled]="!canShare()"

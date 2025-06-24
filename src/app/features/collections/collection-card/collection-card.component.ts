@@ -17,7 +17,9 @@ export class CollectionCardComponent {
 
   private notificationService = inject(NotificationService);
   item = input.required<ICollection>();
-  user = input.required<IUser>();  onDelete = output<string>();
+  user = input.required<IUser>();
+  onDelete = output<string>();
+  onStatistics = output<string>();
   onShare = output<string>();
   onEdit = output<string>();
   onLike = output<{id:string, liked:boolean}>();
@@ -56,6 +58,15 @@ export class CollectionCardComponent {
       return;
     }
     this.onDelete.emit(id);
+  }
+
+  showStatistics(id:string|null){
+    if(!id) return;
+    if(!this.canEdit()) {
+      this.notificationService.toastError('Você não tem permissão para visualizar as estatísticas desta coleção.');
+      return;
+    }
+    this.onStatistics.emit(id);
   }
 
   shareCollection(id:string|null){

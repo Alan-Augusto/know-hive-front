@@ -50,10 +50,12 @@
   </div>
 </div>
 
-<ng-template #customCard let-item>  <collection-card
+<ng-template #customCard let-item>
+  <collection-card
     [item]="item"
     [user]="user()"
     (onDelete)="deleteCollection($event, true)"
+    (onStatistics)="showStatistics($event, true)"
     (onEdit)="editCollection($event, true)"
     (onShare)="shareCollection($event, true)"
     (onLike)="likeCollection($event, item)"

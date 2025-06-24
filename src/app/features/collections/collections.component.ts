@@ -17,6 +17,7 @@ import { ICollection } from '../../entity/collection.interface';
 import { CollectionsService } from '../../services/collections/collections.service';
 import { en_CollectionPermissionType } from '../../entity/collectionPermissionType.interface';
 import { ILikeCollection } from '../../entity/likeCollection.interface';
+import { CollectionStatisticsComponent } from './collection-statistics/collection-statistics.component';
 
 @Component({
   selector: 'collections',
@@ -300,6 +301,32 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
         );
       }
     });
+  }
+
+  showStatistics(id: string, canViewStatistics: boolean = false) {
+    if (!canViewStatistics) {
+      this.notificationService.toastError('Você não tem permissão para visualizar as estatísticas desta coleção.');
+      return;
+    }
+
+    const ref = this.dialogService.open(
+      CollectionStatisticsComponent,
+      {
+        header: '📊 Estatísticas da Coleção',
+        modal: true,
+        closable: true,
+        focusOnShow: false,
+        width: '40rem',
+        breakpoints: {
+          '960px': '85vw',
+          '640px': '95vw'
+        },
+        data: {
+          collectionId: id,
+        }
+      }
+    );
+
   }
 
 }
