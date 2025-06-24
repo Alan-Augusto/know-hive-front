@@ -1,5 +1,11 @@
-<div class="card-grid">
-  @for (item of listCards(); track $index) {
-    <home-card-statistic [value]="item"/>
-  }
+<div class="home-container">
+  <div>
+    <h2>👋 Bem vindo de volta, {{user().name}}!! </h2>
+
+  </div>
+  <div class="card-grid">
+    @for (item of listCards(); track $index) {
+      <home-card-statistic [value]="item"/>
+    }
+  </div>
 </div>

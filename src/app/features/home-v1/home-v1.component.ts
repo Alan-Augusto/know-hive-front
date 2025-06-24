@@ -66,8 +66,40 @@ export class HomeV1Component{
       value: data?.favorites_count || 0,
       icon: 'ti ti-heart',
       color: '#ff6b6b'
+      },
+      {
+      title: 'Respostas Totais',
+      value: data?.total_responses || 0,
+      icon: 'ti ti-list-details',
+      color: '#ffc107'
+      },
+      {
+      title: 'Respostas Corretas',
+      value: data?.correct_responses || 0,
+      icon: 'ti ti-check',
+      color: '#28a745'
+      },
+      {
+      title: 'Precisão',
+      value: data?.accuracy_percentage != null
+        ? `${Number(data.accuracy_percentage.toFixed(1))}%`
+        : '0%',
+      icon: 'ti ti-target',
+      color: '#17a2b8'
+      },
+      {
+      title: 'Coleções com acesso',
+      value: data?.collections_with_access || 0,
+      icon: 'ti ti-users-group',
+      color: '#fd7e14'
+      },
+      {
+      title: 'Questões com acesso',
+      value: data?.questions_with_access || 0,
+      icon: 'ti ti-key',
+      color: '#6f42c1'
       }
-    ]
+    ];
   }
 
 }

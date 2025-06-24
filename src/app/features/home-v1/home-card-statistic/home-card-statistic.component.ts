@@ -2,7 +2,7 @@ import { Component, computed, input } from '@angular/core';
 
 export interface ICardHomeV1 {
   title: string;
-  value: number;
+  value: number | string;
   icon: string;
   color: string;
   onClick?: () => void;
