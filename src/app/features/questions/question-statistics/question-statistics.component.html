@@ -112,7 +112,7 @@
                     <div class="alternative-item" [class.correct-alternative]="alternative.is_correct">
                       <div class="alternative-info">
                         <div class="alternative-header">
-                          <h4 class="alternative-text">{{ alternative.alternative_text }}</h4>
+                          <h4 class="alternative-text">{{ alternative.text }}</h4>
                           @if (alternative.is_correct) {
                             <span class="correct-badge">
                               <i class="ti ti-check"></i>
@@ -124,12 +124,12 @@
                       <div class="alternative-stats">
                         <div class="alternative-stat">
                           <span class="label">Escolhida:</span>
-                          <span class="value">{{ alternative.response_count }} vez{{ alternative.response_count !== 1 ? 'es' : '' }}</span>
+                          <span class="value">{{ alternative.selection_count }} vez{{ alternative.selection_count !== 1 ? 'es' : '' }}</span>
                         </div>
                         <div class="alternative-stat">
                           <span class="label">Percentual:</span>
                           <span class="value">
-                            {{ totalResponses() > 0 ? (alternative.response_count / totalResponses() * 100 | number:'1.0-0') : 0 }}%
+                            {{ totalResponses() > 0 ? (alternative.selection_count / totalResponses() * 100 | number:'1.0-0') : 0 }}%
                           </span>
                         </div>
                       </div>

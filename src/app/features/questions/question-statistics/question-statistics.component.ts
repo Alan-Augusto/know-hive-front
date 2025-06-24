@@ -61,6 +61,7 @@ export class QuestionStatisticsComponent implements AfterViewInit {
     this.questionResponseService.getQuestionStats(id).subscribe({
       next: (stats) => {
         this.data.set(stats);
+        console.log('Question stats loaded:', stats);
 
         setTimeout(() => {
           this.isLoading.set(false);
@@ -144,9 +145,9 @@ export class QuestionStatisticsComponent implements AfterViewInit {
     }
 
     const alternativeStats = this.data()!.alternative_stats;
-    const labels = alternativeStats.map(alt => this.truncateText(alt.alternative_text, 20));
-    const responseData = alternativeStats.map(alt => alt.response_count);
-    const colors = alternativeStats.map(alt => alt.is_correct ? '#9cffa1' : '#73beff');
+    const labels = alternativeStats.map(alt => alt.text);
+    const responseData = alternativeStats.map(alt => alt.selection_count);
+    const colors = alternativeStats.map(alt => alt.is_correct ? '#9cffa1' : '#f78181');
 
     const config: ChartConfiguration = {
       type: 'bar' as ChartType,
@@ -222,7 +223,7 @@ export class QuestionStatisticsComponent implements AfterViewInit {
   }
 
   private truncateText(text: string, maxLength: number): string {
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    return text;
   }
 
   ngOnDestroy() {

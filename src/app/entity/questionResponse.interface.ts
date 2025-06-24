@@ -83,9 +83,9 @@ export interface IQuestionStats {
 
 export interface IAlternativeStats {
   alternative_id: string;
-  alternative_text: string;
+  text: string;
   is_correct: boolean;
-  response_count: number;
+  selection_count: number;
 }
 
 export interface ICollectionStats {
