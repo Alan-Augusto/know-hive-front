@@ -1,0 +1,110 @@
+<div class="collection-response-container">
+  @if (isLoading()) {
+  <div class="loading-content">
+    <p-skeleton width="100%" height="3rem" />
+    <p-skeleton width="100%" height="2rem" />
+    <p-skeleton width="100%" height="8rem" />
+  </div>
+  }
+  @else if (collection() && questions().length > 0) {
+
+  <!-- Header da Coleção -->
+  <div class="collection-header">
+    <h2 class="collection-title">{{ collection()!.title }}</h2>
+    <div class="progress-info">
+      <span class="progress-text">Questão {{ currentQuestionIndex() + 1 }} de {{ questions().length }}</span>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progressPercentage()"></div>
+      </div>
+    </div>
+  </div>
+
+  @if (!isComplete()) {
+  <!-- Questão Atual -->
+  <div class="question-content">
+    <!-- Título da Questão -->
+    <div class="question-header">
+      <h3 class="question-title">{{ currentQuestion()!.title }}</h3>
+      <span class="question-type">{{ currentQuestion()!.type?.name }}</span>
+    </div>
+
+    <!-- Enunciado da Questão -->
+    <div class="question-statement">
+      <p>{{ currentQuestion()!.statement }}</p>
+    </div>
+
+    <!-- Alternativas -->
+    <div class="alternatives-container">
+      @for (alternative of currentQuestion()!.alternatives; track alternative.id) {
+      <div class="alternative-item">
+        @if (isTrueFalse()) {
+        <div class="alternative-checkbox">
+          <p-checkbox [inputId]="alternative.id" name="group" [value]="alternative.id"
+            [ngModel]="selectedAlternativeIds()" (ngModelChange)="selectedAlternativeIds.set($event)" />
+          <label [for]="alternative.id" class="alternative-text">
+            {{ alternative.text }}
+          </label>
+        </div>
+        }
+        @else {
+        <!-- Múltipla Escolha - Radio Button -->
+        <div class="alternative-radio">
+          <p-radioButton inputId="{{ alternative.id }}" size="small" [value]="alternative.id"
+            [ngModel]="selectedAlternativeIds()" (ngModelChange)="selectedAlternativeIds.set([$event])" />
+          <label [for]="alternative.id" class="alternative-text">
+            {{ alternative.text }}
+          </label>
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="form-actions">
+      <kh-button type="secondary" (click)="handleCancel()" widthType="full">Cancelar</kh-button>
+      <kh-button [disabled]="!canSubmit()" [loading]="isSubmiting()" (click)="submitResponse()" widthType="full">
+        {{ hasMoreQuestions() ? 'Próxima' : 'Finalizar' }}
+      </kh-button>
+    </div>
+  </div>
+  }
+  @else
+  {
+  <!-- Resultados Finais -->
+  <div class="results-content">
+    <div class="results-header">
+      <h3>Parabéns! Você completou a coleção</h3>
+    </div>
+
+    <div class="results-stats">
+      <div class="stat-item">
+        <span class="stat-label">Total de questões:</span>
+        <span class="stat-value">{{ questions().length }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Respostas corretas:</span>
+        <span class="stat-value correct">{{ correctAnswers() }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Taxa de acerto:</span>
+        <span class="stat-value">{{ accuracyPercentage() }}%</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <kh-button type="primary" (click)="handleFinish()" widthType="full">Finalizar</kh-button>
+    </div>
+  </div>
+  }
+
+  }
+  @else {
+  <div class="empty-content">
+    <p>Esta coleção não possui questões.</p>
+    <kh-button type="secondary" (click)="handleCancel()" widthType="full">Fechar</kh-button>
+  </div>
+  }
+
+  <congratulations-message [show]="showConfetti()" />
+</div>

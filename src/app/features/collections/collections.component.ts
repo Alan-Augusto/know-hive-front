@@ -12,6 +12,7 @@ import { AskDialogComponent } from '../../components/ask-dialog/ask-dialog.compo
 import { NotificationService } from '../../services/notification/notification.service';
 import { CollectionFormComponent } from './collection-form/collection-form.component';
 import { CollectionShareComponent } from './collection-share/collection-share.component';
+import { CollectionResponseComponent } from './collection-response/collection-response.component';
 import { ICollection } from '../../entity/collection.interface';
 import { CollectionsService } from '../../services/collections/collections.service';
 import { en_CollectionPermissionType } from '../../entity/collectionPermissionType.interface';
@@ -255,7 +256,6 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
       }
     );    ref.onClose.subscribe((result) => {});
   }
-
   likeCollection(event: { id: string, liked: boolean }, item: ICollection) {
     const form: ILikeCollection = {
       user_id: this.user().id,
@@ -267,6 +267,39 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
         item.is_liked = !item.is_liked;
       }
     })
+  }
+
+  respondCollection(id: string) {
+    if (!id) {
+      console.error('Collection ID is null or undefined');
+      return;
+    }
+
+    const ref = this.dialogService.open(
+      CollectionResponseComponent,
+      {
+        header: '🎯 Responder Coleção',
+        modal: true,
+        closable: true,
+        focusOnShow: false,
+        width: '40rem',
+        breakpoints: {
+          '960px': '85vw',
+          '640px': '95vw'
+        },
+        data: {
+          collectionId: id
+        }
+      }
+    );
+
+    ref.onClose.subscribe((result) => {
+      if (result?.completed) {
+        this.notificationService.toastSuccess(
+          `Coleção completada! ${result.correctAnswers}/${result.totalQuestions} respostas corretas.`
+        );
+      }
+    });
   }
 
 }

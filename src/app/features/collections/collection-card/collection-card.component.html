@@ -1,6 +1,9 @@
 <div class="card">  <div class="card-header">
     <div class="card-title-container">
-      <i class="ti ti-player-play icon-play" pTooltip="Resolver coleção" tooltipPosition="top"></i>
+      <i class="ti ti-player-play icon-play"
+         pTooltip="Resolver coleção"
+         tooltipPosition="top"
+         (click)="respondCollection(item().id || null)"></i>
       <h3 class="card-title">{{ item().title }}</h3>
     </div>
     <button-like

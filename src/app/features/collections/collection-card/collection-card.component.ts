@@ -17,11 +17,11 @@ export class CollectionCardComponent {
 
   private notificationService = inject(NotificationService);
   item = input.required<ICollection>();
-  user = input.required<IUser>();
-  onDelete = output<string>();
+  user = input.required<IUser>();  onDelete = output<string>();
   onShare = output<string>();
   onEdit = output<string>();
   onLike = output<{id:string, liked:boolean}>();
+  onRespond = output<string>();
 
   isOwner = computed(() => this.item().author_id === this.user().id);
   permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
@@ -74,7 +74,6 @@ export class CollectionCardComponent {
     }
     this.onEdit.emit(id);
   }
-
   likeCollection(id:string){
     if(!id) return;
     this.item().is_liked = this.liked();
@@ -84,6 +83,11 @@ export class CollectionCardComponent {
         liked: this.liked()
       }
     );
+  }
+
+  respondCollection(id:string|null){
+    if(!id) return;
+    this.onRespond.emit(id);
   }
 
 }
