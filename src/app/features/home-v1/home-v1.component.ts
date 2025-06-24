@@ -7,10 +7,11 @@ import { KhButtonComponent } from "../../components/kh-button/kh-button.componen
 import { UsersService } from '../../services/users/users.service';
 import { IUserStatistics } from '../../entity/userStatistics.interface';
 import { HomeCardStatisticComponent, ICardHomeV1 } from './home-card-statistic/home-card-statistic.component';
+import { HomeQuestionCardComponent } from "./home-question-card/home-question-card.component";
 
 @Component({
   selector: 'home-v1',
-  imports: [FormsModule, InputTextModule, KhButtonComponent, HomeCardStatisticComponent],
+  imports: [FormsModule, InputTextModule, KhButtonComponent, HomeCardStatisticComponent, HomeQuestionCardComponent],
   templateUrl: './home-v1.component.html',
   styleUrl: './home-v1.component.scss'
 })

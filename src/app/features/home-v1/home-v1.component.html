@@ -8,4 +8,11 @@
       <home-card-statistic [value]="item"/>
     }
   </div>
+
+  <div class="question-card-grid">
+    @for (item of data()?.recent_questions; track $index) {
+      <home-question-card [question]="item"/>
+    }
+
+  </div>
 </div>

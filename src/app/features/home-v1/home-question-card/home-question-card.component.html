@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-header">
+    <div class="card-title-container">
+      <i class="ti ti-help-hexagon"></i>
+      <h3 class="card-title">{{ question().title }}</h3>
+    </div>
+    <span class="created-date">{{ question().created_at | date:'dd/MM' }}</span>
+  </div>
+
+  <div class="card-footer">
+    <div class="author-info">
+      <img [src]="question().profile_picture" [alt]="question().author_name" class="author-avatar" />
+      <span class="author-name">{{ question().author_name }}</span>
+      @if(question().is_owned) {
+        <span class="ownership-badge">Minha</span>
+      }
+    </div>
+  </div>
+</div>
