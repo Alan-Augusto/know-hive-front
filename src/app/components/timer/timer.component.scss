@@ -1,0 +1,137 @@
+.timer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: var(--p-surface-card);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  gap: .25rem;
+
+  .timer-icon {
+    animation: organic-spin 2.5s infinite linear;
+
+    i {
+      width: .9rem;
+      height: .9rem;
+    }
+  }
+
+  @keyframes organic-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    8% {
+      transform: rotate(30deg);
+    }
+
+    18% {
+      transform: rotate(60deg);
+    }
+
+    28% {
+      transform: rotate(90deg);
+    }
+
+    40% {
+      transform: rotate(120deg);
+    }
+
+    55% {
+      transform: rotate(180deg);
+    }
+
+    70% {
+      transform: rotate(240deg);
+    }
+
+    85% {
+      transform: rotate(300deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .time-text {
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--p-text-base);
+    width: 3rem;
+  }
+  .pendulum-container{
+    position: relative;
+    width: .9rem;
+    width: 1.25rem;
+    .pendulum {
+      --pendulum-height: .9rem; /* Variável principal - altere aqui para redimensionar todo o pêndulo */
+      position: absolute;
+      width: calc(var(--pendulum-height) * 1.22); /* 220px proporcional a 180px */
+      height: var(--pendulum-height);
+      // background-color: #f8c6cf;
+      top: 50%;
+      left: 50%;
+      border-radius: 5%;
+      align-items: center;
+      border-top: calc(var(--pendulum-height) * 0.083) solid var(--p-text-base); /* 15px proporcional */
+      transform: translate(-50%, -50%);
+
+      .pendulum_box {
+        display: flex;
+        padding: calc(var(--pendulum-height) * 0.67) 0 0 calc(var(--pendulum-height) * 0.056); /* 120px e 10px proporcionais */
+        position: absolute;
+        flex: 1;
+
+        .ball {
+          height: calc(var(--pendulum-height) * 0.22); /* 40px proporcional */
+          width: calc(var(--pendulum-height) * 0.22); /* 40px proporcional */
+          border-radius: 50%;
+          background-color: var(--p-text-accent);
+          position: relative;
+          transform-origin: 50% -300%;
+        }
+
+        .ball::before {
+          content: '';
+          width: calc(var(--pendulum-height) * 0.011); /* 2px proporcional */
+          height: calc(var(--pendulum-height) * 0.67); /* 120px proporcional */
+          background-color: var(--p-text-secondary);
+          left: calc(var(--pendulum-height) * 0.1); /* 18px proporcional */
+          top: calc(var(--pendulum-height) * -0.67); /* -120px proporcional */
+          position: absolute;
+        }
+
+        .ball.first {
+          animation: firstball 1s alternate ease-in infinite;
+        }
+
+        @keyframes firstball {
+          0% {
+            transform: rotate(35deg);
+          }
+
+          50% {
+            transform: rotate(0deg);
+          }
+        }
+
+        .ball.last {
+          animation: lastball 1s alternate ease-out infinite;
+        }
+
+        @keyframes lastball {
+          50% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(-35deg);
+          }
+        }
+      }
+
+    }
+  }
+
+}

@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ICollection } from '../../../entity/collection.interface';
 import { IQuestion } from '../../../entity/question.interface';
@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CongratulationsMessageComponent } from '../../../components/congratulations-message/congratulations-message.component';
 import { ICreateQuestionResponse } from '../../../entity/questionResponse.interface';
+import { TimerComponent } from "../../../components/timer/timer.component";
 
 @Component({
   selector: 'collection-response',
@@ -24,12 +25,15 @@ import { ICreateQuestionResponse } from '../../../entity/questionResponse.interf
     FormsModule,
     CommonModule,
     SkeletonModule,
-    CongratulationsMessageComponent
-  ],
+    CongratulationsMessageComponent,
+    TimerComponent
+],
   templateUrl: './collection-response.component.html',
   styleUrl: './collection-response.component.scss'
 })
 export class CollectionResponseComponent implements OnInit {
+  @ViewChild('questionTimer') questionTimer!: TimerComponent;
+
   private dynamicDialogRef = inject(DynamicDialogRef);
   private dynamicDialogConfig = inject(DynamicDialogConfig);
   private collectionsService = inject(CollectionsService);
@@ -47,6 +51,7 @@ export class CollectionResponseComponent implements OnInit {
   showConfetti = signal<boolean>(false);
   questionsCompleted = signal<number>(0);
   correctAnswers = signal<number>(0);
+  time = signal<number>(0);
 
   // Computed
   user = computed(() => this.loggedUserService.loggedUser());
@@ -104,6 +109,7 @@ export class CollectionResponseComponent implements OnInit {
       question_id: this.currentQuestion()?.id || '',
       user_id: this.user()?.id || '',
       alternative_ids: this.selectedAlternativeIds() || [],
+      response_time: this.time()
     }
 
     this.isSubmiting.set(true);
@@ -135,11 +141,19 @@ export class CollectionResponseComponent implements OnInit {
 
   nextQuestion() {
     this.currentQuestionIndex.update(index => index + 1);
+    // Reset timer para a próxima pergunta
+    if (this.questionTimer) {
+      this.questionTimer.resetTimer();
+    }
   }
 
   previousQuestion() {
     if (this.currentQuestionIndex() > 0) {
       this.currentQuestionIndex.update(index => index - 1);
+      // Reset timer quando voltar para pergunta anterior
+      if (this.questionTimer) {
+        this.questionTimer.resetTimer();
+      }
     }
   }
 
