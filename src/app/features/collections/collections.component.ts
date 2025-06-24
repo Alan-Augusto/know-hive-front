@@ -307,18 +307,16 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
     if (!canViewStatistics) {
       this.notificationService.toastError('Você não tem permissão para visualizar as estatísticas desta coleção.');
       return;
-    }
-
-    const ref = this.dialogService.open(
+    }    const ref = this.dialogService.open(
       CollectionStatisticsComponent,
       {
         header: '📊 Estatísticas da Coleção',
         modal: true,
         closable: true,
         focusOnShow: false,
-        width: '40rem',
+        width: '60rem',
         breakpoints: {
-          '960px': '85vw',
+          '960px': '90vw',
           '640px': '95vw'
         },
         data: {

@@ -78,14 +78,11 @@ export class CollectionResponseComponent implements OnInit {
   }
 
   private loadCollection() {
-    console.log('Loading collection...');
     const data = this.dynamicDialogConfig.data;
-    console.log('Dynamic dialog data:', data);
     if (data?.collectionId) {
       this.isLoading.set(true);
       this.collectionsService.findOne(data.collectionId).subscribe({
         next: (collection: any) => {
-          console.log('Collection loaded:', collection);
           this.collection.set(collection as ICollection);
           this.questions.set(collection.questions || []);
           this.isLoading.set(false);
@@ -108,6 +105,7 @@ export class CollectionResponseComponent implements OnInit {
     const formData: ICreateQuestionResponse = {
       question_id: this.currentQuestion()?.id || '',
       user_id: this.user()?.id || '',
+      collection_id: this.collection()?.id || '',
       alternative_ids: this.selectedAlternativeIds() || [],
       response_time: this.time()
     }

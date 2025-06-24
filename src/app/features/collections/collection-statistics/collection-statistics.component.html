@@ -1,1 +1,129 @@
-<p>collection-statistics works!</p>
+<div class="statistics-container">
+  @if (isLoading()) {
+    <div class="stats-content">
+    </div>
+  }
+  @else if (data()) {
+    <div class="stats-content">
+      <!-- Overview Cards -->
+      <div class="overview-cards">
+        <div class="stat-card primary">
+          <div class="stat-icon">
+            <i class="ti ti-target"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Taxa de Acerto</span>
+            <span class="stat-value">{{ accuracyPercentage() | number:'1.1-1' }}%</span>
+          </div>
+        </div>
+
+        <div class="stat-card secondary">
+          <div class="stat-icon">
+            <i class="ti ti-clipboard-list"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Total de Respostas</span>
+            <span class="stat-value">{{ totalResponses() }}</span>
+          </div>
+        </div>
+
+        <div class="stat-card success">
+          <div class="stat-icon">
+            <i class="ti ti-check"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Respostas Corretas</span>
+            <span class="stat-value">{{ correctResponses() }}</span>
+          </div>
+        </div>
+
+        <div class="stat-card danger">
+          <div class="stat-icon">
+            <i class="ti ti-x"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Respostas Incorretas</span>
+            <span class="stat-value">{{ incorrectResponses() }}</span>
+          </div>
+        </div>
+
+        <div class="stat-card info">
+          <div class="stat-icon">
+            <i class="ti ti-clock"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Tempo Médio</span>
+            <span class="stat-value">{{ averageTime() }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="charts-section">
+        <!-- Accuracy Chart -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3 class="chart-title">Distribuição de Acertos</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas #accuracyChart></canvas>
+          </div>
+        </div>
+
+        <!-- Questions Performance Chart -->
+        @if (data()?.question_stats && data()!.question_stats.length > 0) {
+          <div class="chart-container">
+            <div class="chart-header">
+              <h3 class="chart-title">Performance por Questão</h3>
+            </div>
+            <div class="chart-wrapper">
+              <canvas #questionsChart></canvas>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Questions Detail -->
+      @if (data()?.question_stats && data()!.question_stats.length > 0) {
+        <div class="questions-detail">
+          <h3 class="section-title">
+            <i class="ti ti-list"></i>
+            Detalhes por Questão
+          </h3>
+          <div class="questions-list">            @for (question of data()!.question_stats; track question.question_id) {
+              <div class="question-item">
+                <div class="question-info">
+                  <h4 class="question-title">{{ question.question_title }}</h4>
+                  <p class="question-statement">{{ question.question_statement }}</p>
+                </div>
+                <div class="question-stats">
+                  <div class="question-stat">
+                    <span class="label">Total:</span>
+                    <span class="value">{{ question.total_responses }}</span>
+                  </div>
+                  <div class="question-stat success">
+                    <span class="label">Corretas:</span>
+                    <span class="value">{{ question.correct_responses }}</span>
+                  </div>
+                  <div class="question-stat">
+                    <span class="label">Taxa:</span>
+                    <span class="value">
+                      {{ question.total_responses > 0 ? (question.correct_responses / question.total_responses * 100 | number:'1.0-0') : 0 }}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+  @else {
+    <div class="empty-state">
+      <i class="ti ti-chart-off"></i>
+      <h3>Nenhuma estatística disponível</h3>
+      <p>Ainda não há dados suficientes para exibir estatísticas desta coleção.</p>
+    </div>
+  }
+</div>
