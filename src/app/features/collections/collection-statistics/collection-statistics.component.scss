@@ -242,3 +242,14 @@
     }
   }
 }
+
+
+::ng-deep .p-accordionheader {
+  padding: .5rem 0rem !important;
+  margin: 0 !important;
+}
+
+::ng-deep .p-accordioncontent-content{
+  padding: 0.5rem 0rem !important;
+  margin: 0 !important;
+}

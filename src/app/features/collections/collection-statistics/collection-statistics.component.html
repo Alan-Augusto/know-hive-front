@@ -1,6 +1,21 @@
 <div class="statistics-container">
   @if (isLoading()) {
     <div class="stats-content">
+      <div class="overview-cards">
+        <p-skeleton width="100%" height="6rem" />
+        <p-skeleton width="100%" height="6rem" />
+        <p-skeleton width="100%" height="6rem" />
+        <p-skeleton width="100%" height="6rem" />
+        <p-skeleton width="100%" height="6rem" />
+      </div>
+      <div class="charts-section">
+        <div class="chart-container">
+          <p-skeleton width="100%" height="25rem" />
+        </div>
+        <div class="chart-container">
+          <p-skeleton width="100%" height="25rem" />
+        </div>
+      </div>
     </div>
   }
   @else if (data()) {
@@ -85,37 +100,46 @@
 
       <!-- Questions Detail -->
       @if (data()?.question_stats && data()!.question_stats.length > 0) {
-        <div class="questions-detail">
-          <h3 class="section-title">
-            <i class="ti ti-list"></i>
-            Detalhes por Questão
-          </h3>
-          <div class="questions-list">            @for (question of data()!.question_stats; track question.question_id) {
-              <div class="question-item">
-                <div class="question-info">
-                  <h4 class="question-title">{{ question.question_title }}</h4>
-                  <p class="question-statement">{{ question.question_statement }}</p>
-                </div>
-                <div class="question-stats">
-                  <div class="question-stat">
-                    <span class="label">Total:</span>
-                    <span class="value">{{ question.total_responses }}</span>
-                  </div>
-                  <div class="question-stat success">
-                    <span class="label">Corretas:</span>
-                    <span class="value">{{ question.correct_responses }}</span>
-                  </div>
-                  <div class="question-stat">
-                    <span class="label">Taxa:</span>
-                    <span class="value">
-                      {{ question.total_responses > 0 ? (question.correct_responses / question.total_responses * 100 | number:'1.0-0') : 0 }}%
-                    </span>
-                  </div>
+
+        <p-accordion>
+          <p-accordion-panel value="0">
+            <p-accordion-header>Detalhes por Questão</p-accordion-header>
+            <p-accordion-content>
+              <div class="questions-detail">
+
+                <div class="questions-list">
+                  @for (question of data()!.question_stats; track question.question_id) {
+                    <div class="question-item">
+                      <div class="question-info">
+                        <h4 class="question-title">{{ question.question_title }}</h4>
+                        <p class="question-statement">{{ question.question_statement }}</p>
+                      </div>
+                      <div class="question-stats">
+                        <div class="question-stat">
+                          <span class="label">Total:</span>
+                          <span class="value">{{ question.total_responses }}</span>
+                        </div>
+                        <div class="question-stat success">
+                          <span class="label">Corretas:</span>
+                          <span class="value">{{ question.correct_responses }}</span>
+                        </div>
+                        <div class="question-stat">
+                          <span class="label">Taxa:</span>
+                          <span class="value">
+                            {{ question.total_responses > 0 ? (question.correct_responses / question.total_responses * 100 | number:'1.0-0') : 0 }}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  }
                 </div>
               </div>
-            }
-          </div>
-        </div>
+
+            </p-accordion-content>
+          </p-accordion-panel>
+
+        </p-accordion>
+
       }
     </div>
   }

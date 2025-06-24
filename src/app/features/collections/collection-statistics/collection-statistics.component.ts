@@ -3,18 +3,20 @@ import { CommonModule } from '@angular/common';
 import { QuestionResponseService } from '../../../services/question-response/question-response.service';
 import { ICollectionStats } from '../../../entity/questionResponse.interface';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { AccordionModule } from 'primeng/accordion';
 import {
   Chart,
   ChartConfiguration,
   ChartType,
   registerables
 } from 'chart.js';
+import { SkeletonModule } from 'primeng/skeleton';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'collection-statistics',
-  imports: [CommonModule],
+  imports: [CommonModule, SkeletonModule, AccordionModule],
   templateUrl: './collection-statistics.component.html',
   styleUrl: './collection-statistics.component.scss'
 })
@@ -59,8 +61,14 @@ export class CollectionStatisticsComponent implements AfterViewInit {
     this.questionResponseService.getCollectionStats(id).subscribe({
       next: (stats) => {
         this.data.set(stats);
-        this.isLoading.set(false);
-        setTimeout(() => this.createCharts(), 100); // Small delay to ensure DOM is ready
+
+        setTimeout(() => {
+          this.isLoading.set(false);
+        }, 100); // Small delay to ensure DOM is ready
+
+        setTimeout(() => {
+          this.createCharts();
+        }, 200); // Small delay to ensure DOM is ready
       },
       error: (err) => {
         console.error('Error loading collection stats:', err);
