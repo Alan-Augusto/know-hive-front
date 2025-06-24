@@ -80,7 +80,8 @@
           width: 1rem;
           height: 1rem;
         }
-        .alternative-checkbox{
+        .alternative-checkbox, .alternative-radio{
+          cursor: pointer;
           display: flex;
           flex-direction: row;
           align-items: start;
@@ -96,6 +97,18 @@
         }
       }
     }
+
+      .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        // Mobile
+        @media (max-width: 480px) {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+      }
   }
 
 }

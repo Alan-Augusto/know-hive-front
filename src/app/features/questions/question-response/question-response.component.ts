@@ -32,10 +32,11 @@ export class QuestionResponseComponent implements OnInit {
 
   // Signals
   question = signal<IQuestion | null>(null);
-  selectedAlternatives = signal<string[]>([]);
   isSubmitted = signal<boolean>(false);
   isLoading = signal<boolean>(false);
   responseResult = signal<IQuestionResponseResult | null>(null);
+
+  selectedAlternativeIds = signal<string[]>([]);
 
   // Computed
   isMultipleChoice = computed(() =>
@@ -47,12 +48,13 @@ export class QuestionResponseComponent implements OnInit {
   );
 
   canSubmit = computed(() =>
-    this.selectedAlternatives().length > 0 && !this.isSubmitted()
+    this.selectedAlternativeIds().length > 0 && !this.isSubmitted()
   );
 
   ngOnInit() {
     this.loadQuestion();
   }
+
   private loadQuestion() {
     const data = this.dynamicDialogConfig.data;
     if (data?.questionId) {
@@ -65,6 +67,7 @@ export class QuestionResponseComponent implements OnInit {
         error: (error) => {
           console.error('Error loading question:', error);
           this.isLoading.set(false);
+          this.dynamicDialogRef.close();
         }
       });
     } else if (data?.question) {
@@ -72,63 +75,15 @@ export class QuestionResponseComponent implements OnInit {
     }
   }
 
-  onAlternativeChange(alternativeId: string, checked?: boolean) {
-    const currentSelected = this.selectedAlternatives();
-
-    if (this.isMultipleChoice()) {
-      // Para múltipla escolha, permite múltiplas seleções
-      if (checked) {
-        this.selectedAlternatives.set([...currentSelected, alternativeId]);
-      } else {
-        this.selectedAlternatives.set(currentSelected.filter(id => id !== alternativeId));
-      }
-    } else {
-      // Para V/F, permite apenas uma seleção
-      this.selectedAlternatives.set([alternativeId]);
-    }
-  }
-
-  isAlternativeSelected(alternativeId: string): boolean {
-    return this.selectedAlternatives().includes(alternativeId);
-  }
-
   submitResponse() {
     if (!this.canSubmit()) return;
 
-    const question = this.question();
-    if (!question || !question.alternatives) return;
+    console.log('Submitting response...');
+    console.log('Selected alternatives:', this.selectedAlternativeIds());
 
-    const correctAlternatives = question.alternatives
-      .filter(alt => alt.is_correct)
-      .map(alt => alt.id!);
-
-    const userAlternatives = this.selectedAlternatives();
-
-    // Verifica se a resposta está correta
-    const isCorrect = this.checkAnswer(correctAlternatives, userAlternatives);
-
-    const result: IQuestionResponseResult = {
-      isCorrect,
-      correctAlternatives,
-      userAlternatives
-    };
-
-    this.responseResult.set(result);
-    this.isSubmitted.set(true);
   }
 
-  private checkAnswer(correct: string[], user: string[]): boolean {
-    if (correct.length !== user.length) return false;
-    return correct.every(id => user.includes(id));
-  }
-
-  tryAgain() {
-    this.selectedAlternatives.set([]);
-    this.isSubmitted.set(false);
-    this.responseResult.set(null);
-  }
-
-  close() {
+  handleCancel() {
     this.dynamicDialogRef.close();
   }
 
