@@ -114,7 +114,6 @@ export class CollectionResponseComponent implements OnInit {
     this.questionResponseService.create(formData).subscribe({
       next: (response) => {
 
-        console.log('Response submitted successfully:', response);
 
         if (response.is_correct) {
           this.correctAnswers.update(count => count + 1);

@@ -61,8 +61,6 @@ export class QuestionStatisticsComponent implements AfterViewInit {
     this.questionResponseService.getQuestionStats(id).subscribe({
       next: (stats) => {
         this.data.set(stats);
-        console.log('Question stats loaded:', stats);
-
         setTimeout(() => {
           this.isLoading.set(false);
         }, 100); // Small delay to ensure DOM is ready

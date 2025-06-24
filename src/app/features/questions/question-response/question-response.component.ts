@@ -84,7 +84,6 @@ export class QuestionResponseComponent implements OnInit {
 
     this.questionResponseService.create(formData).subscribe({
       next: (response) => {
-        console.log('Response submitted successfully:', response);
         this.isSubmitted.set(true);
 
         if(response.is_correct) {
@@ -99,9 +98,6 @@ export class QuestionResponseComponent implements OnInit {
         this.isSubmitted.set(false);
       }
     });
-
-    console.log('Submitting response...');
-    console.log('Selected alternatives:', this.selectedAlternativeIds());
 
   }
 
