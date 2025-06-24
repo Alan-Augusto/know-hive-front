@@ -16,7 +16,6 @@ import { ButtonLikeComponent } from "../../../components/button-like/button-like
 export class QuestionCardComponent {
 
   private notificationService = inject(NotificationService);
-
   item = input.required<IQuestion>();
   user = input.required<IUser>();
   onDelete = output<string>();
@@ -24,12 +23,14 @@ export class QuestionCardComponent {
   onEdit = output<string>();
   onLike = output<{id:string, liked:boolean}>();
   onResolve = output<string>();
+  onShowStatistics = output<string>();
 
   isOwner = computed(() => this.item().author_id === this.user().id);
   permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
   canEdit = computed(() => this.permissionType() === en_CollectionPermissionType.EDIT || this.permissionType() === en_CollectionPermissionType.ADMIN || this.isOwner());
   canShare = computed(() =>  this.permissionType() === en_CollectionPermissionType.ADMIN || this.isOwner());
   canDelete = computed(() => this.isOwner());
+  canViewStatistics = computed(() => this.permissionType() === en_CollectionPermissionType.ADMIN || this.isOwner());
 
   liked = signal<boolean>(false);
 
@@ -93,6 +94,11 @@ export class QuestionCardComponent {
   resolveQuestion(id:string){
     if(!id) return;
     this.onResolve.emit(id);
+  }
+
+  showStatistics(id: string | null) {
+    if (!id) return;
+    this.onShowStatistics.emit(id);
   }
 
 }

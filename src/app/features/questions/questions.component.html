@@ -59,5 +59,6 @@
     (onShare)="shareQuestion($event, true)"
     (onLike)="likeQuestion($event, item)"
     (onResolve)="resolveQuestion($event)"
+    (onShowStatistics)="showStatistics($event, item.id || null)"
   />
 </ng-template>

@@ -19,6 +19,7 @@ import { QuestionShareComponent } from './question-share/question-share.componen
 import { en_CollectionPermissionType } from '../../entity/collectionPermissionType.interface';
 import { ILikeQuestion } from '../../entity/likeQuestion.interface';
 import { QuestionResponseComponent } from './question-response/question-response.component';
+import { QuestionStatisticsComponent } from './question-statistics/question-statistics.component';
 @Component({
   selector: 'questions',
   imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule, DynamicDataViewComponent, QuestionCardComponent],
@@ -81,9 +82,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
           dateFormat: 'dd/MM/yyyy',
         }
       }
-    ]);
-
-    this.actionsDef.set([
+    ]);    this.actionsDef.set([
       {
         label: 'Excluir',
         icon: 'ti ti-trash',
@@ -102,6 +101,12 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
         icon: 'ti ti-pencil',
         onClick: (row: IQuestion) => this.editQuestion(row.id || '', this.canEditQuestion(row)),
         disabled: (row: IQuestion) =>  !this.canEditQuestion(row)
+      },
+      {
+        label: 'Estatísticas',
+        icon: 'ti ti-chart-bar',
+        onClick: (row: IQuestion) => this.showStatistics(row.id || '', this.canViewStatistics(row)),
+        disabled: (row: IQuestion) => !this.canViewStatistics(row)
       }
     ])
   }
@@ -128,6 +133,14 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
   }
 
   canShareQuestion(row: IQuestion): boolean {
+    if (!row.author || !this.user()) {
+      return false;
+    }
+    const userAccess = this.getUserQuestionAcess(row);
+    return userAccess === en_CollectionPermissionType.ADMIN || row.author.id === this.user().id;
+  }
+
+  canViewStatistics(row: IQuestion): boolean {
     if (!row.author || !this.user()) {
       return false;
     }
@@ -291,6 +304,31 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
     ref.onClose.subscribe(() => {
       this.loadData(() => this.questionService.findByUser(this.user().id));
     })
+  }
+
+  showStatistics(id: string, canViewStatistics: boolean = false) {
+    if (!canViewStatistics) {
+      this.notificationService.toastError('Você não tem permissão para visualizar as estatísticas desta questão.');
+      return;
+    }
+
+    const ref = this.dialogService.open(
+      QuestionStatisticsComponent,
+      {
+        header: '📊 Estatísticas da Questão',
+        modal: true,
+        closable: true,
+        focusOnShow: false,
+        width: '60rem',
+        breakpoints: {
+          '960px': '90vw',
+          '640px': '95vw'
+        },
+        data: {
+          questionId: id,
+        }
+      }
+    );
   }
 
 }
