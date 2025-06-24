@@ -1,0 +1,121 @@
+<div class="question-response-container">
+  @if (isLoading()) {
+    <div class="question-content">
+      <p-skeleton width="100%" height="3rem"/>
+    </div>
+  }
+  @else if (question()) {
+    <div class="question-content">
+      <!-- Título da Questão -->
+      <div class="question-header">
+        <h3 class="question-title">{{ question()!.title }}</h3>
+        <span class="question-type">{{ question()!.type?.name }}</span>
+      </div>
+
+      <!-- Enunciado da Questão -->
+      <div class="question-statement">
+        <p>{{ question()!.statement }}</p>
+      </div>
+
+      <!-- Alternativas -->
+      <div class="alternatives-container">
+        @for (alternative of question()!.alternatives; track alternative.id) {
+          <div class="alternative-item" [ngClass]="getAlternativeClass(alternative)">
+            <div class="alternative-indicator">
+            @if (isSubmitted()) {
+                @if (alternative.is_correct) {
+                  <span>✅</span>
+                }
+                @else if (isAlternativeSelected(alternative.id!) && !alternative.is_correct) {
+                  <span>🫣</span>
+                }
+              }
+            </div>
+
+            @if (isTrueFalse()) {
+              <div class="alternative-checkbox">
+                <p-checkbox
+                  [value]="alternative.id"
+                  [disabled]="isSubmitted()"
+                  [binary]="true"
+                  (onChange)="onAlternativeChange(alternative.id!, $event.checked)"
+                />
+                <label [for]="alternative.id" class="alternative-text">
+                  {{ alternative.text }}
+                </label>
+              </div>
+            }
+            @else {
+              <!-- Verdadeiro/Falso - Radio Button -->
+              <div class="alternative-radio">
+                <p-radioButton
+                  [value]="alternative.id"
+                  name="question-alternatives"
+                  [disabled]="isSubmitted()"
+                  (onClick)="onAlternativeChange(alternative.id!)"
+                />
+                <label [for]="alternative.id" class="alternative-text">
+                  {{ alternative.text }}
+                </label>
+              </div>
+            }
+
+            <!-- Indicador de resposta correta/incorreta -->
+
+          </div>
+        }
+      </div>
+
+      <!-- Resultado da Resposta -->
+      @if (isSubmitted() && responseResult()) {
+        <div class="response-result" [ngClass]="responseResult()!.isCorrect ? 'correct' : 'incorrect'">
+          <div class="result-icon">
+            @if (responseResult()!.isCorrect) {
+              <i class="ti ti-check-circle"></i>
+            } @else {
+              <i class="ti ti-x-circle"></i>
+            }
+          </div>
+          <div class="result-message">
+            @if (responseResult()!.isCorrect) {
+              <h4>🎉 Parabéns! Resposta Correta!</h4>
+              <p>Você acertou a questão.</p>
+            } @else {
+              <h4>❌ Resposta Incorreta</h4>
+              <p>Não foi dessa vez. Tente novamente!</p>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Botões de Ação -->
+      <div class="action-buttons">
+        @if (!isSubmitted()) {
+          <kh-button
+            type="tertiary"
+            (click)="close()"
+          >
+            Cancelar
+          </kh-button>
+          <kh-button
+            [disabled]="!canSubmit()"
+            (click)="submitResponse()"
+          >
+            Responder
+          </kh-button>
+        } @else {
+          <kh-button
+            type="secondary"
+            (click)="tryAgain()"
+          >
+            Tentar Novamente
+          </kh-button>
+          <kh-button
+            (click)="close()"
+          >
+            Fechar
+          </kh-button>
+        }
+      </div>
+    </div>
+  }

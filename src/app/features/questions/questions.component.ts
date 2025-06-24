@@ -18,6 +18,7 @@ import { NotificationService } from '../../services/notification/notification.se
 import { QuestionShareComponent } from './question-share/question-share.component';
 import { en_CollectionPermissionType } from '../../entity/collectionPermissionType.interface';
 import { ILikeQuestion } from '../../entity/likeQuestion.interface';
+import { QuestionResponseComponent } from './question-response/question-response.component';
 @Component({
   selector: 'questions',
   imports: [FormsModule, KhButtonComponent, InputTextModule, TooltipModule, DynamicDataViewComponent, QuestionCardComponent],
@@ -263,6 +264,32 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
         console.error('Error liking question:', err);
         item.is_liked = !item.is_liked;
       }
+    })
+  }
+
+  resolveQuestion(id: string) {
+    if (!id) {
+      console.error('Question ID is null or undefined');
+      return;
+    }
+    const ref = this.dialogService.open(
+      QuestionResponseComponent,
+      {
+        header: '✅ Resolver questão',
+        modal: true,
+        closable: true,
+        focusOnShow: false,
+        width: '30rem',
+        breakpoints: {
+          '960px': '75vw',
+          '640px': '90vw'
+        },
+        data: {
+          questionId: id
+        }
+      });
+    ref.onClose.subscribe(() => {
+      this.loadData(() => this.questionService.findByUser(this.user().id));
     })
   }
 

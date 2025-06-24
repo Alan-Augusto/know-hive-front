@@ -23,6 +23,7 @@ export class QuestionCardComponent {
   onShare = output<string>();
   onEdit = output<string>();
   onLike = output<{id:string, liked:boolean}>();
+  onResolve = output<string>();
 
   isOwner = computed(() => this.item().author_id === this.user().id);
   permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
@@ -87,6 +88,11 @@ export class QuestionCardComponent {
         liked: this.liked()
       }
     );
+  }
+
+  resolveQuestion(id:string){
+    if(!id) return;
+    this.onResolve.emit(id);
   }
 
 }

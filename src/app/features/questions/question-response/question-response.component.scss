@@ -1,0 +1,101 @@
+.question-response-container{
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+
+  .question-content{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    .question-header{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: .5rem;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+
+      .question-title{
+        flex-grow: 1;
+        font-weight: bold;
+        font-size: .9rem;
+        color: var(--p-text-base);
+      }
+
+      .question-type {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--p-text-base);
+        background-color: var(--p-surface-card);
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.5rem;
+      }
+    }
+
+    .question-statement{
+      font-size: 1rem;
+      color: var(--p-text-base);
+      padding: 0.5rem;
+      border: 1px solid var(--p-surface-card);
+      text-align: justify;
+      border-radius: 0.5rem;
+      white-space: pre-line;
+    }
+
+    .alternatives-container{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+
+      .alternative-item{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--p-surface-hover);
+        }
+
+        &.selected {
+          background-color: var(--p-primary-container);
+          border-color: var(--p-primary);
+          color: var(--p-on-primary-container);
+        }
+
+        .alternative-indicator{
+          width: 1rem;
+          height: 1rem;
+        }
+        .alternative-checkbox{
+          display: flex;
+          flex-direction: row;
+          align-items: start;
+          gap: 0.5rem;
+          width: 100%;
+
+          .alternative-text{
+            font-size: 1rem;
+            color: var(--p-text-base);
+            flex-grow: 1;
+            white-space: pre-line;
+          }
+        }
+      }
+    }
+  }
+
+}
