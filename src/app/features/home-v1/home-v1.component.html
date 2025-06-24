@@ -1,37 +1,5 @@
-<div class="home-container">
-  <div>
-    <div class="flex align-items-center gap-2 flex-wrap" [style.color]="'var(--p-text-base)'" >
-      <h2 class="m-0 emoji">👋</h2>
-      <h2>Bem vindo de volta, </h2>
-      <h2 class="m-0" [style.color]="'var(--p-accent-400)'">{{ user().name}}.</h2>
-    </div>
-    <p class="home-description">Você está preparado para explorar novas questões e provas?</p>
-  </div>
-
-  <div class="search-container">
-      <input pInputText class="flex-1" autocomplete="off" placeholder="Digite algo para procurar..." [ngModel]="searchTerm()" (ngModelChange)="setSearchTerm($event)" />
-      <kh-button type="secondary" class="w-10rem ml-2">
-        <i class="ti ti-search"></i>
-        <span class="search-text">Pesquisar</span>
-      </kh-button>
-  </div>
-
-  <div class="list-options">
-    <kh-button size="small" [type]="optionSelect()=='question' ? 'secondary' : 'tertiary'" class="w-10rem" (click)="setOptionSelect('question')" >Questões</kh-button>
-    <kh-button size="small" [type]="optionSelect()=='collection' ? 'secondary' : 'tertiary'" class="w-10rem" (click)="setOptionSelect('collection')" >Coleções</kh-button>
-    <kh-button size="small" [type]="optionSelect()=='share_with_me' ? 'secondary' : 'tertiary'" class="w-10rem" (click)="setOptionSelect('share_with_me')" >Compartilhados comigo</kh-button>
-  </div>
-
-  <div class="list-container">
-    @if (optionSelect()=='question') {
-      <list-questions/>
-    }
-    @else if (optionSelect()=='collection') {
-      <list-collection/>
-    }
-    @else if (optionSelect()=='share_with_me') {
-      <list-share-with-me/>
-    }
-  </div>
-
+<div class="card-grid">
+  @for (item of listCards(); track $index) {
+    <home-card-statistic [value]="item"/>
+  }
 </div>

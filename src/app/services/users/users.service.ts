@@ -29,4 +29,8 @@ export class UsersService extends BaseApiService {
     return this.delete(`${id}`);
   }
 
+  getUserStatistics(id: string) {
+    return this.get(`${id}/statistics`);
+  }
+
 }

@@ -1,0 +1,9 @@
+<div class="card-container">
+  <div class="card-icon" [style.backgroundColor]="backgroundColor()" [style.color]="value().color">
+    <i [class]="value().icon" [style.color]="value().color"></i>
+  </div>
+  <div class="card-content">
+    <p class="card-value">{{ value().value }}</p>
+    <h3 class="card-title">{{ value().title }}</h3>
+  </div>
+</div>
