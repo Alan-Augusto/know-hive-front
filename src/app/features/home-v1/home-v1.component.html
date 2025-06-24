@@ -9,10 +9,21 @@
     }
   </div>
 
-  <div class="question-card-grid">
+  <div class="items-grid">
+    <div class="question-card-list">
+      <div class="card-list-header">
+        <h3 class="card-list-title">Perguntas recentes</h3>
+        <div class="view-all-link">Ver todas</div>
+      </div>
+      @for (item of data()?.recent_questions; track $index) {
+        <home-question-card [question]="item"/>
+      }
+    </div>
+  <div class="question-card-list">
     @for (item of data()?.recent_questions; track $index) {
       <home-question-card [question]="item"/>
     }
-
   </div>
+  </div>
+
 </div>
