@@ -1,8 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IQuestion } from '../../../entity/question.interface';
-import { IAlternative } from '../../../entity/alternative.interface';
-import { IQuestionResponse, IQuestionResponseResult } from '../../../entity/questionResponse.interface';
 import { en_QuestionType } from '../../../entity/questionType.interface';
 import { QuestionsService } from '../../../services/questions/questions.service';
 import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
@@ -11,6 +9,10 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SkeletonModule } from 'primeng/skeleton';
+import { QuestionResponseService } from '../../../services/question-response/question-response.service';
+import { ICreateQuestionResponse } from '../../../entity/questionResponse.interface';
+import { LoggedUserService } from '../../../services/logged-user/logged-user.service';
+import { CongratulationsMessageComponent } from '../../../components/congratulations-message/congratulations-message.component';
 
 @Component({
   selector: 'question-response',
@@ -20,7 +22,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     CheckboxModule,
     FormsModule,
     CommonModule,
-    SkeletonModule
+    SkeletonModule,
+    CongratulationsMessageComponent
   ],
   templateUrl: './question-response.component.html',
   styleUrl: './question-response.component.scss'
@@ -29,27 +32,22 @@ export class QuestionResponseComponent implements OnInit {
   private dynamicDialogRef = inject(DynamicDialogRef);
   private dynamicDialogConfig = inject(DynamicDialogConfig);
   private questionService = inject(QuestionsService);
+  private questionResponseService = inject(QuestionResponseService);
+  private loggedUserService = inject(LoggedUserService)
+  private dialogService = inject(DialogService);
 
   // Signals
   question = signal<IQuestion | null>(null);
   isSubmitted = signal<boolean>(false);
   isLoading = signal<boolean>(false);
-  responseResult = signal<IQuestionResponseResult | null>(null);
-
   selectedAlternativeIds = signal<string[]>([]);
+  showConfetti = signal<boolean>(false);
 
   // Computed
-  isMultipleChoice = computed(() =>
-    this.question()?.type_id === en_QuestionType.MULTIPLE_CHOICE
-  );
-
-  isTrueFalse = computed(() =>
-    this.question()?.type_id === en_QuestionType.TRUE_FALSE
-  );
-
-  canSubmit = computed(() =>
-    this.selectedAlternativeIds().length > 0 && !this.isSubmitted()
-  );
+  user = computed(() => this.loggedUserService.loggedUser());
+  isMultipleChoice = computed(() => this.question()?.type_id === en_QuestionType.MULTIPLE_CHOICE);
+  isTrueFalse = computed(() =>this.question()?.type_id === en_QuestionType.TRUE_FALSE);
+  canSubmit = computed(() =>this.selectedAlternativeIds().length > 0 && !this.isSubmitted());
 
   ngOnInit() {
     this.loadQuestion();
@@ -78,31 +76,47 @@ export class QuestionResponseComponent implements OnInit {
   submitResponse() {
     if (!this.canSubmit()) return;
 
+    const formData : ICreateQuestionResponse = {
+      question_id: this.question()?.id || '',
+      user_id: this.user()?.id || '',
+      alternative_ids: this.selectedAlternativeIds() || [],
+    }
+
+    this.questionResponseService.create(formData).subscribe({
+      next: (response) => {
+        console.log('Response submitted successfully:', response);
+        this.isSubmitted.set(true);
+
+        if(response.is_correct) {
+          this.congratulations();
+        }
+        else{
+          this.sadMessage();
+        }
+      },
+      error: (error) => {
+        console.error('Error submitting response:', error);
+        this.isSubmitted.set(false);
+      }
+    });
+
     console.log('Submitting response...');
     console.log('Selected alternatives:', this.selectedAlternativeIds());
 
   }
 
-  handleCancel() {
-    this.dynamicDialogRef.close();
+  congratulations() {
+    this.showConfetti.set(true);
+    setTimeout(() => {
+      this.showConfetti.set(false);
+    }, 1500);
   }
 
-  getAlternativeClass(alternative: IAlternative): string {
-    if (!this.isSubmitted()) return '';
+  sadMessage(){
 
-    const result = this.responseResult();
-    if (!result) return '';
+  }
 
-    const alternativeId = alternative.id!;
-    const isCorrect = alternative.is_correct;
-    const wasSelected = result.userAlternatives.includes(alternativeId);
-
-    if (isCorrect) {
-      return 'correct-alternative';
-    } else if (wasSelected && !isCorrect) {
-      return 'incorrect-alternative';
-    }
-
-    return '';
+  handleCancel() {
+    this.dynamicDialogRef.close();
   }
 }

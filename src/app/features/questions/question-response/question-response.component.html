@@ -1,65 +1,56 @@
 <div class="question-response-container">
   @if (isLoading()) {
-    <div class="question-content">
-      <p-skeleton width="100%" height="3rem"/>
-    </div>
+  <div class="question-content">
+    <p-skeleton width="100%" height="3rem" />
+  </div>
   }
   @else if (question()) {
-    <div class="question-content">
-      <!-- Título da Questão -->
-      <div class="question-header">
-        <h3 class="question-title">{{ question()!.title }}</h3>
-        <span class="question-type">{{ question()!.type?.name }}</span>
-      </div>
-
-      <!-- Enunciado da Questão -->
-      <div class="question-statement">
-        <p>{{ question()!.statement }}</p>
-      </div>
-
-      <!-- Alternativas -->
-      <div class="alternatives-container">
-        @for (alternative of question()!.alternatives; track alternative.id) {
-          <div class="alternative-item" [ngClass]="getAlternativeClass(alternative)">
-            @if (isTrueFalse()) {
-              <div class="alternative-checkbox">
-                <p-checkbox
-                  [inputId]="alternative.id"
-                  name="group"
-                  [value]="alternative.id"
-                  [ngModel]="selectedAlternativeIds()"
-                  (ngModelChange)="selectedAlternativeIds.set($event)"
-                />
-                <label [for]="alternative.id" class="alternative-text">
-                  {{ alternative.text }}
-                </label>
-              </div>
-            }
-            @else {
-              <!-- Verdadeiro/Falso - Radio Button -->
-              <div class="alternative-radio">
-                <p-radioButton
-                  inputId ="{{ alternative.id }}"
-                  size="small"
-                  [value]="alternative.id"
-                  [disabled]="isSubmitted()"
-                  [ngModel]="selectedAlternativeIds()"
-                  (ngModelChange)="selectedAlternativeIds.set([$event])"
-                />
-                <label [for]="alternative.id" class="alternative-text">
-                  {{ alternative.text }}
-                </label>
-              </div>
-            }
-
-          </div>
-        }
-      </div>
-
-      <!-- Botões de Ação -->
-      <div class="form-actions">
-        <kh-button type="secondary" (click)="handleCancel()" widthType="full">Cancelar</kh-button>
-        <kh-button [loading]="isLoading()" [disabled]="isLoading() || !canSubmit()" (click)="submitResponse()" widthType="full">Salvar</kh-button>
-      </div>
+  <div class="question-content">
+    <!-- Título da Questão -->
+    <div class="question-header">
+      <h3 class="question-title">{{ question()!.title }}</h3>
+      <span class="question-type">{{ question()!.type?.name }}</span>
     </div>
+
+    <!-- Enunciado da Questão -->
+    <div class="question-statement">
+      <p>{{ question()!.statement }}</p>
+    </div>
+
+    <!-- Alternativas -->
+    <div class="alternatives-container">
+      @for (alternative of question()!.alternatives; track alternative.id) {
+      <div class="alternative-item">
+        @if (isTrueFalse()) {
+        <div class="alternative-checkbox">
+          <p-checkbox [inputId]="alternative.id" name="group" [value]="alternative.id"
+            [ngModel]="selectedAlternativeIds()" (ngModelChange)="selectedAlternativeIds.set($event)" />
+          <label [for]="alternative.id" class="alternative-text">
+            {{ alternative.text }}
+          </label>
+        </div>
+        }
+        @else {
+        <!-- Verdadeiro/Falso - Radio Button -->
+        <div class="alternative-radio">
+          <p-radioButton inputId="{{ alternative.id }}" size="small" [value]="alternative.id" [disabled]="isSubmitted()"
+            [ngModel]="selectedAlternativeIds()" (ngModelChange)="selectedAlternativeIds.set([$event])" />
+          <label [for]="alternative.id" class="alternative-text">
+            {{ alternative.text }}
+          </label>
+        </div>
+        }
+
+      </div>
+      }
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="form-actions">
+      <kh-button type="secondary" (click)="handleCancel()" widthType="full">Cancelar</kh-button>
+      <kh-button [loading]="isLoading()" [disabled]="isLoading() || !canSubmit()" (click)="submitResponse()"
+        widthType="full">Salvar</kh-button>
+    </div>
+  </div>
   }
+  <congratulations-message [show]="showConfetti()" />

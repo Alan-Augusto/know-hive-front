@@ -1,0 +1,19 @@
+<div class="confetti-container" [class.show]="isVisible">
+  <div class="confetti-overlay">
+    <!-- Confetes -->
+    <div
+      class="confetti-piece"
+      *ngFor="let piece of confettiPieces"
+      [style.left]="piece.left"
+      [style.animation-delay]="piece.delay"
+      [style.animation-duration]="piece.duration"
+      [class]="'confetti-' + piece.type"
+    ></div>
+
+    <!-- Mensagem de congratulações -->
+    <div class="congratulations-content">
+      <div class="congratulations-icon">🎉</div>
+      <!-- <div class="congratulations-text">{{ message }}</div> -->
+    </div>
+  </div>
+</div>
