@@ -59,6 +59,7 @@
         }
       }
     }
+
     .collection-card-list {
       width: 100%;
       display: flex;
@@ -86,6 +87,49 @@
 
     }
 
+    .tags-and-shortcuts {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+
+      .tag-card-list {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: var(--p-surface-base) !important;
+        gap: .5rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--p-surface-secondary);
+
+        .card-list-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          padding: 0.5rem;
+          border-radius: 0.5rem;
+
+          .card-list-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--p-text-base);
+          }
+        }
+      }
+
+      .shortcut-card-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--p-surface-base) !important;
+        gap: .5rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--p-surface-secondary);
+      }
+    }
   }
 
 

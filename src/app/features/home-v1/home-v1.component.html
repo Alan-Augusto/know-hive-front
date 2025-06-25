@@ -18,7 +18,7 @@
         </kh-button>
       </div>
       @for (item of data()?.recent_questions; track $index) {
-        <home-question-card [question]="item" />
+      <home-question-card [question]="item" />
       }
     </div>
 
@@ -30,14 +30,23 @@
         </kh-button>
       </div>
       @for (item of data()?.recent_collections; track $index) {
-        <home-collection-card  [collection]="item" />
+      <home-collection-card [collection]="item" />
       }
     </div>
 
     <div class="tags-and-shortcuts">
-      @for (item of data()?.most_used_tags; track $index) {
-      <home-tag-card [tag]="item" />
-      }
+      <div class="tag-card-list">
+        <div class="card-list-header">
+          <h4 class="card-list-title">Tags recorrentes</h4>
+        </div>
+        @for (item of data()?.most_used_tags; track $index) {
+        <home-tag-card [tag]="item" [index]="$index" />
+        }
+
+      </div>
+      <div class="shortcut-card-list">
+
+      </div>
     </div>
   </div>
 
