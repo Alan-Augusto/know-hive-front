@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IRecentQuestion } from '../../../entity/userStatistics.interface';
 import { ButtonLikeComponent } from "../../../components/button-like/button-like.component";
@@ -11,6 +11,24 @@ import { ButtonLikeComponent } from "../../../components/button-like/button-like
 })
 export class HomeQuestionCardComponent {
   question = input.required<IRecentQuestion>();
+
+  listIcons = signal<string[]>([
+    'ti ti-notebook',
+    'ti ti-pencil',
+    'ti ti-clipboard',
+    'ti ti-file-text',
+    'ti ti-file-alert',
+    'ti ti-file-analytics',
+    'ti ti-file-code',
+    'ti ti-file-smile',
+    'ti ti-file-zip',
+    'ti ti-file',
+  ])
+
+  icon = computed(() => {
+    const index = Math.floor(Math.random() * this.listIcons().length);
+    return this.listIcons()[index];
+  });
 
   date = computed(() => {
     const date = new Date(this.question().date);

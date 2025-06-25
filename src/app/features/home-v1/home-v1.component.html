@@ -5,7 +5,7 @@
   </div>
   <div class="card-grid">
     @for (item of listCards(); track $index) {
-      <home-card-statistic [value]="item"/>
+    <home-card-statistic [value]="item" />
     }
   </div>
 
@@ -13,24 +13,26 @@
     <div class="question-card-list">
       <div class="card-list-header">
         <h4 class="card-list-title">Perguntas recentes</h4>
-        <kh-button
-          size="small"
-          type="tertiary"
-          class="w-auto"
-          (click)="navigateTo('/questions')"
-        >
+        <kh-button size="small" type="tertiary" class="w-auto" (click)="navigateTo('/questions')">
           Ver todas
         </kh-button>
       </div>
       @for (item of data()?.recent_questions; track $index) {
-        <home-question-card [question]="item"/>
+        <home-question-card [question]="item" />
       }
     </div>
-  <div class="question-card-list">
-    @for (item of data()?.recent_questions; track $index) {
-      <home-question-card [question]="item"/>
-    }
-  </div>
+
+    <div class="collection-card-list">
+      @for (item of data()?.most_used_tags; track $index) {
+        <home-collection-card></home-collection-card>
+      }
+    </div>
+
+    <div class="tags-and-shortcuts">
+      @for (item of data()?.most_used_tags; track $index) {
+      <home-tag-card [tag]="item" />
+      }
+    </div>
   </div>
 
 </div>
