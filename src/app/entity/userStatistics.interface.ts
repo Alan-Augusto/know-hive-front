@@ -16,10 +16,13 @@ export interface IUserStatistics {
 export interface IRecentQuestion {
   id: string;
   title: string;
-  created_at: string;
+  statment: string;
+  date: string;
   author_name: string;
+  tags: string[];
+  is_liked: boolean;
   profile_picture: string;
-  type: 'question';
+  type: string;
   is_owned: boolean;
 }
 

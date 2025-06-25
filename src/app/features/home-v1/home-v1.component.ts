@@ -8,6 +8,7 @@ import { UsersService } from '../../services/users/users.service';
 import { IUserStatistics } from '../../entity/userStatistics.interface';
 import { HomeCardStatisticComponent, ICardHomeV1 } from './home-card-statistic/home-card-statistic.component';
 import { HomeQuestionCardComponent } from "./home-question-card/home-question-card.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'home-v1',
@@ -18,6 +19,7 @@ import { HomeQuestionCardComponent } from "./home-question-card/home-question-ca
 export class HomeV1Component{
   private loggedUserService = inject(LoggedUserService);
   private userService = inject(UsersService);
+  private router = inject(Router);
 
   // SIGNALS
   data = signal<IUserStatistics|null>(null);
@@ -101,6 +103,10 @@ export class HomeV1Component{
       color: '#6f42c1'
       }
     ];
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
   }
 
 }

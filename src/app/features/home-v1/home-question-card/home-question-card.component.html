@@ -1,19 +1,26 @@
 <div class="card">
-  <div class="card-header">
-    <div class="card-title-container">
-      <i class="ti ti-help-hexagon"></i>
-      <h3 class="card-title">{{ question().title }}</h3>
-    </div>
-    <span class="created-date">{{ question().created_at | date:'dd/MM' }}</span>
+  <div class="card-left">
+    <img class="card-icon" [src]="question().profile_picture"  />
   </div>
 
-  <div class="card-footer">
-    <div class="author-info">
-      <img [src]="question().profile_picture" [alt]="question().author_name" class="author-avatar" />
-      <span class="author-name">{{ question().author_name }}</span>
-      @if(question().is_owned) {
-        <span class="ownership-badge">Minha</span>
+  <div class="card-center">
+    <span class="card-title">{{ question().title }}</span>
+    <span class="card-statment">{{question().statment}}</span>
+    <div class="card-tag-list">
+      @for (item of question().tags; track $index) {
+        <span class="tag-item">{{item}}</span>
       }
     </div>
+  </div>
+
+  <div class="card-right">
+    <div class="card-like">
+      <button-like
+        [(liked)]="question().is_liked"
+        (onLike)="likeQuestion(question().id ?? '')"
+      />
+
+    </div>
+    <span class="card-date">{{date()}}</span>
   </div>
 </div>

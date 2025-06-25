@@ -13,12 +13,19 @@
   gap: 1rem;
   width: 100%;
   max-width: calc((100vh - 3.5rem) * 16 / 9);
+
+  .home-header{
+    width: 100%;
+    text-align: start;
+    padding-top: 1rem;
+  }
+
   .card-grid {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: .5rem;
-    padding: 0.5rem;
+    // padding: 0.5rem;
   }
 
   .items-grid{
@@ -34,6 +41,8 @@
       background-color: var(--p-surface-base) !important;
       gap: .5rem;
       padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--p-surface-secondary);
 
       .card-list-header {
         display: flex;
@@ -44,16 +53,9 @@
         border-radius: 0.5rem;
 
         .card-list-title {
-          font-size: 1.25rem;
+          font-size: 1.1rem;
           font-weight: 600;
           color: var(--p-text-base);
-        }
-
-        .view-all-link {
-          color: var(--p-primary);
-          cursor: pointer;
-          font-size: 0.875rem;
-          font-weight: 500;
         }
       }
 
