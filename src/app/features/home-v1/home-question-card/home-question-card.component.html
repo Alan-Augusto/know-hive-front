@@ -20,7 +20,7 @@
     <div class="card-like">
       <button-like
         [(liked)]="question().is_liked"
-        (onLike)="likeQuestion(question().id ?? '')"
+        (onLike)="likeQuestion(question().id)"
       />
 
     </div>

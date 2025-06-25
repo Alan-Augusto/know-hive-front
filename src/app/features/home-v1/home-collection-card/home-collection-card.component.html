@@ -1,1 +1,29 @@
-<p>home-collection-card works!</p>
+<div class="card">
+  <div class="card-left">
+    <img class="card-icon" [src]="collection().profile_picture"  />
+    <span class="card-author">{{collection().author_name}}</span>
+    <!-- <div class="card-icon">
+      <i [class]="icon()"></i>
+    </div> -->
+  </div>
+
+  <div class="card-center">
+    <span class="card-title">{{ collection().title }}</span>
+    <div class="card-tag-list">
+      @for (item of collection().tags; track $index) {
+        <span class="tag-item">{{item}}</span>
+      }
+    </div>
+  </div>
+
+  <div class="card-right">
+    <div class="card-like">
+      <button-like
+        [(liked)]="collection().is_liked"
+        (onLike)="likeQuestion(collection().id)"
+      />
+
+    </div>
+    <span class="card-date">{{date()}}</span>
+  </div>
+</div>

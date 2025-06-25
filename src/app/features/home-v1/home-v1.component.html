@@ -23,8 +23,14 @@
     </div>
 
     <div class="collection-card-list">
-      @for (item of data()?.most_used_tags; track $index) {
-        <home-collection-card></home-collection-card>
+      <div class="card-list-header">
+        <h4 class="card-list-title">Coleções recentes</h4>
+        <kh-button size="small" type="tertiary" class="w-auto" (click)="navigateTo('/collections')">
+          Ver todas
+        </kh-button>
+      </div>
+      @for (item of data()?.recent_collections; track $index) {
+        <home-collection-card  [collection]="item" />
       }
     </div>
 

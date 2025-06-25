@@ -27,13 +27,16 @@ export interface IRecentQuestion {
 }
 
 export interface IRecentCollection {
-    id: string;
-    title: string;
-    created_at: string;
-    author_name: string;
-    profile_picture: string;
-    type: 'collection';
-    is_owned: boolean;
+  id: string;
+  title: string;
+  statment: string;
+  date: string;
+  author_name: string;
+  tags: string[];
+  is_liked: boolean;
+  profile_picture: string;
+  type: string;
+  is_owned: boolean;
 }
 
 export interface IMostUsedTag {
