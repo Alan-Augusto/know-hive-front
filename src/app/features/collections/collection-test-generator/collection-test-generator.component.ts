@@ -144,8 +144,6 @@ export class CollectionTestGeneratorComponent implements OnInit {
           this.collection.set(collection as ICollection);
           this.divideQuestionsIntoPages();
           this.isLoading.set(false);
-          console.log('Collection loaded:', this.collection());
-          console.log('Question pages:', this.questionPages());
         },
         error: (error) => {
           console.error('Error loading collection:', error);

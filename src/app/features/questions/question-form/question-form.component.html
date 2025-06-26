@@ -67,7 +67,8 @@
       <p-accordion-content>
         <div class="tag-form">
           <p-floatlabel variant="on" class="w-full">
-            <input pInputText id="tags_input" formControlName="tags" class="form-input" autocomplete="off" />
+            <tags-input [formGroup]="formGroup" formControlName="tags" />
+            <!-- <input pInputText id="tags_input" formControlName="tags" class="form-input" autocomplete="off" /> -->
             <label for="tags_input">Tags</label>
           </p-floatlabel>
           <small class="tag-helper">Separe as tags por vírgula</small>

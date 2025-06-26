@@ -28,10 +28,11 @@ import {
   AlternativeFormData
 } from './question-form.types';
 import { FormService } from '../../../services/utils/form.service';
+import { TagsInputComponent } from "../../../components/tags-input/tags-input.component";
 
 @Component({
   selector: 'question-form',
-  imports: [InputTextModule, AccordionModule, SelectModule, TextareaModule, FloatLabelModule, CheckboxModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, KhButtonComponent],
+  imports: [InputTextModule, AccordionModule, SelectModule, TextareaModule, FloatLabelModule, CheckboxModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, ButtonModule, DividerModule, PasswordModule, KhButtonComponent, TagsInputComponent],
   templateUrl: './question-form.component.html',
   styleUrl: './question-form.component.scss'
 })
@@ -71,7 +72,7 @@ export class QuestionFormComponent implements OnInit {
       author_id: [this.currentUser().id as string],
       is_public: [false],
       created_at: [null as Date | null],
-      tags: ['']
+      tags: [[]]
     });
   }
 
@@ -151,7 +152,7 @@ export class QuestionFormComponent implements OnInit {
       author_id: question.author_id || this.currentUser().id,
       is_public: question.is_public || false,
       created_at: question.created_at || null,
-      tags: question.tags ? question.tags.join(', ') : ''
+      tags: question.tags ? question.tags : []
     });
 
     // Preencher alternativas
@@ -241,7 +242,7 @@ export class QuestionFormComponent implements OnInit {
     form.alternatives = form.alternatives.filter((alt: any) => alt.text && alt.text.trim() !== '');
 
     // Processar tags
-    form.tags = form.tags ? this.normalizeTags(form.tags) : [];
+    form.tags = form.tags ? form.tags : [];
 
     // Remover campos nulos/undefined apenas se for criação
     if (!this.isEditMode()) {
@@ -273,9 +274,5 @@ export class QuestionFormComponent implements OnInit {
 
   handleCancel(): void {
     this.dialogRef.close();
-  }
-
-  normalizeTags(tags: string): string[] {
-    return tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
   }
 }

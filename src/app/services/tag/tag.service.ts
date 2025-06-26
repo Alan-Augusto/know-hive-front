@@ -8,7 +8,7 @@ import { BaseApiService } from '../base-api.service';
 })
 export class TagService extends BaseApiService {
 
-  override entityUrl = '/tag';
+  override entityUrl = '/tags';
 
   // Criar uma nova tag
   create(createTagDto: any): Observable<any> {

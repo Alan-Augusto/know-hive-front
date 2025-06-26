@@ -17,10 +17,11 @@ import { AccordionModule } from 'primeng/accordion';
 import { CheckboxModule } from 'primeng/checkbox';
 
 import { QuestionSelectListComponent } from "../question-select-list/question-select-list.component";
+import { TagsInputComponent } from "../../../components/tags-input/tags-input.component";
 
 @Component({
   selector: 'collection-form',
-  imports: [InputTextModule, AccordionModule, TextareaModule, CheckboxModule, FloatLabelModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, KhButtonComponent, QuestionSelectListComponent],
+  imports: [InputTextModule, AccordionModule, TextareaModule, CheckboxModule, FloatLabelModule, RadioButtonModule, FormsModule, ReactiveFormsModule, CommonModule, KhButtonComponent, QuestionSelectListComponent, TagsInputComponent],
   templateUrl: './collection-form.component.html',
   styleUrl: './collection-form.component.scss'
 })
@@ -56,7 +57,7 @@ export class CollectionFormComponent implements OnInit {
       description: ['', [this.formService.requiredValidator()]],
       is_public: [false],
       questions_ids:[[]],
-      tags: ['']
+      tags: [[]]
     });
   }
 
@@ -78,7 +79,7 @@ export class CollectionFormComponent implements OnInit {
           description: collection.description,
           is_public: collection.is_public || false,
           questions_ids: collection.questions_ids || [],
-          tags: collection.tags ? collection.tags.join(', ') : ''
+          tags: collection.tags ? collection.tags : []
         });
 
         this.selectedQuestions.set(collection.questions_ids || []);
@@ -88,10 +89,6 @@ export class CollectionFormComponent implements OnInit {
       this.notificationService.toastError('Erro ao carregar dados da coleção.');
       this.handleCancel();
     }
-  }
-
-  normalizeTags(tags: string): string[] {
-    return tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
   }
 
   handleSave(): void {
@@ -109,7 +106,7 @@ export class CollectionFormComponent implements OnInit {
       is_public: formData.is_public,
       is_liked: false,
       questions_ids: this.selectedQuestions() || [],
-      tags: formData.tags ? this.normalizeTags(formData.tags): []
+      tags: formData.tags ? formData.tags: []
     };
 
     this.collectionsService.createOrUpdateWithQuestions(collectionData).subscribe({

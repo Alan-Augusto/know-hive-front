@@ -56,7 +56,6 @@ export class HomeV1Component {
     this.userService.getUserStatistics(this.user().id).subscribe({
       next: (data) => {
         this.data.set(data as IUserStatistics);
-        console.log('User statistics loaded:', data);
       },
       error: (error) => {
         console.error('Error loading user statistics:', error);

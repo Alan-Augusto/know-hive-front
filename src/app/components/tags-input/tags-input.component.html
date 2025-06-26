@@ -1,0 +1,3 @@
+<div [formGroup]="formGroup()">
+  <p-autocomplete [formControlName]="formControlName()" inputId="multiple-ac-1" multiple fluid [suggestions]="existingTagsWithQuery()" (completeMethod)="onSearch($event)" appendTo="body"/>
+</div>
