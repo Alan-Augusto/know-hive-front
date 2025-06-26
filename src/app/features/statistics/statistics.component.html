@@ -1,1 +1,114 @@
-<p>statistics works!</p>
+<div class="statistics-container">
+  <header class="statistics-header">
+    <h1 class="statistics-title">📊 Estatísticas Detalhadas</h1>
+    <p class="statistics-subtitle">Panorama completo do seu desempenho na plataforma</p>
+  </header>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Carregando estatísticas...</p>
+    </div>
+  } @else {
+    <div class="statistics-content">
+      <!-- Estatísticas Gerais -->
+      <section class="stats-section">
+        <h2 class="section-title">
+          <i class="ti ti-chart-bar"></i>
+          Estatísticas Gerais
+        </h2>
+        <div class="stats-grid">
+          @for (stat of generalStats(); track stat.title) {
+            <home-card-statistic [value]="stat" />
+          }
+        </div>
+      </section>
+
+      <!-- Performance -->
+      <section class="stats-section">
+        <h2 class="section-title">
+          <i class="ti ti-target"></i>
+          Performance
+        </h2>
+        <div class="performance-layout">
+          <div class="stats-grid stats-grid-2">
+            @for (stat of performanceStats(); track stat.title) {
+              <home-card-statistic [value]="stat" />
+            }
+          </div>
+          @if (data()?.total_responses && data()!.total_responses > 0) {
+            <div class="chart-container">
+              <h3 class="chart-title">Distribuição de Respostas</h3>
+              <div class="chart-wrapper">
+                <canvas #performanceChart></canvas>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Compartilhamento e Acesso -->
+      <section class="stats-section">
+        <h2 class="section-title">
+          <i class="ti ti-share"></i>
+          Compartilhamento e Acesso
+        </h2>
+        <div class="stats-grid">
+          @for (stat of sharingStats(); track stat.title) {
+            <home-card-statistic [value]="stat" />
+          }
+        </div>
+      </section>
+
+      <!-- Tags Mais Utilizadas -->
+      @if (topTags().length > 0) {
+        <section class="stats-section">
+          <h2 class="section-title">
+            <i class="ti ti-tags"></i>
+            Tags Mais Utilizadas
+          </h2>
+          <div class="tags-layout">
+            <div class="tags-container">
+              @for (tag of topTags(); track tag.id) {
+                <div class="tag-item">
+                  <span class="tag-name"># {{ tag.name }}</span>
+                  <span class="tag-count">{{ tag.usage_count }} usos</span>
+                </div>
+              }
+            </div>
+            @if (topTags().length > 0) {
+              <div class="chart-container">
+                <h3 class="chart-title">Ranking de Tags</h3>
+                <div class="chart-wrapper chart-wrapper-tall">
+                  <canvas #tagsChart></canvas>
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- Ações Rápidas -->
+      <section class="stats-section">
+        <h2 class="section-title">
+          <i class="ti ti-rocket"></i>
+          Ações Rápidas
+        </h2>
+        <div class="quick-actions">
+          <button class="action-button" (click)="navigateTo('/questions')">
+            <i class="ti ti-notebook"></i>
+            <span>Gerenciar Questões</span>
+          </button>
+          <button class="action-button" (click)="navigateTo('/collections')">
+            <i class="ti ti-folder"></i>
+            <span>Gerenciar Coleções</span>
+          </button>
+          <button class="action-button" (click)="navigateTo('/home')">
+            <i class="ti ti-home"></i>
+            <span>Voltar ao Início</span>
+          </button>
+        </div>
+      </section>
+    </div>
+  }
+</div>
