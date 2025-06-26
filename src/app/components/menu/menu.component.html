@@ -6,7 +6,7 @@
 
         <div class="menu-body">
           @for (item of menuItems(); track $index) {
-            <div class="menu-item" [class.active]="item.active" (click)="redirectTo(item.url); activateMenuItem(item.id)">
+            <div class="menu-item" [class.active]="item.active" (click)="redirectTo(item.url);">
               <i [class]="item.icon"></i>
               <span class="menu-item-text">{{item.label}}</span>
             </div>
@@ -20,7 +20,7 @@
     </div>
     <div class="content">
         <div class="content-header">
-            <div class="toggle-button" (click)="isExpanded.set(!isExpanded())">
+            <div class="toggle-button" (click)="toggleMenu()">
                 <i [class]="isExpanded() ? 'ti ti-layout-sidebar-left-collapse' : 'ti ti-layout-sidebar-right-collapse'"></i>
             </div>
             <div class="space-horizon"></div>

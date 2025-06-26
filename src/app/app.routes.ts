@@ -57,6 +57,11 @@ export const routes: Routes = [
       data: {showMenu: true}
     },
     {
+      path: 'public-search',
+      loadComponent: () => import('./features/public-search/public-search.component').then(m => m.PublicSearchComponent),
+      data: {showMenu: true}
+    },
+    {
         path: 'color-preview',
         loadComponent: () => import('./features/color-preview/color-preview.component').then(m => m.ColorPreviewComponent)
     }
