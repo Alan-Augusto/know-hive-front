@@ -144,9 +144,12 @@
     }
 
     &.active {
-      background-color: var(--p-surface-card);
+      background-color: var(--p-accent-100);
       opacity: 0.8;
-      color: var(--p-primary-color-text);
+      color: var(--p-accent-700);
+      i{
+        color: var(--p-accent-700);
+      }
     }
 
     i {
