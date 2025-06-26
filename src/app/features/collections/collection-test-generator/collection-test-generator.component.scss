@@ -1,9 +1,19 @@
+.test-modal-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 70vh;
+}
+
 .test-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  min-height: 100vh;
-  background-color: #f0f0f0;
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--p-surface-fluffy);
+  border-radius: .5rem;
+  border: 1px solid var(--p-surface-card);
   padding: 20px;
   font-family: 'Times New Roman', Times, serif;
 
@@ -401,8 +411,23 @@
     align-items: center;
     justify-content: center;
     height: 300px;
-    color: #666;
+    color: var(--p-surface-card);
     font-size: 16px;
+  }
+
+}
+.actions {
+  position: sticky;
+  bottom: 0;
+  margin: 0;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  // Mobile
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 }
 

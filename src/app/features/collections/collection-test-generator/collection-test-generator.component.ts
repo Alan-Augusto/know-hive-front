@@ -4,6 +4,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CollectionsService } from '../../../services/collections/collections.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { CommonModule } from '@angular/common';
+import { KhButtonComponent } from '../../../components/kh-button/kh-button.component';
 
 interface QuestionPage {
   pageNumber: number;
@@ -13,7 +14,7 @@ interface QuestionPage {
 
 @Component({
   selector: 'collection-test-generator',
-  imports: [CommonModule],
+  imports: [CommonModule, KhButtonComponent],
   templateUrl: './collection-test-generator.component.html',
   styleUrl: './collection-test-generator.component.scss'
 })

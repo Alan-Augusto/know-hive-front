@@ -1,54 +1,54 @@
-<div class="test-container">
-  @if (!isLoading() && collection()) {
-    <div class="test-pages">
+<div class="test-modal-content">
+  <div class="test-container">
+    @if (!isLoading() && collection()) {
+      <div class="test-pages">
+        @for (page of questionPages(); track page.pageNumber) {
+          <div class="a4-paper page" [attr.id]="'page-' + page.pageNumber">
 
-      @for (page of questionPages(); track page.pageNumber) {
-        <div class="a4-paper page" [attr.id]="'page-' + page.pageNumber">
+            <!-- Cabeçalho da Prova (apenas na primeira página) -->
+            @if (page.isFirstPage) {
+              <div class="test-header">
+                <div class="header-content">
+                  <h1 class="test-title">AVALIAÇÃO - {{ collection()?.title }}</h1>
 
-          <!-- Cabeçalho da Prova (apenas na primeira página) -->
-          @if (page.isFirstPage) {
-            <div class="test-header">
-              <div class="header-content">
-                <h1 class="test-title">AVALIAÇÃO - {{ collection()?.title }}</h1>
-
-                <div class="test-info">
-                  <div class="info-grid">
-                    <div class="info-item">
-                      <span class="label">Nome:</span>
-                      <div class="underline-long"></div>
-                    </div>
-                    <div class="info-item">
-                      <span class="label">Nº:</span>
-                      <div class="underline-short"></div>
-                    </div>
-                    <div class="info-item">
-                      <span class="label">Data:</span>
-                      <div class="underline-medium"></div>
-                    </div>
-                    <div class="info-item">
-                      <span class="label">Turma:</span>
-                      <div class="underline-medium"></div>
-                    </div>
-                    <div class="info-item full-width">
-                      <span class="label">Professor(a):</span>
-                      <div class="underline-long"></div>
+                  <div class="test-info">
+                    <div class="info-grid">
+                      <div class="info-item">
+                        <span class="label">Nome:</span>
+                        <div class="underline-long"></div>
+                      </div>
+                      <div class="info-item">
+                        <span class="label">Nº:</span>
+                        <div class="underline-short"></div>
+                      </div>
+                      <div class="info-item">
+                        <span class="label">Data:</span>
+                        <div class="underline-medium"></div>
+                      </div>
+                      <div class="info-item">
+                        <span class="label">Turma:</span>
+                        <div class="underline-medium"></div>
+                      </div>
+                      <div class="info-item full-width">
+                        <span class="label">Professor(a):</span>
+                        <div class="underline-long"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Descrição da Prova -->
-            @if (collection()?.description) {
-              <div class="test-description">
-                <p>{{ collection()?.description }}</p>
-              </div>
-            }
+              <!-- Descrição da Prova -->
+              @if (collection()?.description) {
+                <div class="test-description">
+                  <p>{{ collection()?.description }}</p>
+                </div>
+              }
 
-            <!-- Instruções -->
-            <div class="test-instructions">
-              <h3>INSTRUÇÕES:</h3>
-              <ul>
+              <!-- Instruções -->
+              <div class="test-instructions">
+                <h3>INSTRUÇÕES:</h3>
+                <ul>
                 <li>Leia atentamente todas as questões antes de responder.</li>
                 <li>Para questões de múltipla escolha, marque apenas uma alternativa.</li>
                 <li>Para questões de verdadeiro ou falso, escreva V ou F no espaço indicado.</li>
@@ -141,22 +141,30 @@
           </div>
         </div>
       }
-
     </div>
-  }
 
-  <!-- Loading State -->
-  @if (isLoading()) {
-    <div class="loading-container">
-      <div class="loading-spinner"></div>
-      <p>Carregando prova...</p>
-    </div>
-  }
+    <!-- Loading State -->
+    @if (isLoading()) {
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Carregando prova...</p>
+      </div>
+    }
 
-  <!-- Empty State -->
-  @if (!isLoading() && !collection()) {
-    <div class="empty-state">
-      <p>Nenhuma coleção encontrada.</p>
-    </div>
+    <!-- Empty State -->
+    @if (!isLoading() && !collection()) {
+      <div class="empty-state">
+        <p>Nenhuma coleção encontrada.</p>
+      </div>
+    }
   }
+</div>
+
+  <div class="actions">
+    <kh-button type="secondary" widthType="full">Cancelar</kh-button>
+    <kh-button widthType="full">
+      <i class="ti ti-file-text"></i>
+      <span>Gerar PDF</span>
+    </kh-button>
+  </div>
 </div>
