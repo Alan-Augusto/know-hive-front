@@ -28,7 +28,6 @@ export class MenuService {
     const currentUrl = this.router.url;
     const activeItem = this.menuItems().find(item => currentUrl.includes(item.url));
     if (activeItem) {
-      console.log('Active item found:', activeItem);
       this.activateMenuItem(activeItem.id);
     }
   }

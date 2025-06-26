@@ -141,7 +141,11 @@
 
     &:hover {
       background-color: var(--p-accent-100);
+      color: var(--p-accent-700) !important;
 
+      i{
+        color: var(--p-accent-700) !important;
+      }
     }
 
     &.active {

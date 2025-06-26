@@ -1,8 +1,12 @@
 <div class="statistics-container">
-  <header class="statistics-header">
+  <!-- <header class="statistics-header">
     <h1 class="statistics-title">📊 Estatísticas Detalhadas</h1>
     <p class="statistics-subtitle">Panorama completo do seu desempenho na plataforma</p>
-  </header>
+  </header> -->
+  <div class="flex flex-column align-items-left gap-2 w-full" [style.color]="'var(--p-text-base)'">
+    <h2 class="m-0 emoji">📊 Estatísticas Detalhadas</h2>
+    <p>Panorama completo do seu desempenho na plataforma.</p>
+  </div>
 
   @if (loading()) {
     <div class="loading-container">

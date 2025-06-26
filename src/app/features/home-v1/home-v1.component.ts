@@ -34,7 +34,7 @@ export class HomeV1Component {
       label: 'Criar Questão', icon: 'ti ti-pencil', onClick: () => {this.newQuestion();},
     },
     {
-      label: 'Criar Coleção', icon: 'ti ti-folder-plus', onClick: () => {this.navigateTo('/create-collection');},
+      label: 'Criar Coleção', icon: 'ti ti-folder-plus', onClick: () => {this.newCollection();},
     },
     {
       label: 'Gerenciar Questões', icon: 'ti ti-notebook', onClick: () => {this.navigateTo('/questions');},
@@ -142,6 +142,24 @@ export class HomeV1Component {
         '640px': '90vw'
       },
     });
+  }
+
+  newCollection(){
+    const ref = this.dialogService.open(
+      QuestionFormComponent,
+      {
+        header: '📚 Nova coleção',
+        modal: true,
+        closable: true,
+        focusOnShow: false,
+        width: '30rem',
+        breakpoints: {
+          '960px': '75vw',
+          '640px': '90vw'
+        },
+      }
+    );
+
   }
 
 }
