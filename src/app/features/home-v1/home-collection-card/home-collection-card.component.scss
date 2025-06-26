@@ -65,6 +65,7 @@
     }
 
     .card-tag-list{
+      padding-top: .5rem;
       display: flex;
       flex-direction: row;
       gap: 0.25rem;
@@ -77,9 +78,9 @@
       }
 
       .tag-item{
-        font-size: 0.8rem;
-        background-color: var(--p-surface-fluffy);
-        color: var(--p-text-base);
+        font-size: 0.65rem;
+        background-color: var(--p-accent-100) !important;
+        color: var(--p-text-base) !important;
         padding: 0.15rem 0.25rem;
         border-radius: 0.25rem;
       }

@@ -140,7 +140,8 @@
     overflow: hidden;
 
     &:hover {
-      background-color: var(--p-surface-card);
+      background-color: var(--p-accent-100);
+
     }
 
     &.active {
