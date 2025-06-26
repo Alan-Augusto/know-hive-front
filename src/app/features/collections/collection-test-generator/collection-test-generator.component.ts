@@ -158,4 +158,379 @@ export class CollectionTestGeneratorComponent implements OnInit {
       this.dynamicDialogRef.close();
     }
   }
+
+  generatePdf() {
+    // Criar uma nova janela para impressão
+    const printWindow = window.open('', '_blank');
+
+    if (!printWindow) {
+      this.notificationService.toastError('Por favor, permita pop-ups para gerar o PDF.');
+      return;
+    }
+
+    // Obter o HTML das páginas do teste
+    const testPagesElement = document.querySelector('.test-pages');
+    if (!testPagesElement) {
+      this.notificationService.toastError('Erro ao obter o conteúdo do teste.');
+      printWindow.close();
+      return;
+    }
+
+    // CSS específico para impressão
+    const printStyles = `
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Times New Roman', Times, serif;
+          margin: 0;
+          padding: 0;
+          background: white;
+          color: #000;
+          font-size: 12pt;
+          line-height: 1.4;
+        }
+
+        @page {
+          size: A4;
+          margin: 0;
+        }
+
+        .test-pages {
+          display: block;
+        }
+
+        .a4-paper {
+          width: 210mm;
+          height: 297mm;
+          background: white;
+          page-break-after: always;
+          page-break-inside: avoid;
+          padding: 15mm 20mm 20mm 20mm;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          position: relative;
+        }
+
+        .a4-paper:last-child {
+          page-break-after: auto;
+        }
+
+        .test-header {
+          margin-bottom: 20px;
+        }
+
+        .test-title {
+          font-size: 16pt;
+          font-weight: bold;
+          margin: 20px 0 25px 0;
+          text-align: center;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          border: 2px solid #000;
+          padding: 10px;
+          background-color: #f8f9fa;
+        }
+
+        .test-info {
+          margin-bottom: 20px;
+        }
+
+        .info-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px 20px;
+          align-items: center;
+        }
+
+        .info-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .info-item.full-width {
+          grid-column: 1 / -1;
+        }
+
+        .label {
+          font-weight: bold;
+          font-size: 11pt;
+          white-space: nowrap;
+        }
+
+        .underline-long {
+          flex: 1;
+          border-bottom: 1px solid #000;
+          height: 18px;
+          min-width: 250px;
+        }
+
+        .underline-medium {
+          flex: 1;
+          border-bottom: 1px solid #000;
+          height: 18px;
+          min-width: 120px;
+        }
+
+        .underline-short {
+          flex: 1;
+          border-bottom: 1px solid #000;
+          height: 18px;
+          min-width: 60px;
+        }
+
+        .test-description {
+          background-color: #f8f9fa;
+          padding: 12px;
+          border: 1px solid #dee2e6;
+          margin-bottom: 20px;
+          border-radius: 4px;
+        }
+
+        .test-description p {
+          margin: 0;
+          font-style: italic;
+          font-size: 11pt;
+          text-align: justify;
+        }
+
+        .test-instructions {
+          margin-bottom: 25px;
+          padding: 12px;
+          border: 2px solid #000;
+          background-color: #fff;
+        }
+
+        .test-instructions h3 {
+          margin: 0 0 10px 0;
+          font-size: 12pt;
+          font-weight: bold;
+          text-align: center;
+        }
+
+        .test-instructions ul {
+          margin: 0;
+          padding-left: 18px;
+        }
+
+        .test-instructions li {
+          font-size: 10pt;
+          margin-bottom: 4px;
+          line-height: 1.3;
+        }
+
+        .question-item {
+          margin-bottom: 20px;
+          page-break-inside: avoid;
+        }
+
+        .question-header {
+          display: flex;
+          align-items: flex-start;
+          gap: 8px;
+          margin-bottom: 8px;
+        }
+
+        .question-number {
+          font-weight: bold;
+          font-size: 12pt;
+          min-width: 25px;
+        }
+
+        .question-title {
+          font-weight: bold;
+          font-size: 11pt;
+          color: #495057;
+          font-style: italic;
+        }
+
+        .question-statement {
+          margin-left: 25px;
+          margin-bottom: 12px;
+          font-size: 11pt;
+          line-height: 1.4;
+          text-align: justify;
+          font-weight: 500;
+        }
+
+        .alternatives-section {
+          margin-left: 30px;
+          page-break-inside: avoid;
+        }
+
+        .alternative-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 8px;
+          margin-bottom: 8px;
+          padding: 3px 0;
+        }
+
+        .alternative-mark {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          min-width: 50px;
+        }
+
+        .alternative-letter {
+          font-weight: bold;
+          font-size: 11pt;
+        }
+
+        .mark-circle {
+          font-weight: bold;
+          font-size: 12pt;
+        }
+
+        .alternative-text {
+          font-size: 11pt;
+          line-height: 1.3;
+          flex: 1;
+          text-align: justify;
+        }
+
+        .true-false-section {
+          margin-left: 30px;
+          margin-top: 8px;
+          page-break-inside: avoid;
+        }
+
+        .true-false-item {
+          margin-bottom: 10px;
+        }
+
+        .statement-with-answer {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          padding: 3px 0;
+        }
+
+        .answer-box {
+          font-weight: bold;
+          font-size: 12pt;
+          min-width: 35px;
+          flex-shrink: 0;
+        }
+
+        .statement-text {
+          font-size: 11pt;
+          line-height: 1.3;
+          flex: 1;
+          text-align: justify;
+        }
+
+        .single-true-false .answer-instruction {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-top: 8px;
+        }
+
+        .instruction-text {
+          font-size: 10pt;
+          color: #6c757d;
+          font-style: italic;
+        }
+
+        .essay-section {
+          margin-left: 30px;
+          margin-top: 12px;
+          page-break-inside: avoid;
+        }
+
+        .answer-line {
+          border-bottom: 1px solid #000;
+          height: 20px;
+          margin-bottom: 6px;
+          width: 100%;
+        }
+
+        .page-footer {
+          position: absolute;
+          bottom: 15mm;
+          left: 20mm;
+          right: 20mm;
+          border-top: 1px solid #000;
+          padding-top: 8px;
+        }
+
+        .footer-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 10pt;
+          color: #000;
+        }
+
+        .page-number {
+          font-weight: bold;
+        }
+
+        .question-count {
+          font-style: italic;
+        }
+
+        @media print {
+          body {
+            -webkit-print-color-adjust: exact;
+            color-adjust: exact;
+          }
+
+          .a4-paper {
+            page-break-after: always;
+          }
+
+          .a4-paper:last-child {
+            page-break-after: auto;
+          }
+        }
+      </style>
+    `;
+
+    // Criar o documento HTML completo
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Prova - ${this.collection()?.title || 'Teste'}</title>
+          ${printStyles}
+        </head>
+        <body>
+          <div class="test-pages">
+            ${testPagesElement.innerHTML}
+          </div>
+        </body>
+      </html>
+    `;
+
+    // Escrever o conteúdo na nova janela
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+
+    // Aguardar o carregamento e imprimir
+    printWindow.onload = () => {
+      setTimeout(() => {
+        printWindow.print();
+        // Fechar a janela após a impressão (opcional)
+        printWindow.onafterprint = () => {
+          printWindow.close();
+        };
+      }, 500);
+    };
+
+    this.notificationService.toastSuccess('Preparando PDF para impressão...');
+  }
+
+  cancel() {
+    this.dynamicDialogRef.close();
+  }
 }

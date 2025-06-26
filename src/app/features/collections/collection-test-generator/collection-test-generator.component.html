@@ -161,8 +161,8 @@
 </div>
 
   <div class="actions">
-    <kh-button type="secondary" widthType="full">Cancelar</kh-button>
-    <kh-button widthType="full">
+    <kh-button type="secondary" widthType="full" (click)="cancel()">Cancelar</kh-button>
+    <kh-button widthType="full" (click)="generatePdf()">
       <i class="ti ti-file-text"></i>
       <span>Gerar PDF</span>
     </kh-button>
