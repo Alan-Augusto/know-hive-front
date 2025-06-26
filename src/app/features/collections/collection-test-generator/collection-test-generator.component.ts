@@ -3,10 +3,11 @@ import { ICollection } from '../../../entity/collection.interface';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CollectionsService } from '../../../services/collections/collections.service';
 import { NotificationService } from '../../../services/notification/notification.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'collection-test-generator',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './collection-test-generator.component.html',
   styleUrl: './collection-test-generator.component.scss'
 })
@@ -23,6 +24,11 @@ export class CollectionTestGeneratorComponent {
 
   ngOnInit() {
     this.loadCollection();
+  }
+
+  // Método para obter as letras das alternativas
+  getAlternativeLetter(index: number): string {
+    return String.fromCharCode(97 + index); // a, b, c, d, etc.
   }
 
   private loadCollection() {

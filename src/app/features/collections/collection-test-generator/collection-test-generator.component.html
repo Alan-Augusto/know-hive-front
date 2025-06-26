@@ -1,1 +1,129 @@
-<p>collection-test-generator works!</p>
+<div class="test-container">
+  @if (!isLoading() && collection()) {
+    <div class="a4-paper">
+      <!-- Cabeçalho da Prova -->
+      <div class="test-header">
+        <div class="header-content">
+          <h1 class="test-title">{{ collection()?.title }}</h1>
+          <div class="test-info">
+            <div class="info-row">
+              <span class="label">Nome:</span>
+              <div class="underline"></div>
+            </div>
+            <div class="info-row">
+              <span class="label">Data:</span>
+              <div class="underline-short"></div>
+              <span class="label">Turma:</span>
+              <div class="underline-short"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Descrição da Prova -->
+      @if (collection()?.description) {
+        <div class="test-description">
+          <p>{{ collection()?.description }}</p>
+        </div>
+      }
+
+      <!-- Instruções -->
+      <div class="test-instructions">
+        <h3>Instruções:</h3>
+        <ul>
+          <li>Leia atentamente todas as questões antes de responder.</li>
+          <li>Para questões de múltipla escolha, marque apenas uma alternativa.</li>
+          <li>Para questões de verdadeiro ou falso, escreva V ou F no espaço indicado.</li>
+          <li>Use caneta azul ou preta.</li>
+        </ul>
+      </div>
+
+      <!-- Lista de Questões -->
+      <div class="questions-section">
+        @for (question of collection()?.questions; track $index) {
+          <div class="question-item">
+            <div class="question-header">
+              <span class="question-number">{{ $index + 1 }}.</span>
+              @if (question.title) {
+                <span class="question-title">{{ question.title }}</span>
+              }
+            </div>
+
+            <div class="question-statement">
+              {{ question.statement }}
+            </div>
+
+            <!-- Questões de Múltipla Escolha (type_id = 1) -->
+            @if (question.type_id === 1 && question.alternatives && question.alternatives.length > 0) {
+              <div class="alternatives-section">
+                @for (alternative of question.alternatives; track altIndex; let altIndex = $index) {
+                  <div class="alternative-item">
+                    <span class="alternative-letter">{{ getAlternativeLetter(altIndex) }})</span>
+                    <span class="alternative-text">{{ alternative.text }}</span>
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- Questões de Verdadeiro ou Falso (type_id = 2) -->
+            @if (question.type_id === 2) {
+              <div class="true-false-section">
+                <!-- Se tem alternativas, mostra elas -->
+                @if (question.alternatives && question.alternatives.length > 0) {
+                  <div class="true-false-alternatives">
+                    @for (alternative of question.alternatives; track altIndex; let altIndex = $index) {
+                      <div class="true-false-item">
+                        <div class="statement-with-answer">
+                          <!-- <span class="answer-symbol">(ㅤㅤ)ㅤㅤ</span> -->
+                          <span class="statement-text">(ㅤㅤ)ㅤ{{ alternative.text }}</span>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- Questões Dissertativas (outros tipos) -->
+            @if (question.type_id !== 1 && question.type_id !== 2) {
+              <div class="essay-section">
+                <div class="answer-lines">
+                  @for (line of [1,2,3,4,5]; track $index) {
+                    <div class="answer-line"></div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Rodapé -->
+      <div class="test-footer">
+        <div class="footer-info">
+          <span>Total de questões: {{ collection()?.questions?.length || 0 }}</span>
+          @if (collection()?.author) {
+            <span class="author-info">
+              Elaborado por: {{ collection()?.author?.name || 'Autor não informado' }}
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Carregando prova...</p>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading() && !collection()) {
+    <div class="empty-state">
+      <p>Nenhuma coleção encontrada.</p>
+    </div>
+  }
+</div>
