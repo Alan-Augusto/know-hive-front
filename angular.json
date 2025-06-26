@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "teste_projeto_angular": {
+    "know_hive": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/teste_projeto_angular",
+            "outputPath": "dist/know_hive",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -41,13 +41,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "1MB",
+                  "maximumError": "2MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "15kB"
                 }
               ],
               "outputHashing": "all",
@@ -79,10 +79,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "teste_projeto_angular:build:production"
+              "buildTarget": "know_hive:build:production"
             },
             "development": {
-              "buildTarget": "teste_projeto_angular:build:development"
+              "buildTarget": "know_hive:build:development"
             }
           },
           "defaultConfiguration": "development"

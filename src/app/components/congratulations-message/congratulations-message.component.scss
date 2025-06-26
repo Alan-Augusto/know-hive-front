@@ -1,3 +1,5 @@
+@use "sass:list";
+
 // Cores dos confetes
 $colors: (
   #ffd300,  // Amarelo
@@ -42,46 +44,44 @@ $colors: (
   height: 10px;
   background: #ffd300;
   animation: confetti-fall 3s linear infinite;
-  transform-origin: center;
-
   // Diferentes formas e tamanhos
   &.confetti-0 {
-    background: #{nth($colors, 1)};
+    background: #{list.nth($colors, 1)};
     border-radius: 50%;
     width: 8px;
     height: 8px;
   }
 
   &.confetti-1 {
-    background: #{nth($colors, 2)};
+    background: #{list.nth($colors, 2)};
     width: 6px;
     height: 12px;
     transform: rotate(45deg);
   }
 
   &.confetti-2 {
-    background: #{nth($colors, 3)};
+    background: #{list.nth($colors, 3)};
     border-radius: 50%;
     width: 10px;
     height: 10px;
   }
 
   &.confetti-3 {
-    background: #{nth($colors, 4)};
+    background: #{list.nth($colors, 4)};
     width: 8px;
     height: 8px;
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   }
 
   &.confetti-4 {
-    background: #{nth($colors, 5)};
+    background: #{list.nth($colors, 5)};
     width: 12px;
     height: 4px;
     border-radius: 2px;
   }
 
   &.confetti-5 {
-    background: #{nth($colors, 6)};
+    background: #{list.nth($colors, 6)};
     width: 6px;
     height: 6px;
     transform: rotate(45deg);
