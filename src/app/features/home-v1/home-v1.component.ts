@@ -11,10 +11,13 @@ import { HomeQuestionCardComponent } from "./home-question-card/home-question-ca
 import { Router } from '@angular/router';
 import { HomeTagCardComponent } from "./home-tag-card/home-tag-card.component";
 import { HomeCollectionCardComponent } from './home-collection-card/home-collection-card.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { QuestionFormComponent } from '../questions/question-form/question-form.component';
 
 @Component({
   selector: 'home-v1',
   imports: [FormsModule, InputTextModule, KhButtonComponent, HomeCardStatisticComponent, HomeQuestionCardComponent, HomeTagCardComponent, HomeCollectionCardComponent],
+  providers: [DialogService],
   templateUrl: './home-v1.component.html',
   styleUrl: './home-v1.component.scss'
 })
@@ -22,12 +25,13 @@ export class HomeV1Component {
   private loggedUserService = inject(LoggedUserService);
   private userService = inject(UsersService);
   private router = inject(Router);
+  private dialogService = inject(DialogService)
 
   // SIGNALS
   data = signal<IUserStatistics | null>(null);
   shortcuts = signal<{ label: string, icon: string, onClick: () => void }[]>([
     {
-      label: 'Criar Questão', icon: 'ti ti-pencil', onClick: () => {this.navigateTo('/create-question');},
+      label: 'Criar Questão', icon: 'ti ti-pencil', onClick: () => {this.newQuestion();},
     },
     {
       label: 'Criar Coleção', icon: 'ti ti-folder-plus', onClick: () => {this.navigateTo('/create-collection');},
@@ -123,6 +127,22 @@ export class HomeV1Component {
 
   navigateTo(route: string) {
     this.router.navigate([route]);
+  }
+
+  newQuestion(){
+    const ref = this.dialogService.open(
+      QuestionFormComponent,
+      {
+      header: '📝 Nova questão',
+      modal: true,
+      closable: true,
+      focusOnShow: false,
+      width: '30rem',
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+    });
   }
 
 }

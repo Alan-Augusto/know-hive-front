@@ -18,6 +18,7 @@ import { CollectionsService } from '../../services/collections/collections.servi
 import { en_CollectionPermissionType } from '../../entity/collectionPermissionType.interface';
 import { ILikeCollection } from '../../entity/likeCollection.interface';
 import { CollectionStatisticsComponent } from './collection-statistics/collection-statistics.component';
+import { CollectionTestGeneratorComponent } from './collection-test-generator/collection-test-generator.component';
 
 @Component({
   selector: 'collections',
@@ -324,7 +325,31 @@ export class CollectionsComponent extends BaseListComponent<ICollection> {
         }
       }
     );
+  }
 
+  generateTest(id: string, canGenerateTest: boolean = false) {
+    if (!canGenerateTest) {
+      this.notificationService.toastError('Você não tem permissão para gerar um teste desta coleção.');
+      return;
+    }
+
+    const ref = this.dialogService.open(
+      CollectionTestGeneratorComponent,
+      {
+        header: '📝 Gerar Teste',
+        modal: true,
+        closable: true,
+        focusOnShow: false,
+        width: '40rem',
+        breakpoints: {
+          '960px': '85vw',
+          '640px': '95vw'
+        },
+        data: {
+          collectionId: id
+        }
+      }
+    );
   }
 
 }

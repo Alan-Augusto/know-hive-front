@@ -161,7 +161,7 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
         '960px': '75vw',
         '640px': '90vw'
       },
-      });
+    });
     ref.onClose.subscribe(() => {
       this.loadData(() => this.questionService.findByUser(this.user().id));
     })

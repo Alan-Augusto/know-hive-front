@@ -24,6 +24,7 @@ export class CollectionCardComponent {
   onEdit = output<string>();
   onLike = output<{id:string, liked:boolean}>();
   onRespond = output<string>();
+  onGenerateTest = output<string>();
 
   isOwner = computed(() => this.item().author_id === this.user().id);
   permissionType = signal<en_CollectionPermissionType>(en_CollectionPermissionType.VIEW);
@@ -99,6 +100,11 @@ export class CollectionCardComponent {
   respondCollection(id:string|null){
     if(!id) return;
     this.onRespond.emit(id);
+  }
+
+  generateTest(id:string|null){
+    if(!id) return;
+    this.onGenerateTest.emit(id);
   }
 
 }

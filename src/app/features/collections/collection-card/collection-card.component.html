@@ -47,6 +47,18 @@
           size="small"
           type="tertiary"
           [onlyIcon]="true"
+          [pTooltip]="'Gerar prova'"
+          tooltipPosition="top"
+          [disabled]="false"
+          (click)="generateTest(item().id || null)"
+        >
+          <i class="ti ti-file-text-spark"></i>
+        </kh-button>
+
+        <kh-button
+          size="small"
+          type="tertiary"
+          [onlyIcon]="true"
           [pTooltip]="'Estatísticas'"
           tooltipPosition="top"
           [disabled]="false"
