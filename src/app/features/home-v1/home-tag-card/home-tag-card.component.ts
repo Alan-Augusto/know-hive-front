@@ -20,7 +20,10 @@ export class HomeTagCardComponent {
     '#28a745',
     '#17a2b8',
     '#fd7e14',
-    '#6f42c1'
+    '#6f42c1',
+    '#e83e8c',
+    '#20c997',
+    '#6c757d'
   ]);
 
   backgroundColor = computed(() => {
