@@ -1,114 +1,147 @@
 <div class="test-container">
   @if (!isLoading() && collection()) {
-    <div class="a4-paper">
-      <!-- Cabeçalho da Prova -->
-      <div class="test-header">
-        <div class="header-content">
-          <h1 class="test-title">{{ collection()?.title }}</h1>
-          <div class="test-info">
-            <div class="info-row">
-              <span class="label">Nome:</span>
-              <div class="underline"></div>
-            </div>
-            <div class="info-row">
-              <span class="label">Data:</span>
-              <div class="underline-short"></div>
-              <span class="label">Turma:</span>
-              <div class="underline-short"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="test-pages">
 
-      <!-- Descrição da Prova -->
-      @if (collection()?.description) {
-        <div class="test-description">
-          <p>{{ collection()?.description }}</p>
-        </div>
-      }
+      @for (page of questionPages(); track page.pageNumber) {
+        <div class="a4-paper page" [attr.id]="'page-' + page.pageNumber">
 
-      <!-- Instruções -->
-      <div class="test-instructions">
-        <h3>Instruções:</h3>
-        <ul>
-          <li>Leia atentamente todas as questões antes de responder.</li>
-          <li>Para questões de múltipla escolha, marque apenas uma alternativa.</li>
-          <li>Para questões de verdadeiro ou falso, escreva V ou F no espaço indicado.</li>
-          <li>Use caneta azul ou preta.</li>
-        </ul>
-      </div>
+          <!-- Cabeçalho da Prova (apenas na primeira página) -->
+          @if (page.isFirstPage) {
+            <div class="test-header">
+              <div class="header-content">
+                <h1 class="test-title">AVALIAÇÃO - {{ collection()?.title }}</h1>
 
-      <!-- Lista de Questões -->
-      <div class="questions-section">
-        @for (question of collection()?.questions; track $index) {
-          <div class="question-item">
-            <div class="question-header">
-              <span class="question-number">{{ $index + 1 }}.</span>
-              @if (question.title) {
-                <span class="question-title">{{ question.title }}</span>
-              }
-            </div>
-
-            <div class="question-statement">
-              {{ question.statement }}
-            </div>
-
-            <!-- Questões de Múltipla Escolha (type_id = 1) -->
-            @if (question.type_id === 1 && question.alternatives && question.alternatives.length > 0) {
-              <div class="alternatives-section">
-                @for (alternative of question.alternatives; track altIndex; let altIndex = $index) {
-                  <div class="alternative-item">
-                    <span class="alternative-letter">{{ getAlternativeLetter(altIndex) }})</span>
-                    <span class="alternative-text">{{ alternative.text }}</span>
+                <div class="test-info">
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <span class="label">Nome:</span>
+                      <div class="underline-long"></div>
+                    </div>
+                    <div class="info-item">
+                      <span class="label">Nº:</span>
+                      <div class="underline-short"></div>
+                    </div>
+                    <div class="info-item">
+                      <span class="label">Data:</span>
+                      <div class="underline-medium"></div>
+                    </div>
+                    <div class="info-item">
+                      <span class="label">Turma:</span>
+                      <div class="underline-medium"></div>
+                    </div>
+                    <div class="info-item full-width">
+                      <span class="label">Professor(a):</span>
+                      <div class="underline-long"></div>
+                    </div>
                   </div>
-                }
+                </div>
+              </div>
+            </div>
+
+            <!-- Descrição da Prova -->
+            @if (collection()?.description) {
+              <div class="test-description">
+                <p>{{ collection()?.description }}</p>
               </div>
             }
 
-            <!-- Questões de Verdadeiro ou Falso (type_id = 2) -->
-            @if (question.type_id === 2) {
-              <div class="true-false-section">
-                <!-- Se tem alternativas, mostra elas -->
-                @if (question.alternatives && question.alternatives.length > 0) {
-                  <div class="true-false-alternatives">
-                    @for (alternative of question.alternatives; track altIndex; let altIndex = $index) {
-                      <div class="true-false-item">
-                        <div class="statement-with-answer">
-                          <!-- <span class="answer-symbol">(ㅤㅤ)ㅤㅤ</span> -->
-                          <span class="statement-text">(ㅤㅤ)ㅤ{{ alternative.text }}</span>
+            <!-- Instruções -->
+            <div class="test-instructions">
+              <h3>INSTRUÇÕES:</h3>
+              <ul>
+                <li>Leia atentamente todas as questões antes de responder.</li>
+                <li>Para questões de múltipla escolha, marque apenas uma alternativa.</li>
+                <li>Para questões de verdadeiro ou falso, escreva V ou F no espaço indicado.</li>
+                <li>Use caneta azul ou preta.</li>
+                <li>Não é permitido o uso de corretivo.</li>
+                <li>Mantenha a prova limpa e organizada.</li>
+              </ul>
+            </div>
+          }
+
+          <!-- Lista de Questões da página atual -->
+          <div class="questions-section">
+            @for (question of page.questions; track question.id) {
+              <div class="question-item" [attr.data-question]="getQuestionNumber(question)">
+                <div class="question-header">
+                  <span class="question-number">{{ getQuestionNumber(question) }}.</span>
+                  @if (question.title) {
+                    <span class="question-title">({{ question.title }})</span>
+                  }
+                </div>
+
+                <div class="question-statement">
+                  {{ question.statement }}
+                </div>
+
+                <!-- Questões de Múltipla Escolha (type_id = 1) -->
+                @if (question.type_id === 1 && question.alternatives && question.alternatives.length > 0) {
+                  <div class="alternatives-section">
+                    @for (alternative of question.alternatives; track alternative.id; let altIndex = $index) {
+                      <div class="alternative-item">
+                        <div class="alternative-mark">
+                          <span class="alternative-letter">{{ getAlternativeLetter(altIndex) }})</span>
+                          <span class="mark-circle">( )</span>
+                        </div>
+                        <span class="alternative-text">{{ alternative.text }}</span>
+                      </div>
+                    }
+                  </div>
+                }
+
+                <!-- Questões de Verdadeiro ou Falso (type_id = 2) -->
+                @if (question.type_id === 2) {
+                  <div class="true-false-section">
+                    @if (question.alternatives && question.alternatives.length > 0) {
+                      <div class="true-false-alternatives">
+                        @for (alternative of question.alternatives; track alternative.id) {
+                          <div class="true-false-item">
+                            <div class="statement-with-answer">
+                              <span class="answer-box">(&nbsp;&nbsp;&nbsp;)</span>
+                              <span class="statement-text">{{ alternative.text }}</span>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    } @else {
+                      <div class="single-true-false">
+                        <div class="answer-instruction">
+                          <span class="answer-box">(&nbsp;&nbsp;&nbsp;)</span>
+                          <span class="instruction-text">Marque V para verdadeiro ou F para falso</span>
                         </div>
                       </div>
                     }
                   </div>
                 }
-              </div>
-            }
 
-            <!-- Questões Dissertativas (outros tipos) -->
-            @if (question.type_id !== 1 && question.type_id !== 2) {
-              <div class="essay-section">
-                <div class="answer-lines">
-                  @for (line of [1,2,3,4,5]; track $index) {
-                    <div class="answer-line"></div>
-                  }
-                </div>
+                <!-- Questões Dissertativas (outros tipos) -->
+                @if (question.type_id !== 1 && question.type_id !== 2) {
+                  <div class="essay-section">
+                    <div class="answer-lines">
+                      @for (line of [1,2,3,4,5,6]; track $index) {
+                        <div class="answer-line"></div>
+                      }
+                    </div>
+                  </div>
+                }
               </div>
             }
           </div>
-        }
-      </div>
 
-      <!-- Rodapé -->
-      <div class="test-footer">
-        <div class="footer-info">
-          <span>Total de questões: {{ collection()?.questions?.length || 0 }}</span>
-          @if (collection()?.author) {
-            <span class="author-info">
-              Elaborado por: {{ collection()?.author?.name || 'Autor não informado' }}
-            </span>
-          }
+          <!-- Rodapé da página -->
+          <div class="page-footer">
+            <div class="footer-content">
+              <span class="page-number">Página {{ page.pageNumber }}</span>
+              @if (page.isFirstPage) {
+                <span class="question-count">Total de questões: {{ collection()?.questions?.length || 0 }}</span>
+              } @else {
+                <span class="question-count">{{ collection()?.title }} - Continuação</span>
+              }
+            </div>
+          </div>
         </div>
-      </div>
+      }
+
     </div>
   }
 
