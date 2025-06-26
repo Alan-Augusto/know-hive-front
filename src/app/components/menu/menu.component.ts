@@ -20,7 +20,7 @@ export class MenuComponent {
 
   menuItems = signal([
     { id: 1, label: 'Início', url: 'home', icon: 'ti ti-home', active: false },
-    { id: 2, label: 'Questões', url: 'questions', icon: 'ti ti-help', active: false },
+    { id: 2, label: 'Questões', url: 'questions', icon: 'ti ti-notebook', active: false },
     { id: 3, label: 'Coleções', url: 'collections', icon: 'ti ti-folder', active: false },
     { id: 4, label: 'Compartilhados Comigo', url: 'shared-with-me', icon: 'ti ti-users', active: false },
     { id: 5, label: 'Estatísticas', url: 'statistics', icon: 'ti ti-chart-bar', active: false }
@@ -44,7 +44,7 @@ export class MenuComponent {
 
   redirectTo(url: string) {
     this.router.navigate([`/${url}`]);
-    this.isExpanded.set(false);
+    // this.isExpanded.set(false);
   }
 
   activateMenuItem(itemId: number) {

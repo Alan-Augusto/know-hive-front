@@ -18,13 +18,27 @@ import { HomeCollectionCardComponent } from './home-collection-card/home-collect
   templateUrl: './home-v1.component.html',
   styleUrl: './home-v1.component.scss'
 })
-export class HomeV1Component{
+export class HomeV1Component {
   private loggedUserService = inject(LoggedUserService);
   private userService = inject(UsersService);
   private router = inject(Router);
 
   // SIGNALS
-  data = signal<IUserStatistics|null>(null);
+  data = signal<IUserStatistics | null>(null);
+  shortcuts = signal<{ label: string, icon: string, onClick: () => void }[]>([
+    {
+      label: 'Criar Questão', icon: 'ti ti-pencil', onClick: () => {this.navigateTo('/create-question');},
+    },
+    {
+      label: 'Criar Coleção', icon: 'ti ti-folder-plus', onClick: () => {this.navigateTo('/create-collection');},
+    },
+    {
+      label: 'Gerenciar Questões', icon: 'ti ti-notebook', onClick: () => {this.navigateTo('/questions');},
+    },
+    {
+      label: 'Gerenciar Coleções', icon: 'ti ti-folder', onClick: () => {this.navigateTo('/collections');},
+    },
+  ]);
 
   // COMPUTEDS
   user = computed<IUser>(() => this.loggedUserService.loggedUser());
@@ -34,7 +48,7 @@ export class HomeV1Component{
     this.loadData();
   }
 
-  loadData(){
+  loadData() {
     this.userService.getUserStatistics(this.user().id).subscribe({
       next: (data) => {
         this.data.set(data as IUserStatistics);
@@ -49,60 +63,60 @@ export class HomeV1Component{
   getListCards(data: IUserStatistics | null): ICardHomeV1[] {
     return [
       {
-      title: 'Questões Criadas',
-      value: data?.questions_created || 0,
-      icon: 'ti ti-progress-help',
-      color: '#007bff'
+        title: 'Questões Criadas',
+        value: data?.questions_created || 0,
+        icon: 'ti ti-progress-help',
+        color: '#007bff'
       },
       {
-      title: 'Coleções',
-      value: data?.collections_created || 0,
-      icon: 'ti ti-folder',
-      color: '#a259ff'
+        title: 'Coleções',
+        value: data?.collections_created || 0,
+        icon: 'ti ti-folder',
+        color: '#a259ff'
       },
       {
-      title: 'Compartilhadas',
-      value: data?.shared_items_count || 0,
-      icon: 'ti ti-share',
-      color: '#00e18f'
+        title: 'Compartilhadas',
+        value: data?.shared_items_count || 0,
+        icon: 'ti ti-share',
+        color: '#00e18f'
       },
       {
-      title: 'Favoritas',
-      value: data?.favorites_count || 0,
-      icon: 'ti ti-heart',
-      color: '#ff6b6b'
+        title: 'Favoritas',
+        value: data?.favorites_count || 0,
+        icon: 'ti ti-heart',
+        color: '#ff6b6b'
       },
       {
-      title: 'Respostas Totais',
-      value: data?.total_responses || 0,
-      icon: 'ti ti-list-details',
-      color: '#ffc107'
+        title: 'Respostas Totais',
+        value: data?.total_responses || 0,
+        icon: 'ti ti-list-details',
+        color: '#ffc107'
       },
       {
-      title: 'Respostas Corretas',
-      value: data?.correct_responses || 0,
-      icon: 'ti ti-check',
-      color: '#28a745'
+        title: 'Respostas Corretas',
+        value: data?.correct_responses || 0,
+        icon: 'ti ti-check',
+        color: '#28a745'
       },
       {
-      title: 'Precisão',
-      value: data?.accuracy_percentage != null
-        ? `${Number(data.accuracy_percentage.toFixed(1))}%`
-        : '0%',
-      icon: 'ti ti-target',
-      color: '#17a2b8'
+        title: 'Precisão',
+        value: data?.accuracy_percentage != null
+          ? `${Number(data.accuracy_percentage.toFixed(1))}%`
+          : '0%',
+        icon: 'ti ti-target',
+        color: '#17a2b8'
       },
       {
-      title: 'Coleções com acesso',
-      value: data?.collections_with_access || 0,
-      icon: 'ti ti-users-group',
-      color: '#fd7e14'
+        title: 'Coleções com acesso',
+        value: data?.collections_with_access || 0,
+        icon: 'ti ti-users-group',
+        color: '#fd7e14'
       },
       {
-      title: 'Questões com acesso',
-      value: data?.questions_with_access || 0,
-      icon: 'ti ti-key',
-      color: '#6f42c1'
+        title: 'Questões com acesso',
+        value: data?.questions_with_access || 0,
+        icon: 'ti ti-key',
+        color: '#6f42c1'
       }
     ];
   }

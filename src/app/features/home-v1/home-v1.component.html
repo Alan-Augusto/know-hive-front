@@ -14,7 +14,7 @@
       <div class="card-list-header">
         <h4 class="card-list-title">Perguntas recentes</h4>
         <kh-button size="small" type="tertiary" class="w-auto" (click)="navigateTo('/questions')">
-          Ver todas
+          <span>Ver todas</span>
         </kh-button>
       </div>
       @for (item of data()?.recent_questions; track $index) {
@@ -26,7 +26,7 @@
       <div class="card-list-header">
         <h4 class="card-list-title">Coleções recentes</h4>
         <kh-button size="small" type="tertiary" class="w-auto" (click)="navigateTo('/collections')">
-          Ver todas
+          <span>Ver todas</span>
         </kh-button>
       </div>
       @for (item of data()?.recent_collections; track $index) {
@@ -45,7 +45,17 @@
 
       </div>
       <div class="shortcut-card-list">
-
+        <div class="card-list-header">
+          <h4 class="card-list-title">Acesso rápido</h4>
+        </div>
+        @for (item of shortcuts(); track $index) {
+          <kh-button (click)="item.onClick()" class="" size="small" type="tertiary">
+            <div class="shortcut-btn">
+              <i [class]="item.icon"></i>
+              <span>{{item.label}}</span>
+            </div>
+          </kh-button>
+        }
       </div>
     </div>
   </div>
