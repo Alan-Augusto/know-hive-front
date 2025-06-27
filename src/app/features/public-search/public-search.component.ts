@@ -13,7 +13,6 @@ import { ILikeQuestion } from '../../entity/likeQuestion.interface';
 import { IUser } from '../../entity/user.interface';
 import { forkJoin } from 'rxjs';
 import { ButtonLikeComponent } from '../../components/button-like/button-like.component';
-import { HomeCollectionCardComponent } from '../home-v1/home-collection-card/home-collection-card.component';
 
 @Component({
   selector: 'public-search',
@@ -22,7 +21,6 @@ import { HomeCollectionCardComponent } from '../home-v1/home-collection-card/hom
     InputTextModule,
     KhButtonComponent,
     ButtonLikeComponent,
-    HomeCollectionCardComponent
   ],
   templateUrl: './public-search.component.html',
   styleUrl: './public-search.component.scss'
