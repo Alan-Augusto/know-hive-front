@@ -1,145 +1,288 @@
-# KnowHive Frontend
+# 🐝 KnowHive
 
-Este repositório contém a interface web da plataforma **KnowHive**, um sistema colaborativo e educacional voltado para a criação, organização e compartilhamento de questões acadêmicas. A aplicação foi desenvolvida como parte do Trabalho de Conclusão de Curso (TCC) do Bacharelado em Sistemas de Informação da UFMG, seguindo uma abordagem modular, escalável e alinhada aos princípios de Engenharia de Software Moderna.
+> *"Nenhum de nós é tão inteligente quanto todos nós juntos."*
 
-## ✨ Visão Geral
+Uma plataforma colaborativa moderna para criação, organização e compartilhamento de conhecimento através de questões e coleções interativas.
 
-O frontend da KnowHive é construído utilizando **Angular 16+** com **TypeScript**, e integra componentes do **PrimeNG** para oferecer uma interface responsiva, moderna e acessível. A aplicação interage com uma API RESTful (desenvolvida em Node.js) para gerenciar usuários, autenticação e dados educacionais.
+![Angular](https://img.shields.io/badge/Angular-19.1.0-DD0031?style=flat&logo=angular&logoColor=white)
+![PrimeNG](https://img.shields.io/badge/PrimeNG-19.0.7-007ACC?style=flat&logo=primeng&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7.2-3178C6?style=flat&logo=typescript&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-4.5.0-FF6384?style=flat&logo=chart.js&logoColor=white)
 
-## 📌 Funcionalidades Principais
+## 📋 Índice
 
-As funcionalidades já implementadas no frontend incluem:
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Funcionalidades](#-funcionalidades)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação](#-instalação)
+- [Como Usar](#-como-usar)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Scripts Disponíveis](#-scripts-disponíveis)
+- [API](#-api)
+- [Contribuição](#-contribuição)
+- [Licença](#-licença)
 
-- **Autenticação de Usuários**:
-  - Verificação de e-mail com redirecionamento automático para login ou cadastro.
-  - Integração visual com login via Google (mockado inicialmente).
+## 🎯 Sobre o Projeto
 
-- **Login**:
-  - Autenticação com e-mail e senha.
-  - Armazenamento seguro do token JWT no `localStorage`.
+O **KnowHive** é uma aplicação web desenvolvida em Angular que permite aos usuários criar, organizar e compartilhar conhecimento de forma colaborativa. A plataforma funciona como uma "colmeia de conhecimento" onde usuários podem:
 
-- **Registro de Usuários**:
-  - Formulário preparado para cadastro com validação de e-mails e senhas.
+- Criar questões interativas com múltiplas alternativas
+- Organizar questões em coleções temáticas
+- Compartilhar conteúdo com outros usuários
+- Acompanhar estatísticas de desempenho
+- Buscar publicamente por conteúdo relevante
 
-- **Componentes de UI Reutilizáveis**:
-  - Demonstração de tema escuro e claro.
-  - Estilo customizado com tema `Noir` baseado no preset `Aura` do PrimeNG.
+## ✨ Funcionalidades
 
-- **Tratamento de Erros e Notificações**:
-  - Serviço centralizado de notificações (`NotificationService`) com suporte a mensagens de sucesso, erro e informação.
+### 🔐 Autenticação e Perfil
+- Sistema completo de login e registro
+- Gerenciamento de perfil de usuário
+- Controle de acesso baseado em permissões
 
-- **Serviços Compartilhados**:
-  - `UserService`, `LoggedUserService`, `UtilsService`, entre outros.
+### 📝 Gestão de Questões
+- **Criação**: Desenvolva questões com múltiplas alternativas
+- **Edição**: Modifique questões existentes
+- **Compartilhamento**: Conceda acesso a outros usuários com diferentes níveis de permissão
+- **Sistema de Likes**: Favorite questões interessantes
+- **Tags**: Organize questões por categorias
+- **Estatísticas**: Acompanhe o desempenho das suas questões
 
-- **Roteamento com Lazy Loading**:
-  - Navegação entre páginas com carregamento sob demanda (eager/lazy components).
+### 📚 Coleções
+- **Organização**: Agrupe questões relacionadas em coleções
+- **Compartilhamento Colaborativo**: Permita que outros usuários visualizem, editem ou administrem suas coleções
+- **Geração de Testes**: Crie testes automatizados a partir das coleções
+- **Controle de Acesso**: Defina permissões específicas para cada usuário
 
-## 🧩 Estrutura do Projeto
+### 🔍 Busca Pública
+- Explore questões e coleções públicas
+- Sistema de filtros avançados
+- Visualização de conteúdo compartilhado pela comunidade
 
-```text
-src/
-├── app/
-│   ├── features/           # Componentes funcionais (login, registro, autenticação, 404)
-│   ├── services/           # Serviços responsáveis por comunicação com API e lógica auxiliar
-│   ├── components/         # Componentes de interface reutilizáveis
-│   ├── entity/             # Interfaces e contratos de dados
-│   ├── app.routes.ts       # Rotas da aplicação
-│   ├── app.config.ts       # Configuração geral do Angular
-│   └── mypreset.ts         # Tema customizado Noir para PrimeNG
-├── assets/                 # Recursos estáticos
-├── styles.scss             # Estilos globais
-└── index.html              # HTML raiz
-```
+### 📊 Dashboard e Estatísticas
+- **Visão Geral**: Dashboard principal com métricas importantes
+- **Estatísticas Detalhadas**: 
+  - Questões criadas e respondidas
+  - Precisão de respostas
+  - Coleções com acesso
+  - Items compartilhados
+  - Tags mais utilizadas
+- **Gráficos Interativos**: Visualizações com Chart.js
 
-## 🛠️ Tecnologias Utilizadas
+### 🤝 Compartilhamento Avançado
+- **Níveis de Permissão**:
+  - **Visualização**: Apenas ver o conteúdo
+  - **Edição**: Modificar questões e coleções
+  - **Administração**: Controle total, incluindo compartilhamento
+- **Gestão de Usuários**: Adicione/remova usuários e altere permissões
 
-- **Angular 16+**
-- **TypeScript**
-- **PrimeNG 19**
-- **PrimeFlex 4**
-- **RxJS**
-- **SCSS (SASS)**
-- **Zone.js**
+## 🛠 Tecnologias Utilizadas
 
-## 🧪 Testes
+### Frontend
+- **[Angular 19.1.0](https://angular.io/)** - Framework principal
+- **[PrimeNG 19.0.7](https://primeng.org/)** - Biblioteca de componentes UI
+- **[PrimeFlex 4.0.0](https://primeflex.org/)** - Sistema de layout CSS
+- **[Chart.js 4.5.0](https://www.chartjs.org/)** - Gráficos e visualizações
+- **[SCSS](https://sass-lang.com/)** - Pré-processador CSS
 
-A aplicação inclui testes unitários com **Jasmine** e **Karma** para os componentes e serviços principais. Os testes podem ser executados com:
+### Ferramentas de Desenvolvimento
+- **TypeScript 5.7.2** - Linguagem de programação
+- **Angular CLI** - Ferramentas de linha de comando
+- **Jasmine & Karma** - Testes unitários
+
+## 📋 Pré-requisitos
+
+Antes de começar, certifique-se de ter instalado:
+
+- **Node.js** (versão 18.x ou superior)
+- **npm** (versão 9.x ou superior)
+- **Angular CLI** (versão 19.x ou superior)
 
 ```bash
-npm test
+# Verificar versões instaladas
+node --version
+npm --version
+ng version
 ```
 
-## 🚀 Execução Local
+## 🚀 Instalação
 
-1. Clone o repositório:
-
+1. **Clone o repositório**
 ```bash
-git clone https://github.com/Alan-Augusto/know-hive-front.git
+git clone https://github.com/alan-augusto/know-hive-front.git
 cd know-hive-front
 ```
 
-2. Instale as dependências:
-
+2. **Instale as dependências**
 ```bash
 npm install
 ```
 
-3. Inicie o servidor de desenvolvimento:
+3. **Configure o ambiente**
+   
+   Edite os arquivos de ambiente conforme necessário:
+   - `src/environments/environment.ts` - Desenvolvimento
+   - `src/environments/environment.prod.ts` - Produção
+   - `src/environments/environment.qas.ts` - Testes
 
+4. **Execute a aplicação**
 ```bash
 npm start
 ```
 
-4. Acesse a aplicação no navegador:
+A aplicação estará disponível em `http://localhost:4200`
+
+## 💻 Como Usar
+
+### Primeiros Passos
+
+1. **Acesse a aplicação** em `http://localhost:4200`
+2. **Registre-se** criando uma nova conta
+3. **Faça login** com suas credenciais
+4. **Explore o dashboard** para ver uma visão geral
+
+### Criando Questões
+
+1. Navigate para **Questões** no menu lateral
+2. Clique em **"Nova Questão"**
+3. Preencha o título, enunciado e alternativas
+4. Adicione tags para categorização
+5. Defina se a questão será pública ou privada
+6. Salve e comece a compartilhar!
+
+### Organizando em Coleções
+
+1. Vá para **Coleções** no menu
+2. Crie uma **"Nova Coleção"**
+3. Adicione questões relacionadas
+4. Configure permissões de acesso
+5. Compartilhe com outros usuários
+
+### Compartilhamento
+
+1. Selecione a questão ou coleção desejada
+2. Clique no ícone de **compartilhamento**
+3. Digite o email do usuário
+4. Escolha o nível de permissão
+5. Confirme o compartilhamento
+
+## 📁 Estrutura do Projeto
 
 ```
-http://localhost:4200/
+src/
+├── app/
+│   ├── components/          # Componentes reutilizáveis
+│   │   ├── auth-base/       # Base para autenticação
+│   │   ├── base/           # Componentes base
+│   │   ├── button-*/       # Componentes de botões
+│   │   ├── dynamic-data-view/ # Visualização dinâmica de dados
+│   │   ├── menu/           # Menu de navegação
+│   │   └── ...
+│   ├── features/           # Módulos funcionais
+│   │   ├── authentication/ # Sistema de auth
+│   │   ├── collections/    # Gestão de coleções
+│   │   ├── home-v1/       # Dashboard principal
+│   │   ├── questions/     # Gestão de questões
+│   │   ├── public-search/ # Busca pública
+│   │   ├── statistics/    # Estatísticas
+│   │   └── ...
+│   ├── services/          # Serviços da aplicação
+│   │   ├── auth/          # Autenticação
+│   │   ├── collections/   # API de coleções
+│   │   ├── questions/     # API de questões
+│   │   ├── users/         # Gestão de usuários
+│   │   └── ...
+│   ├── entity/           # Interfaces TypeScript
+│   └── environments/     # Configurações de ambiente
+├── assets/              # Recursos estáticos
+└── ...
 ```
 
-## 📦 Scripts disponíveis
+## 📜 Scripts Disponíveis
 
-| Comando       | Descrição                                     |
-|---------------|-----------------------------------------------|
-| `npm start`   | Inicia o servidor local (`ng serve`)          |
-| `npm run build` | Compila a aplicação para produção            |
-| `npm test`    | Executa os testes unitários com Karma         |
-| `npm run watch` | Compila em tempo real para ambiente dev     |
+```bash
+# Desenvolvimento
+npm start              # Inicia o servidor de desenvolvimento
+npm run watch          # Build com watch mode
 
-## 📃 Requisitos
+# Build
+npm run build          # Build para desenvolvimento
+npm run build:prod     # Build para produção
 
-- Node.js >= 18
-- Angular CLI >= 16
-- Navegador moderno (Chrome, Firefox, Edge)
+# Testes
+npm test              # Executa testes unitários
+npm run test:watch    # Testes em modo watch
 
-## 📐 Padrões de Código
+# Servidor
+npm run serve:prod    # Serve a versão de produção
+```
 
-O projeto segue uma configuração de formatação definida em `.editorconfig`, com uso de **espaços (2)**, **final de linha no padrão Unix**, e **código consistente em SCSS e TypeScript**. O código também adota as boas práticas recomendadas pelo Angular CLI e utiliza **standalone components**.
+## 🌐 API
 
-## 🔐 Segurança
+A aplicação se conecta com uma API backend. Configure a URL da API nos arquivos de ambiente:
 
-- O token de autenticação é armazenado no `localStorage`.
-- Todas as chamadas à API passam por serviços centralizados, preparados para interceptação e tratamento de erros.
-- Pronto para futura integração com autenticação OAuth2 (ex: Google Sign-In).
+```typescript
+// src/environments/environment.ts
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:3000' // URL da API local
+};
 
-## 📅 Planejamento e Etapas Relacionadas
+// src/environments/environment.prod.ts
+export const environment = {
+  production: true,
+  apiUrl: 'https://know-hive-api-v2.onrender.com' // URL da API de produção
+};
+```
 
-Este frontend corresponde à **etapa prática** da disciplina *Monografia em Sistemas de Informação II*, integrando os seguintes módulos do TCC:
+### Principais Endpoints
 
-- **Criação de Questões e Autenticação de Usuários**
-- **Organização Temática (em desenvolvimento futuro)**
-- **Colaboração e Compartilhamento (etapas posteriores)**
-- **Feedback e Métricas de Desempenho (a serem implementadas)**
+- **Autenticação**: `/auth/login`, `/auth/register`
+- **Questões**: `/questions/*`
+- **Coleções**: `/collections/*`
+- **Usuários**: `/users/*`
+- **Estatísticas**: `/users/:id/statistics`
 
-## 👨‍💻 Autor
+## 🎨 Temas e Personalização
 
-**Alan Augusto Martins Campos**  
-Graduando em Sistemas de Informação - UFMG  
-Orientador: Prof. Adriano César Machado Pereira
+O projeto utiliza PrimeNG com suporte a temas customizáveis. Os temas são configurados em:
+
+- `src/app/mypreset.ts` - Configurações personalizadas
+- `src/styles.scss` - Estilos globais
+
+## 🤝 Contribuição
+
+Contribuições são muito bem-vindas! Para contribuir:
+
+1. **Fork** o projeto
+2. Crie uma **branch** para sua feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um **Pull Request**
+
+### Diretrizes de Contribuição
+
+- Siga os padrões de código existentes
+- Escreva testes para novas funcionalidades
+- Documente mudanças significativas
+- Use commits semânticos
 
 ## 📄 Licença
 
-Este projeto é de caráter acadêmico e sem fins lucrativos. O uso do código segue as diretrizes da UFMG para trabalhos de conclusão de curso. Licenciamento futuro pode ser definido conforme evolução do projeto.
+Este projeto está sob a licença [MIT](LICENSE). Veja o arquivo `LICENSE` para mais detalhes.
+
+## 👥 Autores
+
+- **Alan Augusto** - *Desenvolvimento inicial* - [@alan-augusto](https://github.com/alan-augusto)
+
+## 🙏 Agradecimentos
+
+- Equipe do Angular por um framework incrível
+- PrimeNG pela excelente biblioteca de componentes
+- Comunidade open source por todas as contribuições
 
 ---
 
-> “Nenhum de nós é tão inteligente quanto todos nós juntos.” — *Ray Kroc*
+<div align="center">
+  <strong>🐝 Construído com ❤️ para compartilhar conhecimento</strong>
+</div>
