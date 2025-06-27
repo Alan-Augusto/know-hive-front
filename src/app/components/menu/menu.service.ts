@@ -13,7 +13,7 @@ export class MenuService {
 
   menuItems = signal([
     { id: 1, label: 'Início', url: 'home', icon: 'ti ti-home', active: false },
-    { id: 2, label: 'Busca', url: 'public-search', icon: 'ti ti-hierarchy', active: false },
+    { id: 2, label: 'Busca', url: 'public-search', icon: 'ti ti-brand-google-podcasts', active: false },
     { id: 3, label: 'Questões', url: 'questions', icon: 'ti ti-notebook', active: false },
     { id: 4, label: 'Coleções', url: 'collections', icon: 'ti ti-folder', active: false },
     // { id: 5, label: 'Favoritos', url: 'favorites', icon: 'ti ti-heart', active: false },
