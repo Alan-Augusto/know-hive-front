@@ -45,6 +45,14 @@ export class PublicSearchComponent {
   user = computed<IUser>(() => this.loggedUserService.loggedUser());
   hasResults = computed(() => this.collections().length > 0 || this.questions().length > 0);
 
+  ngOnInit() {
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        this.search();
+      }
+    });
+  }
+
   search() {
     const term = this.searchTerm().trim();
     if (!term) return;
