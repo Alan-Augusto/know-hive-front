@@ -1,1 +1,146 @@
-<p>public-search works!</p>
+<div class="search-container">
+  <div class="search-header">
+    <h3>🔍 Busca Pública</h3>
+    <p>Encontre questões e coleções públicas compartilhadas pela comunidade</p>
+  </div>
+
+  <div class="search-input-container">
+      <input pInputText class="flex-1" autocomplete="off" placeholder="Digite o termo de busca..."
+        [(ngModel)]="searchTerm"/>
+      <kh-button type="primary" class="w-10rem ml-2" (click)="search()">
+        <i class="ti ti-search"></i>
+        <span class="search-text">Pesquisar</span>
+      </kh-button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <i class="ti ti-loader-2 spinning"></i>
+      <span>Buscando...</span>
+    </div>
+  }
+
+  @if (hasSearched() && !loading()) {
+    <div class="results-container">
+      @if (hasResults()) {
+        <div class="results-grid">
+          <!-- Seção de Coleções -->
+          @if (collections().length > 0) {
+            <div class="result-section">
+              <div class="section-header">
+                <h3>📚 Coleções ({{collections().length}})</h3>
+              </div>
+              <div class="cards-list">
+                @for (collection of collections(); track $index) {
+                  @if($index <= countCollectionsView()) {
+                    <div class="card collection-card">
+                      <div class="card-left">
+                        <div class="card-icon">
+                          <i class="ti ti-folder"></i>
+                        </div>
+                        <div class="card-author-info">
+                          <span class="card-author">{{collection.author?.name || 'Desconhecido'}}</span>
+                        </div>
+                      </div>
+
+                      <div class="card-center">
+                        <span class="card-title">{{collection.title}}</span>
+                        <span class="card-description">{{collection.description}}</span>
+                        @if (collection.tags && collection.tags.length > 0) {
+                          <div class="card-tag-list">
+                            @for (tag of collection.tags; track $index) {
+                              <span class="tag-item">{{tag}}</span>
+                            }
+                          </div>
+                        }
+                      </div>
+
+                      <div class="card-right">
+                        <div class="card-like">
+                          <button-like
+                            [liked]="collection.is_liked"
+                            (liked)="collection.is_liked = !collection.is_liked"
+                            (onLike)="likeCollection(collection.id)"
+                          />
+                        </div>
+                        <span class="card-date">{{formatDate(collection.created_at)}}</span>
+                      </div>
+                    </div>
+                  }
+                }
+                @if(collections().length > countCollectionsView() +1) {
+                  <kh-button type="tertiary" (click)="showMoreCollections()">
+                    Ver mais
+                  </kh-button>
+                  <hr/>
+                }
+              </div>
+            </div>
+          }
+
+
+          <!-- Seção de Questões -->
+          @if (questions().length > 0) {
+            <div class="result-section">
+              <div class="section-header">
+                <h3>❓ Questões ({{questions().length}})</h3>
+              </div>
+              <div class="cards-list">
+                @for (question of questions(); track $index) {
+                  @if($index <= countQuestionsView()) {
+                    <div class="card question-card">
+                      <div class="card-left">
+                        <div class="card-icon">
+                          <i class="ti ti-help"></i>
+                        </div>
+                        <div class="card-author-info">
+                          <span class="card-author">{{question.author?.name || 'Autor desconhecido'}}</span>
+                        </div>
+                      </div>
+
+                      <div class="card-center">
+                        <span class="card-title">{{question.title}}</span>
+                        <span class="card-statement">{{question.statement}}</span>
+                        @if (question.tags && question.tags.length > 0) {
+                          <div class="card-tag-list">
+                            @for (tag of question.tags; track $index) {
+                              <span class="tag-item">{{tag}}</span>
+                            }
+                          </div>
+                        }
+                      </div>
+
+                      <div class="card-right">
+                        <div class="card-like">
+                          <button-like
+                            [liked]="question.is_liked"
+                            (liked)="question.is_liked = !question.is_liked"
+                            (onLike)="likeQuestion(question.id)"
+                          />
+                        </div>
+                        <span class="card-date">{{formatDate(question.created_at)}}</span>
+                      </div>
+                    </div>
+                  }
+                }
+                @if(questions().length > countQuestionsView() +1) {
+                  <kh-button type="tertiary" (click)="showMoreQuestions()">
+                    Ver mais
+                  </kh-button>
+                  <hr/>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+      @else {
+        <div class="no-results">
+          <i class="ti ti-search-off"></i>
+          <h3>Nenhum resultado encontrado</h3>
+          <p>Tente buscar com termos diferentes ou verifique se há itens públicos disponíveis.</p>
+        </div>
+      }
+    </div>
+  }
+</div>

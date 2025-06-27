@@ -12,8 +12,8 @@ export interface ICollection {
   author?: IUser;
   tags?: string[];
   permissions?: ICollectionUserAccess[];
-  created_at?: Date;
-  updated_at?: Date;
+  created_at?: string;
+  upstringd_at?: Date;
   questions_ids?: string[];
   questions?: IQuestion[]; // Assuming questions are stored as an array of strings
 }

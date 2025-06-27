@@ -3,6 +3,7 @@ import { BaseApiService } from '../base-api.service';
 import { IQuestion } from '../../entity/question.interface';
 import { Observable } from 'rxjs';
 import { ILikeQuestion } from '../../entity/likeQuestion.interface';
+import { IPublicSearch } from '../../entity/publicSearch.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,10 @@ export class QuestionsService extends BaseApiService {
 
   like(data:ILikeQuestion){
     return this.post('like', data);
+  }
+
+  searchPublicQuestions(searchData: IPublicSearch): Observable<IQuestion[]> {
+    return this.post('search', searchData);
   }
 
 }

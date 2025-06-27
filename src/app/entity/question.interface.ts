@@ -10,8 +10,8 @@ export interface IQuestion {
   type_id: number;
   type?: IQuestionType;
   is_liked: boolean;
-  created_at?: Date;
-  updated_at?: Date;
+  created_at?: string;
+  upstringd_at?: Date;
   author_id: string;
   is_public: boolean;
   author?: IUser;
