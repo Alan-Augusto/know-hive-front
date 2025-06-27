@@ -23,6 +23,8 @@
         (click)="setOptionSelect('create_with_me')">Criadas por mim</kh-button>
       <kh-button size="small" [type]="optionSelect()=='share_with_me' ? 'secondary' : 'tertiary'" class="w-10rem"
         (click)="setOptionSelect('share_with_me')">Compartilhados comigo</kh-button>
+      <kh-button size="small" [type]="optionSelect()=='liked' ? 'secondary' : 'tertiary'" class="w-10rem"
+        (click)="setOptionSelect('liked')">Curtidas</kh-button>
     </div>
 
     <div class="flex flex-row gap-1">

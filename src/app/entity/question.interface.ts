@@ -15,6 +15,7 @@ export interface IQuestion {
   author_id: string;
   is_public: boolean;
   author?: IUser;
+  shared_with_me?: boolean;
   alternatives?: IAlternative[];
   permissions?: IQuestionUserAccess[];
   tags?: string[];

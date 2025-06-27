@@ -34,11 +34,24 @@ export class QuestionsComponent extends BaseListComponent<IQuestion> {
   private notificationService = inject(NotificationService);
 
   filteredDataSource = computed<IQuestion[]>(() => {
+    // if(this.optionSelect() === 'create_with_me') {
+    //   return this.dataSource().filter(item => item.author?.id === this.user()?.id);
+    // }
+    // else if(this.optionSelect() === 'share_with_me') {
+    //         return this.dataSource().filter(item => item.author?.id !== this.user()?.id);
+    // }
+    // else{
+    //   return this.dataSource();
+    // }
+
     if(this.optionSelect() === 'create_with_me') {
       return this.dataSource().filter(item => item.author?.id === this.user()?.id);
     }
     else if(this.optionSelect() === 'share_with_me') {
-            return this.dataSource().filter(item => item.author?.id !== this.user()?.id);
+      return this.dataSource().filter(item => item.author?.id !== this.user()?.id && item.shared_with_me === true);
+    }
+    else if(this.optionSelect() === 'liked') {
+      return this.dataSource().filter(item => item.is_liked === true);
     }
     else{
       return this.dataSource();

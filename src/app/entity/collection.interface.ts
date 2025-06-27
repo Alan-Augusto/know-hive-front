@@ -10,6 +10,7 @@ export interface ICollection {
   is_public: boolean;
   is_liked: boolean;
   author?: IUser;
+  shared_with_me?: boolean; // Indicates if the collection is shared with the user
   tags?: string[];
   permissions?: ICollectionUserAccess[];
   created_at?: string;
