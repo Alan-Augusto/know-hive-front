@@ -129,8 +129,8 @@
 
     .results-grid {
       display: flex;
-      flex-direction: column;
-      gap: 2rem;
+      flex-direction: row;
+      gap: .5rem;
 
       .result-section {
         .section-header {
