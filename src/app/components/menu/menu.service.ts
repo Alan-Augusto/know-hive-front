@@ -16,7 +16,7 @@ export class MenuService {
     { id: 2, label: 'Busca', url: 'public-search', icon: 'ti ti-hierarchy', active: false },
     { id: 3, label: 'Questões', url: 'questions', icon: 'ti ti-notebook', active: false },
     { id: 4, label: 'Coleções', url: 'collections', icon: 'ti ti-folder', active: false },
-    { id: 5, label: 'Favoritos', url: 'favorites', icon: 'ti ti-heart', active: false },
+    // { id: 5, label: 'Favoritos', url: 'favorites', icon: 'ti ti-heart', active: false },
     // { id: 6, label: 'Compartilhados Comigo', url: 'shared-with-me', icon: 'ti ti-users', active: false },
     { id: 7, label: 'Estatísticas', url: 'statistics', icon: 'ti ti-chart-bar', active: false },
   ]);
