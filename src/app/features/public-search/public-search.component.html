@@ -28,7 +28,8 @@
       @if (collections().length > 0) {
       <div class="result-section">
         <div class="section-header">
-          <h3>📚 Coleções ({{collections().length}})</h3>
+          <!-- <i class="ti ti-folder"></i> -->
+          <h3> Coleções ({{collections().length}})</h3>
         </div>
         <div class="cards-list">
           @for (collection of collections(); track $index) {
@@ -79,7 +80,8 @@
     @if (questions().length > 0) {
     <div class="result-section">
       <div class="section-header">
-        <h3>❓ Questões ({{questions().length}})</h3>
+        <!-- <i class="ti ti-help"></i> -->
+        <h3>Questões ({{questions().length}})</h3>
       </div>
       <div class="cards-list">
         @for (question of questions(); track $index) {
